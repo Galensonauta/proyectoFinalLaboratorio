@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ClassDiagram name="vistaGeneral">
+  <ClassDiagramComponents>
+    <Class name="Comprador" package="" visibility="public" xPosition="26.0" yPosition="32.0">
+      <Fields>
+        <Field name="dni" type="int" visibility="private"/>
+        <Field name="nombre" type="String" visibility="private"/>
+        <Field name="fechaNac" type="Date" visibility="private"/>
+        <Field name="pass" type="String" visibility="private"/>
+        <Field name="medioPago" type="String" visibility="private"/>
+      </Fields>
+      <Constructors/>
+      <Methods/>
+    </Class>
+    <Class name="TicketCompra" package="" visibility="public" xPosition="289.0" yPosition="20.0">
+      <Fields>
+        <Field name="idTicket" type="int" visibility="private"/>
+        <Field name="fechaCompra" type="Date" visibility="private"/>
+        <Field name="fechaProyeccion" type="Date" visibility="private"/>
+        <Field name="monto" type="int" visibility="private"/>
+      </Fields>
+      <Constructors/>
+      <Methods/>
+    </Class>
+    <Class name="DetalleTicket" package="" visibility="public" xPosition="674.0" yPosition="32.0">
+      <Fields>
+        <Field name="codD" type="int" visibility="private"/>
+        <Field name="idProyeccion" type="int" visibility="private"/>
+        <Field name="cantidad" type="int" visibility="private"/>
+        <Field name="subTotal" type="int" visibility="private"/>
+      </Fields>
+      <Constructors/>
+      <Methods/>
+    </Class>
+    <Class name="Pelicula" package="" visibility="public" xPosition="470.0" yPosition="151.0">
+      <Fields>
+        <Field name="titulo" type="String" visibility="private"/>
+        <Field name="director" type="String" visibility="private"/>
+        <Field name="actores" type="String" visibility="private"/>
+        <Field name="origen" type="String" visibility="private"/>
+        <Field name="genero" type="String" visibility="private"/>
+        <Field name="estreno" type="Date" visibility="private"/>
+        <Field name="enCartelera" type="boolean" visibility="private"/>
+      </Fields>
+      <Constructors/>
+      <Methods/>
+    </Class>
+    <Class name="Proyeccion" package="" visibility="public" xPosition="26.0" yPosition="260.0">
+      <Fields>
+        <Field name="idProyeccion" type="int" visibility="private"/>
+        <Field name="idioma" type="String" visibility="private"/>
+        <Field name="subtitulada" type="boolean" visibility="private"/>
+        <Field name="horaInicio" type="LocalDateTime" visibility="private"/>
+        <Field name="horaFin" type="LocalDateTime" visibility="private"/>
+        <Field name="lugaresDisponbiles" type="int" visibility="private"/>
+      </Fields>
+      <Constructors/>
+      <Methods/>
+    </Class>
+    <Class name="Sala" package="" visibility="public" xPosition="268.0" yPosition="428.0">
+      <Fields>
+        <Field name="nroSala" type="int" visibility="private"/>
+        <Field name="apto3D" type="boolean" visibility="private"/>
+        <Field name="capacidad" type="int" visibility="private"/>
+        <Field name="estado" type="boolean" visibility="private"/>
+      </Fields>
+      <Constructors/>
+      <Methods/>
+    </Class>
+    <Class name="LugarAsiento" package="" visibility="public" xPosition="674.0" yPosition="390.0">
+      <Fields>
+        <Field name="codLugar" type="int" visibility="private"/>
+        <Field name="fila" type="String" visibility="private"/>
+        <Field name="numero" type="int" visibility="private"/>
+        <Field name="estado" type="boolean" visibility="private"/>
+      </Fields>
+      <Constructors/>
+      <Methods/>
+    </Class>
+  </ClassDiagramComponents>
+  <ClassDiagramRelations>
+    <HasRelation name="tiene" source="TicketCompra" target="DetalleTicket" type="Default" sourceCardinality="0..1" targetCardinality="1..1"/>
+    <UseRelation name="" source="Proyeccion" target="Pelicula" sourceCardinality="1..*" targetCardinality="1..1"/>
+    <IsRelation name="is" source="DetalleTicket" target="TicketCompra"/>
+    <HasRelation name="pertenece" source="LugarAsiento" target="Proyeccion" type="Default" sourceCardinality="0..1" targetCardinality="1..*" collectionType="List"/>
+    <HasRelation name="pertenece" source="Comprador" target="TicketCompra" type="Aggregation" sourceCardinality="0..1" targetCardinality="1..1"/>
+    <UseRelation name="" source="Proyeccion" target="Sala" sourceCardinality="1..*" targetCardinality="1..1"/>
+    <HasRelation name="tiene" source="DetalleTicket" target="LugarAsiento" type="Default" sourceCardinality="0..1" targetCardinality="1..1"/>
+  </ClassDiagramRelations>
+</ClassDiagram>
