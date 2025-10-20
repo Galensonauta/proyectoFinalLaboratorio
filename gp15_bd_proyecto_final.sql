@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 20-10-2025 a las 22:26:00
+-- Tiempo de generación: 21-10-2025 a las 01:17:12
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -57,8 +57,8 @@ CREATE TABLE `detalle_ticket` (
 
 CREATE TABLE `lugar_asiento` (
   `codLugar` int(11) NOT NULL,
-  `fila` varchar(11) NOT NULL,
-  `numero` int(11) NOT NULL,
+  `filaAsiento` varchar(11) NOT NULL,
+  `numeroAsiento` int(11) NOT NULL,
   `estado` tinyint(1) NOT NULL,
   `proyeccion` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -94,7 +94,8 @@ CREATE TABLE `proyeccion` (
   `horaInicio` datetime NOT NULL,
   `horaFin` datetime NOT NULL,
   `lugaresDisponibles` int(11) NOT NULL,
-  `sala` int(11) NOT NULL
+  `sala` int(11) NOT NULL,
+  `precioLugar` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -185,12 +186,6 @@ ALTER TABLE `ticket_compra`
 --
 ALTER TABLE `proyeccion`
   MODIFY `idProyeccion` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT de la tabla `sala`
---
-ALTER TABLE `sala`
-  MODIFY `nroSala` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `ticket_compra`
