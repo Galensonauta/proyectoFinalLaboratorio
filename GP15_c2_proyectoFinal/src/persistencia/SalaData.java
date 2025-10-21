@@ -38,17 +38,17 @@ public class SalaData {
     }     
      
      public void actualizarSala(int nroSala, boolean nuevoApta3D, int nuevaCapacidad, boolean nuevoEstado){
-        String sql = "UPDATE sala SET apta3D = ?, capacidad = ?, estado = ?, WHERE nroSala = ?";
+        String sql = "UPDATE sala SET apta3D = ?, capacidad = ?, estado = ? WHERE nroSala = ?";
                try{
             PreparedStatement ps = con.prepareStatement(sql);
-            
-            ps.setBoolean(2, nuevoApta3D);
-            ps.setInt(3, nuevaCapacidad);
-            ps.setBoolean(4, nuevoEstado);
+            ps.setBoolean(1, nuevoApta3D);
+            ps.setInt(2, nuevaCapacidad);
+            ps.setBoolean(3, nuevoEstado);
+            ps.setInt(4, nroSala);
                                     
             int registros = ps.executeUpdate();
             if(registros>0){
-                System.out.println("La sala numero" + nroSala + "fue modificada ");
+                System.out.println("La sala numero " + nroSala + "fue modificada ");
             }else{
                 System.out.println("No se encontro ninguna sala numero "+ nroSala);
             }            

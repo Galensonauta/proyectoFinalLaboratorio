@@ -14,9 +14,11 @@ import persistencia.SalaData;
 public class test {
 public static void main(String[] args){
     SalaData salaData = new SalaData();
+    /*
     Sala s = new Sala(1, true,170,true);
     salaData.guardarSala(s);
-    salaData.actualizarSala(1, true, 200, true);
+*/
+    salaData.actualizarSala(1, true, 200, false);
 
     
 }
