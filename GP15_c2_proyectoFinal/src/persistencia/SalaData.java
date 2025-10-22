@@ -7,6 +7,7 @@ package persistencia;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import modelo.Sala;
@@ -20,8 +21,7 @@ public class SalaData {
 
     public SalaData() {
         con = Conexion.getConexion();
-    }    
- 
+    }     
      public void guardarSala(Sala s) {
         String sql = "INSERT INTO sala (nroSala, apta3D, capacidad, estado) values (?,?,?,?)";
         try {
@@ -69,5 +69,55 @@ public class SalaData {
         }catch(SQLException e){
             System.out.println("Error al modificar la materia"+ e.getMessage());
         }       
+    }
+     
+       public void bajaSala(int nroSala){
+        String sql = "UPDATE sala SET estado = ? WHERE nroSala = ?";
+        try{
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setBoolean(1, false);
+            ps.setInt(2, nroSala);
+            int registros = ps.executeUpdate();
+            if(registros>0){
+                System.out.println("La sala "+ nroSala +" fue dada de baja");
+            }else{
+                System.out.println("No se encontro ninguna sala con el nro: "+ nroSala);
+            }               
+        }catch(SQLException e){
+            System.out.println("Error al modificar al alumno"+ e.getMessage());
+        }
+    }
+    public void altaSala(int nroSala){
+        String sql = "UPDATE sala SET estado = ? WHERE nroSala = ?";
+        try{
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setBoolean(1, true);
+            ps.setInt(2, nroSala);
+            int registros = ps.executeUpdate();
+            if(registros>0){
+                System.out.println("La sala nro: "+ nroSala +" fue dada de alta");
+            }else{
+                System.out.println("No se encontro ninguna sala con ese numero: "+ nroSala);
+            }               
+        }catch(SQLException e){
+            System.out.println("Error al modificar la materia"+ e.getMessage());
+        }
+    }
+    
+    public void buscarSala(int nroSala){
+        String sql ="SELECT  * FROM sala WHERE nroSala = ?";
+        try{
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1,nroSala);
+            ResultSet rs = ps.executeQuery();
+            if(rs.next()){
+            System.out.println("Sala numero : "+ nroSala +" encontrada:");
+            System.out.println("tiene capacidad para: " + rs.getInt("capacidad")+" espectadores");
+            }else{
+                System.out.println("No se encontro ninguna sala con ese nro de sala");
+            }
+        }catch(SQLException e){
+            System.out.println("Error al obtener materia"+ e.getMessage());
+        }
     }
 }
