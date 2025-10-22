@@ -20,8 +20,7 @@ public class SalaData {
 
     public SalaData() {
         con = Conexion.getConexion();
-    }
-    
+    }    
  
      public void guardarSala(Sala s) {
         String sql = "INSERT INTO sala (nroSala, apta3D, capacidad, estado) values (?,?,?,?)";
@@ -55,5 +54,20 @@ public class SalaData {
         }catch(SQLException e){
             System.out.println("Error al modificar al sala"+ e.getMessage());
         }
+    }
+     public void borrarSala(int nroSala){
+        String sql = "DELETE FROM sala WHERE nroSala = ?";
+        try{
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1,nroSala);
+            int registros = ps.executeUpdate();            
+            if(registros>0){
+                System.out.println("La sala "+ nroSala +" fue elimanada de la base de datos");
+            }else{
+                System.out.println("No se encontro ninguna sala con el numero: "+ nroSala);
+            }
+        }catch(SQLException e){
+            System.out.println("Error al modificar la materia"+ e.getMessage());
+        }       
     }
 }

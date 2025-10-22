@@ -17,8 +17,9 @@ public static void main(String[] args){
     /*
     Sala s = new Sala(1, true,170,true);
     salaData.guardarSala(s);
-*/
-    salaData.actualizarSala(1, true, 200, false);
+    salaData.actualizarSala(1, true, 175, true);    
+*/    
+    salaData.borrarSala(1);
 
     
 }
