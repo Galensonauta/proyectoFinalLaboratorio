@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 21-10-2025 a las 01:17:12
+-- Tiempo de generación: 23-10-2025 a las 01:13:56
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -34,6 +34,17 @@ CREATE TABLE `comprador` (
   `pass` varchar(30) NOT NULL,
   `medioPago` varchar(30) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `comprador`
+--
+
+INSERT INTO `comprador` (`dni`, `nombre`, `fechaNac`, `pass`, `medioPago`) VALUES
+(123456785, 'Tomás Puw', '1990-07-23', '12345', 'Debito'),
+(123456786, 'Evelyn Cetera', '1990-07-23', '12345', 'Debito'),
+(123456787, 'Santiago Girardi Correa', '1990-07-23', '12345', 'Debito'),
+(123456788, 'Enzo Fornes', '1990-07-23', '12345', 'Debito'),
+(123456789, 'Matias Correa', '1990-07-23', '12345', 'Debito');
 
 -- --------------------------------------------------------
 
@@ -110,6 +121,13 @@ CREATE TABLE `sala` (
   `capacidad` int(11) NOT NULL,
   `estado` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `sala`
+--
+
+INSERT INTO `sala` (`nroSala`, `apta3D`, `capacidad`, `estado`) VALUES
+(1, 1, 170, 1);
 
 -- --------------------------------------------------------
 
