@@ -1,12 +1,8 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package modelo;
 
 /**
  *
- * @author y
+ * @author Grupo 15 (Evelyn Cetera, Tomas Puw Zirulnik, Matias Correa, Enzo Fornes, Santiago Girardi)
  */
 public class Sala {
     private int nroSala;
@@ -55,5 +51,13 @@ public class Sala {
     public void setEstado(boolean estado) {
         this.estado = estado;
     }
+
+    @Override
+    public String toString() {
+        return "Sala[" + "Nro. Sala: " + nroSala + ", Apta 3D: " + apta3D + ", Capacidad: " + capacidad +']';
+    }
+    
+    
+    
     
 }

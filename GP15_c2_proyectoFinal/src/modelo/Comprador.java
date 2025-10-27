@@ -6,11 +6,11 @@ import java.util.Date;
 
 /**
  *
- * @author y
+ * @author Grupo 15 (Evelyn Cetera, Tomas Puw Zirulnik, Matias Correa, Enzo Fornes, Santiago Girardi)
  */
 public class Comprador {
     private int dni;
-    private String nombre, pass,medioPago;
+    private String nombre, pass, medioPago;
     private LocalDate fechaNac;
 
     public Comprador() {
@@ -62,6 +62,11 @@ public class Comprador {
 
     public void setFechaNac(LocalDate fechaNac) {
         this.fechaNac = fechaNac;
+    }
+
+    @Override
+    public String toString() {
+        return "Comprador[" + "DNI: " + dni + ", Nombre: " + nombre + ']';
     }
     
     
