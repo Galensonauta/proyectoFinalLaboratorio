@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package vistas;
+import javax.swing.table.DefaultTableModel;
 import persistencia.SalaData;
 import modelo.Sala;
 
@@ -14,6 +15,8 @@ import modelo.Sala;
 public class SalaVista extends javax.swing.JInternalFrame {
 
     private SalaData salaData;
+    
+    private DefaultTableModel modelo  = new DefaultTableModel();
     /**
      * Creates new form SalaVista
      */
@@ -21,6 +24,7 @@ public class SalaVista extends javax.swing.JInternalFrame {
         initComponents();
         
         this.salaData = new SalaData();
+        armarCabecera();
     }
 
     /**
@@ -50,12 +54,12 @@ public class SalaVista extends javax.swing.JInternalFrame {
         JTCapacidad = new javax.swing.JTextField();
         JTNumeroDeSala = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
-        jButton2 = new javax.swing.JButton();
-        jTextField4 = new javax.swing.JTextField();
+        JBBuscar = new javax.swing.JButton();
+        JTBuscarNroDeSala = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
-        jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
+        JTSalas = new javax.swing.JTable();
+        JBModificar = new javax.swing.JButton();
+        JBSalir = new javax.swing.JButton();
 
         jTextField1.setText("jTextField1");
 
@@ -102,9 +106,9 @@ public class SalaVista extends javax.swing.JInternalFrame {
         jLabel1.setFont(new java.awt.Font("Dialog", 1, 48)); // NOI18N
         jLabel1.setText("Sala");
 
-        jButton2.setText("Buscar");
+        JBBuscar.setText("Buscar");
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        JTSalas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -115,11 +119,11 @@ public class SalaVista extends javax.swing.JInternalFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(JTSalas);
 
-        jButton3.setText("Modificar");
+        JBModificar.setText("Modificar");
 
-        jButton4.setText("Salir");
+        JBSalir.setText("Salir");
 
         EscritorioSala.setLayer(RBEstadoSi, javax.swing.JLayeredPane.DEFAULT_LAYER);
         EscritorioSala.setLayer(RBEstadoNo, javax.swing.JLayeredPane.DEFAULT_LAYER);
@@ -133,11 +137,11 @@ public class SalaVista extends javax.swing.JInternalFrame {
         EscritorioSala.setLayer(JTCapacidad, javax.swing.JLayeredPane.DEFAULT_LAYER);
         EscritorioSala.setLayer(JTNumeroDeSala, javax.swing.JLayeredPane.DEFAULT_LAYER);
         EscritorioSala.setLayer(jLabel1, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        EscritorioSala.setLayer(jButton2, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        EscritorioSala.setLayer(jTextField4, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        EscritorioSala.setLayer(JBBuscar, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        EscritorioSala.setLayer(JTBuscarNroDeSala, javax.swing.JLayeredPane.DEFAULT_LAYER);
         EscritorioSala.setLayer(jScrollPane1, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        EscritorioSala.setLayer(jButton3, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        EscritorioSala.setLayer(jButton4, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        EscritorioSala.setLayer(JBModificar, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        EscritorioSala.setLayer(JBSalir, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         javax.swing.GroupLayout EscritorioSalaLayout = new javax.swing.GroupLayout(EscritorioSala);
         EscritorioSala.setLayout(EscritorioSalaLayout);
@@ -170,16 +174,16 @@ public class SalaVista extends javax.swing.JInternalFrame {
                 .addGroup(EscritorioSalaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, EscritorioSalaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(EscritorioSalaLayout.createSequentialGroup()
-                            .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(JTBuscarNroDeSala, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGap(78, 78, 78)
-                            .addComponent(jButton2)
+                            .addComponent(JBBuscar)
                             .addContainerGap())
                         .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, EscritorioSalaLayout.createSequentialGroup()
                             .addGap(292, 292, 292)
-                            .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(JBSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGap(25, 25, 25)))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, EscritorioSalaLayout.createSequentialGroup()
-                        .addComponent(jButton3)
+                        .addComponent(JBModificar)
                         .addGap(294, 294, 294))
                     .addGroup(EscritorioSalaLayout.createSequentialGroup()
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 368, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -221,16 +225,16 @@ public class SalaVista extends javax.swing.JInternalFrame {
                         .addGap(106, 106, 106))
                     .addGroup(EscritorioSalaLayout.createSequentialGroup()
                         .addGroup(EscritorioSalaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jButton2)
-                            .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(JBBuscar)
+                            .addComponent(JTBuscarNroDeSala, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(24, 24, 24)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(EscritorioSalaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jButton3)
+                            .addComponent(JBModificar)
                             .addComponent(botonGuardar))
                         .addGap(46, 46, 46)))
-                .addComponent(jButton4)
+                .addComponent(JBSalir)
                 .addGap(37, 37, 37))
         );
 
@@ -285,7 +289,10 @@ public class SalaVista extends javax.swing.JInternalFrame {
         
         salaData.guardarSala(new Sala(nroDeSala,Apta3D,capacidad,estado));
         
-        
+        JTNumeroDeSala.setText("");
+        buttonGroup1.clearSelection();
+        buttonGroup2.clearSelection();
+        JTCapacidad.setText("");
         
         
         // TODO add your handling code here:
@@ -294,8 +301,13 @@ public class SalaVista extends javax.swing.JInternalFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JDesktopPane EscritorioSala;
+    private javax.swing.JButton JBBuscar;
+    private javax.swing.JButton JBModificar;
+    private javax.swing.JButton JBSalir;
+    private javax.swing.JTextField JTBuscarNroDeSala;
     private javax.swing.JTextField JTCapacidad;
     private javax.swing.JTextField JTNumeroDeSala;
+    private javax.swing.JTable JTSalas;
     private javax.swing.JRadioButton RBApta3DNo;
     private javax.swing.JRadioButton RBApta3DSi;
     private javax.swing.JRadioButton RBEstadoNo;
@@ -303,9 +315,6 @@ public class SalaVista extends javax.swing.JInternalFrame {
     private javax.swing.JButton botonGuardar;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.ButtonGroup buttonGroup2;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -314,8 +323,18 @@ public class SalaVista extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
     private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField4;
     // End of variables declaration//GEN-END:variables
+
+    private void armarCabecera(){
+        
+        modelo.addColumn("Nro de sala");
+        modelo.addColumn("Apta para 3D");
+        modelo.addColumn("Capacidad");
+        modelo.addColumn("Estado");
+        
+        JTSalas.setModel(modelo);
+        
+    }
+
 }

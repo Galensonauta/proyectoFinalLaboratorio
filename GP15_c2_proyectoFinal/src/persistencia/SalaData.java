@@ -6,6 +6,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 import modelo.Sala;
 
 /**
@@ -115,5 +117,31 @@ public class SalaData {
         }catch(SQLException e){
             System.out.println("Error al obtener materia"+ e.getMessage());
         }
+    }
+    
+    public List<Sala> obtenerTodasLasSalas() {
+
+        List<Sala> salas = new ArrayList<>();
+        String sql = "SELECT * FROM sala"; 
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+        
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+
+                Sala sala = new Sala();
+                sala.setNroSala(rs.getInt("nroSala"));
+                sala.setApta3D(rs.getBoolean("apta3D"));
+                sala.setCapacidad(rs.getInt("capacidad"));
+                sala.setEstado(rs.getBoolean("estado"));
+                salas.add(sala);
+            }
+        rs.close();
+        ps.close();
+        } catch (SQLException e) {
+            System.out.println("Error al obtener la lista de salas: " + e.getMessage());
+        }    
+        return salas;
     }
 }
