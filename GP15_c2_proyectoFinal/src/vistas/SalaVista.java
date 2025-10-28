@@ -4,6 +4,8 @@
  * and open the template in the editor.
  */
 package vistas;
+import persistencia.SalaData;
+import modelo.Sala;
 
 /**
  *
@@ -11,11 +13,14 @@ package vistas;
  */
 public class SalaVista extends javax.swing.JInternalFrame {
 
+    private SalaData salaData;
     /**
      * Creates new form SalaVista
      */
     public SalaVista() {
         initComponents();
+        
+        this.salaData = new SalaData();
     }
 
     /**
@@ -28,29 +33,46 @@ public class SalaVista extends javax.swing.JInternalFrame {
     private void initComponents() {
 
         jTextField1 = new javax.swing.JTextField();
-        jLabel1 = new javax.swing.JLabel();
+        buttonGroup1 = new javax.swing.ButtonGroup();
+        buttonGroup2 = new javax.swing.ButtonGroup();
+        jMenu1 = new javax.swing.JMenu();
+        jLabel6 = new javax.swing.JLabel();
+        EscritorioSala = new javax.swing.JDesktopPane();
+        RBEstadoSi = new javax.swing.JRadioButton();
+        RBEstadoNo = new javax.swing.JRadioButton();
+        botonGuardar = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        jRadioButton1 = new javax.swing.JRadioButton();
-        jRadioButton2 = new javax.swing.JRadioButton();
-        jTextField2 = new javax.swing.JTextField();
-        jTextField3 = new javax.swing.JTextField();
-        jRadioButton3 = new javax.swing.JRadioButton();
-        jRadioButton4 = new javax.swing.JRadioButton();
-        jButton1 = new javax.swing.JButton();
+        RBApta3DSi = new javax.swing.JRadioButton();
+        RBApta3DNo = new javax.swing.JRadioButton();
+        JTCapacidad = new javax.swing.JTextField();
+        JTNumeroDeSala = new javax.swing.JTextField();
+        jLabel1 = new javax.swing.JLabel();
         jButton2 = new javax.swing.JButton();
-        jLabel6 = new javax.swing.JLabel();
         jTextField4 = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         jButton3 = new javax.swing.JButton();
+        jButton4 = new javax.swing.JButton();
 
         jTextField1.setText("jTextField1");
 
-        jLabel1.setFont(new java.awt.Font("Dialog", 1, 48)); // NOI18N
-        jLabel1.setText("Sala");
+        jMenu1.setText("jMenu1");
+
+        buttonGroup2.add(RBEstadoSi);
+        RBEstadoSi.setText("Habilidato");
+
+        buttonGroup2.add(RBEstadoNo);
+        RBEstadoNo.setText("No habilitado");
+
+        botonGuardar.setText("Guardar");
+        botonGuardar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonGuardarActionPerformed(evt);
+            }
+        });
 
         jLabel2.setText("Nro de sala");
 
@@ -60,20 +82,25 @@ public class SalaVista extends javax.swing.JInternalFrame {
 
         jLabel5.setText("Estado");
 
-        jRadioButton1.setText("Si");
-        jRadioButton1.addActionListener(new java.awt.event.ActionListener() {
+        buttonGroup1.add(RBApta3DSi);
+        RBApta3DSi.setText("Si");
+        RBApta3DSi.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jRadioButton1ActionPerformed(evt);
+                RBApta3DSiActionPerformed(evt);
             }
         });
 
-        jRadioButton2.setText("No");
+        buttonGroup1.add(RBApta3DNo);
+        RBApta3DNo.setText("No");
+        RBApta3DNo.setFocusCycleRoot(true);
+        RBApta3DNo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                RBApta3DNoActionPerformed(evt);
+            }
+        });
 
-        jRadioButton3.setText("Si");
-
-        jRadioButton4.setText("No");
-
-        jButton1.setText("Guardar");
+        jLabel1.setFont(new java.awt.Font("Dialog", 1, 48)); // NOI18N
+        jLabel1.setText("Sala");
 
         jButton2.setText("Buscar");
 
@@ -92,130 +119,203 @@ public class SalaVista extends javax.swing.JInternalFrame {
 
         jButton3.setText("Modificar");
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(302, 302, 302)
-                .addComponent(jLabel1)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(43, 43, 43)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        jButton4.setText("Salir");
+
+        EscritorioSala.setLayer(RBEstadoSi, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        EscritorioSala.setLayer(RBEstadoNo, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        EscritorioSala.setLayer(botonGuardar, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        EscritorioSala.setLayer(jLabel2, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        EscritorioSala.setLayer(jLabel3, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        EscritorioSala.setLayer(jLabel4, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        EscritorioSala.setLayer(jLabel5, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        EscritorioSala.setLayer(RBApta3DSi, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        EscritorioSala.setLayer(RBApta3DNo, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        EscritorioSala.setLayer(JTCapacidad, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        EscritorioSala.setLayer(JTNumeroDeSala, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        EscritorioSala.setLayer(jLabel1, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        EscritorioSala.setLayer(jButton2, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        EscritorioSala.setLayer(jTextField4, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        EscritorioSala.setLayer(jScrollPane1, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        EscritorioSala.setLayer(jButton3, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        EscritorioSala.setLayer(jButton4, javax.swing.JLayeredPane.DEFAULT_LAYER);
+
+        javax.swing.GroupLayout EscritorioSalaLayout = new javax.swing.GroupLayout(EscritorioSala);
+        EscritorioSala.setLayout(EscritorioSalaLayout);
+        EscritorioSalaLayout.setHorizontalGroup(
+            EscritorioSalaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, EscritorioSalaLayout.createSequentialGroup()
+                .addGap(52, 52, 52)
+                .addGroup(EscritorioSalaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(EscritorioSalaLayout.createSequentialGroup()
+                        .addGroup(EscritorioSalaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel3)
                             .addComponent(jLabel4)
                             .addComponent(jLabel2)
                             .addComponent(jLabel5))
                         .addGap(20, 20, 20)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jRadioButton3)
+                        .addGroup(EscritorioSalaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(EscritorioSalaLayout.createSequentialGroup()
+                                .addComponent(RBEstadoSi)
                                 .addGap(31, 31, 31)
-                                .addComponent(jRadioButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addGroup(layout.createSequentialGroup()
-                                    .addComponent(jRadioButton1)
+                                .addComponent(RBEstadoNo))
+                            .addGroup(EscritorioSalaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addGroup(EscritorioSalaLayout.createSequentialGroup()
+                                    .addComponent(RBApta3DSi)
                                     .addGap(30, 30, 30)
-                                    .addComponent(jRadioButton2))
-                                .addComponent(jTextField2)
-                                .addComponent(jTextField3))))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(52, 52, 52)
-                        .addComponent(jButton1)))
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabel6)
-                        .addGap(258, 258, 258))
-                    .addGroup(layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 162, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jButton3)
-                                .addGap(0, 0, Short.MAX_VALUE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(38, 38, 38)
-                                .addComponent(jButton2)
-                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addGap(0, 0, Short.MAX_VALUE)
-                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 368, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(80, 80, 80))))))
+                                    .addComponent(RBApta3DNo))
+                                .addComponent(JTCapacidad)
+                                .addComponent(JTNumeroDeSala, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addComponent(botonGuardar))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(EscritorioSalaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, EscritorioSalaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(EscritorioSalaLayout.createSequentialGroup()
+                            .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(78, 78, 78)
+                            .addComponent(jButton2)
+                            .addContainerGap())
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, EscritorioSalaLayout.createSequentialGroup()
+                            .addGap(292, 292, 292)
+                            .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(25, 25, 25)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, EscritorioSalaLayout.createSequentialGroup()
+                        .addComponent(jButton3)
+                        .addGap(294, 294, 294))
+                    .addGroup(EscritorioSalaLayout.createSequentialGroup()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 368, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap())))
+            .addGroup(EscritorioSalaLayout.createSequentialGroup()
+                .addGap(289, 289, 289)
+                .addComponent(jLabel1)
+                .addGap(0, 0, Short.MAX_VALUE))
+        );
+        EscritorioSalaLayout.setVerticalGroup(
+            EscritorioSalaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, EscritorioSalaLayout.createSequentialGroup()
+                .addContainerGap(30, Short.MAX_VALUE)
+                .addComponent(jLabel1)
+                .addGap(18, 18, 18)
+                .addGroup(EscritorioSalaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(EscritorioSalaLayout.createSequentialGroup()
+                        .addGroup(EscritorioSalaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, EscritorioSalaLayout.createSequentialGroup()
+                                .addComponent(jLabel2)
+                                .addGap(39, 39, 39)
+                                .addGroup(EscritorioSalaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel3)
+                                    .addGroup(EscritorioSalaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(RBApta3DSi)
+                                        .addComponent(RBApta3DNo))))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, EscritorioSalaLayout.createSequentialGroup()
+                                .addComponent(JTNumeroDeSala, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(63, 63, 63)))
+                        .addGap(17, 17, 17)
+                        .addGroup(EscritorioSalaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel4)
+                            .addComponent(JTCapacidad))
+                        .addGap(24, 24, 24)
+                        .addGroup(EscritorioSalaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel5)
+                            .addComponent(RBEstadoSi)
+                            .addComponent(RBEstadoNo))
+                        .addGap(106, 106, 106))
+                    .addGroup(EscritorioSalaLayout.createSequentialGroup()
+                        .addGroup(EscritorioSalaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jButton2)
+                            .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(24, 24, 24)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(EscritorioSalaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jButton3)
+                            .addComponent(botonGuardar))
+                        .addGap(46, 46, 46)))
+                .addComponent(jButton4)
+                .addGap(37, 37, 37))
+        );
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel6)
+                .addGap(258, 258, 258))
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(EscritorioSala, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 12, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jLabel1)
-                .addGap(23, 23, 23)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel2)
-                        .addGap(39, 39, 39)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel3)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(jRadioButton1)
-                                .addComponent(jRadioButton2)))
-                        .addGap(17, 17, 17)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel4)
-                            .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(24, 24, 24)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel5)
-                            .addComponent(jRadioButton3)
-                            .addComponent(jRadioButton4))
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jLabel6))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(1, 1, 1)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jButton2)
-                                    .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addGap(18, 18, 18)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jButton3)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton1)
-                        .addGap(135, 135, 135))))
+                .addComponent(EscritorioSala, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel6)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jRadioButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton1ActionPerformed
+    private void RBApta3DSiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RBApta3DSiActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jRadioButton1ActionPerformed
+    }//GEN-LAST:event_RBApta3DSiActionPerformed
+
+    private void RBApta3DNoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RBApta3DNoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_RBApta3DNoActionPerformed
+
+    private void botonGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonGuardarActionPerformed
+        
+        int nroDeSala = Integer.parseInt(JTNumeroDeSala.getText());
+        boolean estado = false;
+        if(RBEstadoSi.isSelected()){
+            estado = true;
+        }if(RBEstadoNo.isSelected()){
+            estado = false;
+        }
+        int capacidad = Integer.parseInt(JTCapacidad.getText());
+        boolean Apta3D = false;
+        if(RBApta3DSi.isSelected()){
+            Apta3D = true;
+        }if(RBApta3DNo.isSelected()){
+            Apta3D = false;
+        }
+        
+        salaData.guardarSala(new Sala(nroDeSala,Apta3D,capacidad,estado));
+        
+        
+        
+        
+        // TODO add your handling code here:
+    }//GEN-LAST:event_botonGuardarActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
+    private javax.swing.JDesktopPane EscritorioSala;
+    private javax.swing.JTextField JTCapacidad;
+    private javax.swing.JTextField JTNumeroDeSala;
+    private javax.swing.JRadioButton RBApta3DNo;
+    private javax.swing.JRadioButton RBApta3DSi;
+    private javax.swing.JRadioButton RBEstadoNo;
+    private javax.swing.JRadioButton RBEstadoSi;
+    private javax.swing.JButton botonGuardar;
+    private javax.swing.ButtonGroup buttonGroup1;
+    private javax.swing.ButtonGroup buttonGroup2;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JRadioButton jRadioButton1;
-    private javax.swing.JRadioButton jRadioButton2;
-    private javax.swing.JRadioButton jRadioButton3;
-    private javax.swing.JRadioButton jRadioButton4;
+    private javax.swing.JMenu jMenu1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
     private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
     private javax.swing.JTextField jTextField4;
     // End of variables declaration//GEN-END:variables
 }

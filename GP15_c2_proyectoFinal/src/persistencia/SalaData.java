@@ -18,7 +18,7 @@ public class SalaData {
     public SalaData() {
         con = Conexion.getConexion();
     }     
-     public void guardarSala(Sala s) {
+     public  void guardarSala(Sala s) {
         String sql = "INSERT INTO sala (nroSala, apta3D, capacidad, estado) values (?,?,?,?)";
         try {
             PreparedStatement ps = con.prepareStatement(sql);
