@@ -17,8 +17,12 @@ import persistencia.SalaData;
  */
 public class test {
 public static void main(String[] args){
-    SalaData salaData = new SalaData();
+    
+
+    
     /*
+        SalaData salaData = new SalaData();
+
     Sala s = new Sala(1, true,170,true);
     salaData.guardarSala(s);
     salaData.buscarSala(1); 
@@ -38,6 +42,14 @@ public static void main(String[] args){
    cd1.guardarComprador(c3);
    cd1.guardarComprador(c4);
    cd1.guardarComprador(c5);
+        CompradorData compradorData = new CompradorData();
+
+        compradorData.actualizarComprador(123456789, 123456789, "Matias Correa", "12345677","efectivo" , LocalDate.of(1990, 07, 23));
+    Comprador test = new Comprador(1234567812, "test comprador", "12345", "Debito",LocalDate.of(1990, 07, 23));
+    compradorData.guardarComprador(test);
+    compradorData.borrarComprador(1234567812);
+        compradorData.buscarComprador(123456787);
+
 */  
    
    
