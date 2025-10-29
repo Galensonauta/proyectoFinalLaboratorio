@@ -20,6 +20,13 @@ public class Sala {
         this.estado = estado;
     }
 
+    public Sala(Sala sala) {
+        this.nroSala = sala.getNroSala();
+        this.apta3D = sala.getApta3D();
+        this.capacidad = sala.getCapacidad();
+        this.estado = sala.isEstado();
+    }
+
     public int getNroSala() {
         return nroSala;
     }

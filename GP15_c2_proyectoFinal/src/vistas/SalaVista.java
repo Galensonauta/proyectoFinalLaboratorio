@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package vistas;
+import java.util.ArrayList;
 import javax.swing.table.DefaultTableModel;
 import persistencia.SalaData;
 import modelo.Sala;
@@ -25,6 +26,7 @@ public class SalaVista extends javax.swing.JInternalFrame {
         
         this.salaData = new SalaData();
         armarCabecera();
+        cargarSalas(salaData.obtenerTodasLasSalas());
     }
 
     /**
@@ -60,6 +62,9 @@ public class SalaVista extends javax.swing.JInternalFrame {
         JTSalas = new javax.swing.JTable();
         JBModificar = new javax.swing.JButton();
         JBSalir = new javax.swing.JButton();
+        jLabel7 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        JBLimpiarTable = new javax.swing.JButton();
 
         jTextField1.setText("jTextField1");
 
@@ -107,6 +112,11 @@ public class SalaVista extends javax.swing.JInternalFrame {
         jLabel1.setText("Sala");
 
         JBBuscar.setText("Buscar");
+        JBBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                JBBuscarActionPerformed(evt);
+            }
+        });
 
         JTSalas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -122,8 +132,31 @@ public class SalaVista extends javax.swing.JInternalFrame {
         jScrollPane1.setViewportView(JTSalas);
 
         JBModificar.setText("Modificar");
+        JBModificar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                JBModificarActionPerformed(evt);
+            }
+        });
 
         JBSalir.setText("Salir");
+        JBSalir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                JBSalirActionPerformed(evt);
+            }
+        });
+
+        jLabel7.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        jLabel7.setText("Guardar sala");
+
+        jLabel8.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        jLabel8.setText("Buscar sala");
+
+        JBLimpiarTable.setText("Limpiar");
+        JBLimpiarTable.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                JBLimpiarTableActionPerformed(evt);
+            }
+        });
 
         EscritorioSala.setLayer(RBEstadoSi, javax.swing.JLayeredPane.DEFAULT_LAYER);
         EscritorioSala.setLayer(RBEstadoNo, javax.swing.JLayeredPane.DEFAULT_LAYER);
@@ -142,6 +175,9 @@ public class SalaVista extends javax.swing.JInternalFrame {
         EscritorioSala.setLayer(jScrollPane1, javax.swing.JLayeredPane.DEFAULT_LAYER);
         EscritorioSala.setLayer(JBModificar, javax.swing.JLayeredPane.DEFAULT_LAYER);
         EscritorioSala.setLayer(JBSalir, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        EscritorioSala.setLayer(jLabel7, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        EscritorioSala.setLayer(jLabel8, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        EscritorioSala.setLayer(JBLimpiarTable, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         javax.swing.GroupLayout EscritorioSalaLayout = new javax.swing.GroupLayout(EscritorioSala);
         EscritorioSala.setLayout(EscritorioSalaLayout);
@@ -150,55 +186,77 @@ public class SalaVista extends javax.swing.JInternalFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, EscritorioSalaLayout.createSequentialGroup()
                 .addGap(52, 52, 52)
                 .addGroup(EscritorioSalaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(botonGuardar)
                     .addGroup(EscritorioSalaLayout.createSequentialGroup()
-                        .addGroup(EscritorioSalaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel3)
-                            .addComponent(jLabel4)
-                            .addComponent(jLabel2)
-                            .addComponent(jLabel5))
-                        .addGap(20, 20, 20)
+                        .addGap(9, 9, 9)
                         .addGroup(EscritorioSalaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(EscritorioSalaLayout.createSequentialGroup()
-                                .addComponent(RBEstadoSi)
-                                .addGap(31, 31, 31)
-                                .addComponent(RBEstadoNo))
-                            .addGroup(EscritorioSalaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addGroup(EscritorioSalaLayout.createSequentialGroup()
-                                    .addComponent(RBApta3DSi)
-                                    .addGap(30, 30, 30)
-                                    .addComponent(RBApta3DNo))
-                                .addComponent(JTCapacidad)
-                                .addComponent(JTNumeroDeSala, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                    .addComponent(botonGuardar))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGroup(EscritorioSalaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel3)
+                                    .addComponent(jLabel4)
+                                    .addComponent(jLabel2)
+                                    .addComponent(jLabel5))
+                                .addGroup(EscritorioSalaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(EscritorioSalaLayout.createSequentialGroup()
+                                        .addGap(20, 20, 20)
+                                        .addGroup(EscritorioSalaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                            .addGroup(EscritorioSalaLayout.createSequentialGroup()
+                                                .addComponent(RBApta3DSi)
+                                                .addGap(30, 30, 30)
+                                                .addComponent(RBApta3DNo))
+                                            .addComponent(JTCapacidad)
+                                            .addComponent(JTNumeroDeSala, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addGroup(EscritorioSalaLayout.createSequentialGroup()
+                                        .addGap(14, 14, 14)
+                                        .addComponent(RBEstadoSi)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(RBEstadoNo))))
+                            .addComponent(jLabel7))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(EscritorioSalaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, EscritorioSalaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(EscritorioSalaLayout.createSequentialGroup()
-                            .addComponent(JTBuscarNroDeSala, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(78, 78, 78)
-                            .addComponent(JBBuscar)
-                            .addContainerGap())
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, EscritorioSalaLayout.createSequentialGroup()
-                            .addGap(292, 292, 292)
-                            .addComponent(JBSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(25, 25, 25)))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, EscritorioSalaLayout.createSequentialGroup()
-                        .addComponent(JBModificar)
-                        .addGap(294, 294, 294))
                     .addGroup(EscritorioSalaLayout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 368, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 116, Short.MAX_VALUE)
+                        .addGroup(EscritorioSalaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, EscritorioSalaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(EscritorioSalaLayout.createSequentialGroup()
+                                    .addComponent(JTBuscarNroDeSala, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(39, 39, 39)
+                                    .addComponent(JBBuscar)
+                                    .addContainerGap())
+                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, EscritorioSalaLayout.createSequentialGroup()
+                                    .addGap(292, 292, 292)
+                                    .addComponent(JBSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(25, 25, 25)))
+                            .addGroup(EscritorioSalaLayout.createSequentialGroup()
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 368, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addContainerGap())
+                            .addGroup(EscritorioSalaLayout.createSequentialGroup()
+                                .addComponent(JBModificar)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(JBLimpiarTable)
+                                .addGap(43, 43, 43))))
+                    .addGroup(EscritorioSalaLayout.createSequentialGroup()
+                        .addGap(11, 11, 11)
+                        .addComponent(jLabel1)
+                        .addGap(135, 135, 135)
+                        .addComponent(jLabel8)
                         .addContainerGap())))
-            .addGroup(EscritorioSalaLayout.createSequentialGroup()
-                .addGap(289, 289, 289)
-                .addComponent(jLabel1)
-                .addGap(0, 0, Short.MAX_VALUE))
         );
         EscritorioSalaLayout.setVerticalGroup(
             EscritorioSalaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, EscritorioSalaLayout.createSequentialGroup()
-                .addContainerGap(30, Short.MAX_VALUE)
-                .addComponent(jLabel1)
-                .addGap(18, 18, 18)
+                .addGroup(EscritorioSalaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(EscritorioSalaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(EscritorioSalaLayout.createSequentialGroup()
+                            .addGap(49, 49, 49)
+                            .addComponent(jLabel7))
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, EscritorioSalaLayout.createSequentialGroup()
+                            .addContainerGap()
+                            .addComponent(jLabel8)))
+                    .addGroup(EscritorioSalaLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel1)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 48, Short.MAX_VALUE)
                 .addGroup(EscritorioSalaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(EscritorioSalaLayout.createSequentialGroup()
                         .addGroup(EscritorioSalaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -222,7 +280,7 @@ public class SalaVista extends javax.swing.JInternalFrame {
                             .addComponent(jLabel5)
                             .addComponent(RBEstadoSi)
                             .addComponent(RBEstadoNo))
-                        .addGap(106, 106, 106))
+                        .addGap(175, 175, 175))
                     .addGroup(EscritorioSalaLayout.createSequentialGroup()
                         .addGroup(EscritorioSalaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(JBBuscar)
@@ -232,10 +290,11 @@ public class SalaVista extends javax.swing.JInternalFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(EscritorioSalaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(JBModificar)
-                            .addComponent(botonGuardar))
-                        .addGap(46, 46, 46)))
-                .addComponent(JBSalir)
-                .addGap(37, 37, 37))
+                            .addComponent(botonGuardar)
+                            .addComponent(JBLimpiarTable))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(JBSalir)
+                        .addGap(28, 28, 28))))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -298,10 +357,68 @@ public class SalaVista extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_botonGuardarActionPerformed
 
+    private void JBBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBBuscarActionPerformed
+        int buscarNumeroDeSala = Integer.parseInt(JTBuscarNroDeSala.getText());
+        
+        modelo.setRowCount(0);
+        
+        Sala salaBuscada = new Sala(salaData.buscarSalaDevuelveSala(buscarNumeroDeSala));
+        
+        cargarSala(salaBuscada);
+        
+        JTBuscarNroDeSala.setText("");
+        
+        
+        // TODO add your handling code here:
+    }//GEN-LAST:event_JBBuscarActionPerformed
+
+    private void JBLimpiarTableActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBLimpiarTableActionPerformed
+        modelo.setRowCount(0);
+        cargarSalas(salaData.obtenerTodasLasSalas());
+        JTBuscarNroDeSala.setText("");
+        // TODO add your handling code here:
+    }//GEN-LAST:event_JBLimpiarTableActionPerformed
+
+    private void JBModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBModificarActionPerformed
+            
+        int filaSeleccionada = JTSalas.getSelectedRow();
+        
+        if(filaSeleccionada == -1 ){
+            javax.swing.JOptionPane.showMessageDialog(this, "Debe seleccionar una fila");
+            return;
+        }
+        
+        try {
+            int nroSala = (Integer) modelo.getValueAt(filaSeleccionada, 0);
+            
+            Sala salaParaModificar = salaData.buscarSalaDevuelveSala(nroSala);
+            
+            VistaModificarSala ventanaModificar = new VistaModificarSala(salaData, salaParaModificar);
+            
+            this.getParent().add(ventanaModificar);
+            
+            ventanaModificar.setVisible(true);
+            
+        }catch(Exception e){
+            javax.swing.JOptionPane.showMessageDialog(this, "Error al cargar los datos para modificar: " + e.getMessage());
+            
+        }
+        
+        
+        
+        // TODO add your handling code here:
+    }//GEN-LAST:event_JBModificarActionPerformed
+
+    private void JBSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBSalirActionPerformed
+        this.dispose();
+        // TODO add your handling code here:
+    }//GEN-LAST:event_JBSalirActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JDesktopPane EscritorioSala;
     private javax.swing.JButton JBBuscar;
+    private javax.swing.JButton JBLimpiarTable;
     private javax.swing.JButton JBModificar;
     private javax.swing.JButton JBSalir;
     private javax.swing.JTextField JTBuscarNroDeSala;
@@ -321,6 +438,8 @@ public class SalaVista extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField jTextField1;
@@ -335,6 +454,29 @@ public class SalaVista extends javax.swing.JInternalFrame {
         
         JTSalas.setModel(modelo);
         
+    }
+    
+    private void cargarSala(Sala sala){
+        Object[] fila = {
+            sala.getNroSala(),
+            sala.getApta3D(),
+            sala.getCapacidad(),
+            sala.isEstado(),
+        };
+        modelo.addRow(fila);
+    }
+    
+    private void cargarSalas(ArrayList<Sala> salas){
+        modelo.setRowCount(0);
+        for(Sala sala : salas){
+            Object[] fila = {
+                sala.getNroSala(),
+                sala.getApta3D(),
+                sala.getCapacidad(),
+                sala.isEstado(),
+            };
+            modelo.addRow(fila);
+        }
     }
 
 }
