@@ -152,6 +152,7 @@ System.out.println("\n------------------------LUGAR/ASIENTO------------------\n"
         lad.actualizarEstadoAsiento(codLugar, true); //actualizar estado de ocupado a libre o viceversa
         System.out.println("Estado actualizado: " + lugarEncontrado.toString());
     */    
+    
     }
 
 }

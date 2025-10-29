@@ -125,7 +125,7 @@ public class SalaData {
                 sala.setCapacidad(rs.getInt("capacidad"));
                 sala.setEstado(rs.getBoolean("estado"));
 
-                System.out.println("Sala numero : " + nroSala + " encontrada" +
+                System.out.println("Sala numero : " + nroSala + " encontrada, " +
                                    "tiene capacidad para: " + rs.getInt("capacidad") + " espectadores.");
             } else {
                 System.out.println("No se encontro ninguna sala con ese nro");
