@@ -65,6 +65,7 @@ public class SalaVista extends javax.swing.JInternalFrame {
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         JBLimpiarTable = new javax.swing.JButton();
+        jDesktopPane1 = new javax.swing.JDesktopPane();
 
         jTextField1.setText("jTextField1");
 
@@ -158,6 +159,17 @@ public class SalaVista extends javax.swing.JInternalFrame {
             }
         });
 
+        javax.swing.GroupLayout jDesktopPane1Layout = new javax.swing.GroupLayout(jDesktopPane1);
+        jDesktopPane1.setLayout(jDesktopPane1Layout);
+        jDesktopPane1Layout.setHorizontalGroup(
+            jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 103, Short.MAX_VALUE)
+        );
+        jDesktopPane1Layout.setVerticalGroup(
+            jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 100, Short.MAX_VALUE)
+        );
+
         EscritorioSala.setLayer(RBEstadoSi, javax.swing.JLayeredPane.DEFAULT_LAYER);
         EscritorioSala.setLayer(RBEstadoNo, javax.swing.JLayeredPane.DEFAULT_LAYER);
         EscritorioSala.setLayer(botonGuardar, javax.swing.JLayeredPane.DEFAULT_LAYER);
@@ -178,41 +190,44 @@ public class SalaVista extends javax.swing.JInternalFrame {
         EscritorioSala.setLayer(jLabel7, javax.swing.JLayeredPane.DEFAULT_LAYER);
         EscritorioSala.setLayer(jLabel8, javax.swing.JLayeredPane.DEFAULT_LAYER);
         EscritorioSala.setLayer(JBLimpiarTable, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        EscritorioSala.setLayer(jDesktopPane1, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         javax.swing.GroupLayout EscritorioSalaLayout = new javax.swing.GroupLayout(EscritorioSala);
         EscritorioSala.setLayout(EscritorioSalaLayout);
         EscritorioSalaLayout.setHorizontalGroup(
             EscritorioSalaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, EscritorioSalaLayout.createSequentialGroup()
-                .addGap(52, 52, 52)
                 .addGroup(EscritorioSalaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(botonGuardar)
                     .addGroup(EscritorioSalaLayout.createSequentialGroup()
-                        .addGap(9, 9, 9)
+                        .addGap(52, 52, 52)
                         .addGroup(EscritorioSalaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(botonGuardar)
                             .addGroup(EscritorioSalaLayout.createSequentialGroup()
-                                .addGroup(EscritorioSalaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel3)
-                                    .addComponent(jLabel4)
-                                    .addComponent(jLabel2)
-                                    .addComponent(jLabel5))
+                                .addGap(9, 9, 9)
                                 .addGroup(EscritorioSalaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(EscritorioSalaLayout.createSequentialGroup()
-                                        .addGap(20, 20, 20)
-                                        .addGroup(EscritorioSalaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addGroup(EscritorioSalaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jLabel3)
+                                            .addComponent(jLabel4)
+                                            .addComponent(jLabel2)
+                                            .addComponent(jLabel5))
+                                        .addGroup(EscritorioSalaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addGroup(EscritorioSalaLayout.createSequentialGroup()
-                                                .addComponent(RBApta3DSi)
-                                                .addGap(30, 30, 30)
-                                                .addComponent(RBApta3DNo))
-                                            .addComponent(JTCapacidad)
-                                            .addComponent(JTNumeroDeSala, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                    .addGroup(EscritorioSalaLayout.createSequentialGroup()
-                                        .addGap(14, 14, 14)
-                                        .addComponent(RBEstadoSi)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(RBEstadoNo))))
-                            .addComponent(jLabel7))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addGap(20, 20, 20)
+                                                .addGroup(EscritorioSalaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                                    .addGroup(EscritorioSalaLayout.createSequentialGroup()
+                                                        .addComponent(RBApta3DSi)
+                                                        .addGap(30, 30, 30)
+                                                        .addComponent(RBApta3DNo))
+                                                    .addComponent(JTCapacidad)
+                                                    .addComponent(JTNumeroDeSala, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                            .addGroup(EscritorioSalaLayout.createSequentialGroup()
+                                                .addGap(14, 14, 14)
+                                                .addComponent(RBEstadoSi)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                                .addComponent(RBEstadoNo))))
+                                    .addComponent(jLabel7)))))
+                    .addComponent(jDesktopPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGroup(EscritorioSalaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(EscritorioSalaLayout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 116, Short.MAX_VALUE)
@@ -245,18 +260,16 @@ public class SalaVista extends javax.swing.JInternalFrame {
         EscritorioSalaLayout.setVerticalGroup(
             EscritorioSalaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, EscritorioSalaLayout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(EscritorioSalaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(EscritorioSalaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(EscritorioSalaLayout.createSequentialGroup()
-                            .addGap(49, 49, 49)
+                            .addComponent(jDesktopPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                             .addComponent(jLabel7))
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, EscritorioSalaLayout.createSequentialGroup()
-                            .addContainerGap()
-                            .addComponent(jLabel8)))
-                    .addGroup(EscritorioSalaLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jLabel1)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 48, Short.MAX_VALUE)
+                        .addComponent(jLabel8, javax.swing.GroupLayout.Alignment.TRAILING))
+                    .addComponent(jLabel1))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 71, Short.MAX_VALUE)
                 .addGroup(EscritorioSalaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(EscritorioSalaLayout.createSequentialGroup()
                         .addGroup(EscritorioSalaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -432,6 +445,7 @@ public class SalaVista extends javax.swing.JInternalFrame {
     private javax.swing.JButton botonGuardar;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.ButtonGroup buttonGroup2;
+    private javax.swing.JDesktopPane jDesktopPane1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
