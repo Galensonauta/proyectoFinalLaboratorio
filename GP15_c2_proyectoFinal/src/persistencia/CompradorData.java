@@ -1,18 +1,14 @@
 package persistencia;
 
-import java.sql.Connection;
-import java.sql.Date;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.time.LocalDate;
 import modelo.Comprador;
-import modelo.Sala;
 
 /**
  *
  * @author Grupo 15 (Evelyn Cetera, Tomas Puw Zirulnik, Matias Correa, Enzo Fornes, Santiago Girardi)
  */
+
 public class CompradorData {
     private Connection con;
 
