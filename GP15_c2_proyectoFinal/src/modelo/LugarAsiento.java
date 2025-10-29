@@ -12,7 +12,7 @@ public class LugarAsiento {
     
     public LugarAsiento() {}
 
-    public LugarAsiento(int codLugar, int numeroAsiento, String fila, boolean estado, Proyeccion proyeccion) {
+    public LugarAsiento(int codLugar,String fila, int numeroAsiento, boolean estado, Proyeccion proyeccion) {
         this.codLugar = codLugar;
         this.numeroAsiento = numeroAsiento;
         this.fila = fila;

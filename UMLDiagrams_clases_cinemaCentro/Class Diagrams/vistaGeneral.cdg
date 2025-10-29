@@ -54,6 +54,8 @@
         <Field name="horaInicio" type="LocalDateTime" visibility="private"/>
         <Field name="horaFin" type="LocalDateTime" visibility="private"/>
         <Field name="lugaresDisponbiles" type="int" visibility="private"/>
+        <Field name="es3D" type="boolean" visibility="private"/>
+        <Field name="precioLugar" type="int" visibility="private"/>
       </Fields>
       <Constructors/>
       <Methods/>
@@ -80,12 +82,12 @@
     </Class>
   </ClassDiagramComponents>
   <ClassDiagramRelations>
-    <HasRelation name="tiene" source="TicketCompra" target="DetalleTicket" type="Default" sourceCardinality="0..1" targetCardinality="1..1"/>
-    <UseRelation name="" source="Proyeccion" target="Pelicula" sourceCardinality="1..*" targetCardinality="1..1"/>
-    <IsRelation name="is" source="DetalleTicket" target="TicketCompra"/>
-    <HasRelation name="pertenece" source="LugarAsiento" target="Proyeccion" type="Default" sourceCardinality="0..1" targetCardinality="1..*" collectionType="List"/>
     <HasRelation name="pertenece" source="Comprador" target="TicketCompra" type="Aggregation" sourceCardinality="0..1" targetCardinality="1..1"/>
-    <UseRelation name="" source="Proyeccion" target="Sala" sourceCardinality="1..*" targetCardinality="1..1"/>
+    <UseRelation name="" source="Proyeccion" target="Pelicula" sourceCardinality="1..*" targetCardinality="1..1"/>
     <HasRelation name="tiene" source="DetalleTicket" target="LugarAsiento" type="Default" sourceCardinality="0..1" targetCardinality="1..1"/>
+    <HasRelation name="tiene" source="TicketCompra" target="DetalleTicket" type="Default" sourceCardinality="0..1" targetCardinality="1..1"/>
+    <UseRelation name="" source="Proyeccion" target="Sala" sourceCardinality="1..*" targetCardinality="1..1"/>
+    <HasRelation name="pertenece" source="LugarAsiento" target="Proyeccion" type="Default" sourceCardinality="0..1" targetCardinality="1..*" collectionType="List"/>
+    <IsRelation name="is" source="DetalleTicket" target="TicketCompra"/>
   </ClassDiagramRelations>
 </ClassDiagram>
