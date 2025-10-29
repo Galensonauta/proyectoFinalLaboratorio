@@ -126,7 +126,7 @@ public class VistaADM extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void BotonSalaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotonSalaActionPerformed
-        escritorio.removeAll();
+        
         escritorio.repaint();
         SalaVista salavista = new SalaVista();
         salavista.setVisible(true);
