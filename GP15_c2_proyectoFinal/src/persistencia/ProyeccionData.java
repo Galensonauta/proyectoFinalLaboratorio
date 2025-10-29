@@ -4,6 +4,8 @@ package persistencia;
 import java.sql.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
 import modelo.*;
 
 /**
@@ -16,24 +18,18 @@ public class ProyeccionData {
     private Connection con;
     private PeliculaData peliculaData;
     private SalaData salaData;
-    private static final DateTimeFormatter format = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+    private static final DateTimeFormatter FORMAT = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
     public ProyeccionData() {
-        try {
-            con = Conexion.getConexion();
-            if (con != null) {
-                peliculaData = new PeliculaData();
-                salaData = new SalaData();
-            }
-        } catch (Exception e) {
-            System.out.println("Error de conexion en clase ProyeccionData");
-        }
+        con = Conexion.getConexion();
+        peliculaData = new PeliculaData();
+        salaData = new SalaData();
     }
 
     //alta
     public void guardarProyeccion(Proyeccion proyec) {
-        String horaInicioStr = proyec.getHoraInicio().format(format);
-        String horaFinStr = proyec.getHoraFin().format(format);
+        String horaInicioStr = proyec.getHoraInicio().format(FORMAT);
+        String horaFinStr = proyec.getHoraFin().format(FORMAT);
         
         String query = "INSERT INTO proyeccion (pelicula, idioma, es3D, subtitulada, horaInicio, horaFin, lugaresDisponibles, sala, precioLugar)"
                 + " VALUE (?,?,?,?,?,?,?,?,?)";
@@ -84,8 +80,8 @@ public class ProyeccionData {
 
     //actualizar o modificar
     public void actualizarProyeccion(Proyeccion proyec) {
-        String horaInicioStr = proyec.getHoraInicio().format(format);
-        String horaFinStr = proyec.getHoraFin().format(format);
+        String horaInicioStr = proyec.getHoraInicio().format(FORMAT);
+        String horaFinStr = proyec.getHoraFin().format(FORMAT);
         
         
         String query = "UPDATE proyeccion SET pelicula = ?, idioma = ?, es3D = ?, subtitulada = ?,"
@@ -139,8 +135,8 @@ public class ProyeccionData {
                 pro.setIdioma(rs.getString("idioma"));
                 pro.setEs3D(rs.getBoolean("es3D"));
                 pro.setSubtitulada(rs.getBoolean("subtitulada"));
-                pro.setHoraInicio(LocalDateTime.parse(horaInicioStr, format));
-                pro.setHoraFin(LocalDateTime.parse(horaFinStr, format));
+                pro.setHoraInicio(LocalDateTime.parse(horaInicioStr, FORMAT));
+                pro.setHoraFin(LocalDateTime.parse(horaFinStr, FORMAT));
                 pro.setLugaresDisponibles(rs.getInt("lugaresDisponibles"));
                 pro.setSala(sala);
                 pro.setPrecioLugar(rs.getInt("precioLugar"));
@@ -151,4 +147,32 @@ public class ProyeccionData {
         return pro;
     }
 
+    public List<Proyeccion>listarPorSalaYHora(int nroSala, LocalDateTime hora){
+    
+        List<Proyeccion> listaProyec = new ArrayList();
+        String horaStr = hora.format(FORMAT);
+        
+        String query = "SELECT idProyeccion FROM proyeccion WHERE sala = ? AND horaInicio = ?";
+        
+        try{
+            PreparedStatement ps = con.prepareStatement(query);
+            ps.setInt(1, nroSala);
+            ps.setString(2, horaStr);
+            
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()){
+                int idPro = rs.getInt("idProyeccion");
+                
+                Proyeccion p = buscarProyeccionPorID(idPro);
+                
+                if(p != null){
+                    listaProyec.add(p);
+                }
+            }
+        
+        }catch(SQLException ex){
+            System.out.println("Error al tratar de listar proyecciones (ProyeccionData): " + ex.getMessage());
+        }
+        return listaProyec;
+    }
 }

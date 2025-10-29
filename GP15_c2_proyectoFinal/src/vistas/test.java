@@ -37,16 +37,17 @@ public class test {
     salaData.bajaSala(1);
     
     CompradorData cd1 = new CompradorData();
-   Comprador c1 = new Comprador(123456789, "Matias Correa", "12345", "Debito",LocalDate.of(1990, 07, 23));
-   Comprador c2 = new Comprador(123456788, "Enzo Fornes", "12345", "Debito",LocalDate.of(1990, 07, 23));
-   Comprador c3 = new Comprador(123456787, "Santiago Girardi Correa", "12345", "Debito",LocalDate.of(1990, 07, 23));
-   Comprador c4 = new Comprador(123456786, "Evelyn Cetera", "12345", "Debito",LocalDate.of(1990, 07, 23));
-   Comprador c5 = new Comprador(123456785, "Tomás Puw", "12345", "Debito",LocalDate.of(1990, 07, 23));
-   cd1.guardarComprador(c1);
-   cd1.guardarComprador(c2);
-   cd1.guardarComprador(c3);
-   cd1.guardarComprador(c4);
-   cd1.guardarComprador(c5);
+    Comprador c1 = new Comprador(123456789, "Matias Correa", "12345", "Debito",LocalDate.of(1990, 07, 23));
+    Comprador c2 = new Comprador(123456788, "Enzo Fornes", "12345", "Debito",LocalDate.of(1990, 07, 23));
+    Comprador c3 = new Comprador(123456787, "Santiago Girardi Correa", "12345", "Debito",LocalDate.of(1990, 07, 23));
+    Comprador c4 = new Comprador(123456786, "Evelyn Cetera", "12345", "Debito",LocalDate.of(1990, 07, 23));
+    Comprador c5 = new Comprador(123456785, "Tomás Puw", "12345", "Debito",LocalDate.of(1990, 07, 23));
+    cd1.guardarComprador(c1);
+    cd1.guardarComprador(c2);
+    cd1.guardarComprador(c3);
+    cd1.guardarComprador(c4);
+    cd1.guardarComprador(c5);
+    
         CompradorData compradorData = new CompradorData();
 
         compradorData.actualizarComprador(123456789, 123456789, "Matias Correa", "12345677","efectivo" , LocalDate.of(1990, 07, 23));
@@ -56,17 +57,25 @@ public class test {
         compradorData.buscarComprador(123456787);
 
          */
-        //PRUEBAS CLASES  PELICULADATA, PROYECCIONDATA, LUGARASIENTODATA
+        
+        
+        
+        
+    
+//----------------PRUEBAS CLASES  PELICULADATA, PROYECCIONDATA, LUGARASIENTODATA----------------------------
         SalaData salaData = new SalaData();
         CompradorData cd1 = new CompradorData();
         ProyeccionData proyecData = new ProyeccionData();
         PeliculaData pd = new PeliculaData();
         LugarAsientoData lad = new LugarAsientoData();
-        System.out.println("\n------------------------PELICULA------------------\n");
-        //---------------------------------PELICULA------------------------------------------------------
+        
+System.out.println("\n------------------------PELICULA------------------\n");
+        
         String tituloStr1 = "Pelicula de prueba 111111";
         String tituloStr2 = "Pelicula de prueba 222222";
         String tituloNuevo = "Nuevo Titulo";
+    
+        
         /*
     Pelicula peliTest1 = new Pelicula(tituloStr1, "Juanito", "Varios", "AR", "Terror", LocalDate.of(2025, Month.MARCH, 20), true);
     Pelicula peliTest2 = new Pelicula(tituloStr2, "Pepito", "Varios", "USA", "Terror", LocalDate.of(2025, Month.DECEMBER, 15), false);
@@ -74,6 +83,9 @@ public class test {
     pd.guardarPelicula(peliTest1);
     pd.guardarPelicula(peliTest2);
          */
+        
+        
+    /*
         Pelicula encontrada1 = pd.obtenerPeliculaPorTitulo(tituloStr1);
         Pelicula encontrada2 = pd.obtenerPeliculaPorTitulo(tituloStr2);//buscamos la peli
 
@@ -89,10 +101,11 @@ public class test {
         pd.eliminarPelicula(tituloStr1);
 
         Sala sala1 = salaData.buscarSala(1);
+        
 
-        System.out.println("\n------------------------PROYECCION------------------\n");
+System.out.println("\n------------------------PROYECCION------------------\n");
 
-        //---------------------------------PROYECCION------------------------------------------------------
+
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         LocalDateTime horaInicio = LocalDateTime.parse("2025-10-30 20:00:00", formatter);
         LocalDateTime horaFin = LocalDateTime.parse("2025-10-30 22:30:00", formatter);
@@ -112,8 +125,12 @@ public class test {
             proEncontrada1.setPrecioLugar(8000);
             proyecData.actualizarProyeccion(proEncontrada1);
         }
-        System.out.println("\n------------------------LUGAR/ASIENTO------------------\n");
-        //---------------------------------LUGAR/ASIENTO------------------------------------------------------
+        
+        
+System.out.println("\n------------------------LUGAR/ASIENTO------------------\n");
+        
+        
+
         LugarAsiento lugar = new LugarAsiento(8, "A", 33, true, proEncontrada1);
 
         lad.guardarAsiento(lugar);
@@ -131,9 +148,10 @@ public class test {
             System.out.println("Asiento: " + lugarEncontrado.getFila() + lugarEncontrado.getNumeroAsiento()
                     + " - Estado: " + estadoStr);
         }
-        
-        
+
         lad.actualizarEstadoAsiento(codLugar, true); //actualizar estado de ocupado a libre o viceversa
         System.out.println("Estado actualizado: " + lugarEncontrado.toString());
+    */    
     }
+
 }

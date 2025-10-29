@@ -64,7 +64,7 @@ public class LugarAsientoData {
         }
     }
     
-    public void modificarPelicula(LugarAsiento la){
+    public void modificarAsiento(LugarAsiento la){
     
         String query = "UPDATE lugar_asiento SET filaAsiento = ?, numeroAsiento = ?, estado = ?, proyeccion = ? WHERE titulo = ?";
         
