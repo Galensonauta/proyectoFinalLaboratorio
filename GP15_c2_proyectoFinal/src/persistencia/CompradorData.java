@@ -2,6 +2,8 @@ package persistencia;
 
 import java.sql.*;
 import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.ArrayList;
 import modelo.Comprador;
 
 /**
@@ -82,5 +84,96 @@ public class CompradorData {
             System.out.println("Error al eliminar comprador"+ e.getMessage());
         }       
     }
+     
+     
+     public ArrayList<Comprador> obtenerTodosLosCompradores() {
+    
+            ArrayList<Comprador> compradores = new ArrayList<>();
+    
+        String sql = "SELECT * FROM comprador"; 
+
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+        
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+            
+                Comprador comprador = new Comprador();
+            
+            
+                comprador.setDni(rs.getInt("dni"));
+                comprador.setNombre(rs.getString("nombre"));
+                comprador.setPass(rs.getString("pass"));
+                java.sql.Date utilDate = rs.getDate("fechaNac");
+                LocalDate localDate = utilDate.toLocalDate();
+                comprador.setFechaNac(localDate);
+                comprador.setMedioPago(rs.getString("medioPago"));
+                
+            
+                compradores.add(comprador);
+        }
+        
+        
+            rs.close();
+            ps.close();
+
+        } catch (SQLException e) {
+            System.out.println("Error al obtener la lista de compradores: " + e.getMessage());
+        }
+    
+        return compradores;
+    }
+     
+     
+     public Comprador buscarCompradorDevuelveComprador(int dni) {
+    
+        String sql = "SELECT * FROM comprador WHERE dni = ?";
+        Comprador comprador = null; // 1. Inicia el objeto como nulo
+
+        // Usamos try-with-resources para que 'ps' y 'rs' se cierren solos
+        try (PreparedStatement ps = con.prepareStatement(sql)) {
+        
+            ps.setInt(1, dni);
+        
+            try (ResultSet rs = ps.executeQuery()) {
+            
+            // 2. Si 'rs.next()' es verdadero, encontramos al comprador
+                if (rs.next()) {
+                
+                // 3. Creamos la instancia
+                    comprador = new Comprador(); 
+                
+                // 4. Llenamos el objeto con los datos (uso los campos de tu método anterior)
+                    comprador.setDni(rs.getInt("dni"));
+                    comprador.setNombre(rs.getString("nombre"));
+                    comprador.setPass(rs.getString("pass"));
+                    comprador.setMedioPago(rs.getString("medioPago"));
+                
+                // 5. Manejamos la fecha (con la corrección que hicimos)
+                    java.sql.Date sqlDate = rs.getDate("fechaNac");
+                    if (sqlDate != null) {
+                        comprador.setFechaNac(sqlDate.toLocalDate());
+                    } else {
+                        comprador.setFechaNac(null);
+                    }
+
+                // 6. Si tienes un campo 'estado', también iría aquí
+                // comprador.setEstado(rs.getBoolean("estado"));
+                
+                } else {
+                // Si no hay 'next()', no se encontró
+                    System.out.println("No se encontro ningun comprador con ese DNI");
+                }
+            } // 'rs' se cierra aquí
+        
+            } catch (SQLException e) {
+                System.out.println("Error al buscar comprador: " + e.getMessage());
+                e.printStackTrace(); // Muestra el error completo en consola
+            }
+    
+            // 7. Devuelve el objeto (será 'null' si no se encontró)
+        return comprador;
+        }
 
 }
