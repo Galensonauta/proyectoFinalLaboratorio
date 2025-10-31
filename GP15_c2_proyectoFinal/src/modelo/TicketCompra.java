@@ -11,15 +11,17 @@ public class TicketCompra {
     private LocalDate fechaCompra, fechaProyeccion;
     int monto; 
     private Comprador comprador;
+    private LugarAsiento lugarAsiento;
 
     public TicketCompra(){}
     
-    public TicketCompra(int idTicket, LocalDate fechaCompra, LocalDate fechaProyeccion, int monto, Comprador comprador) {
+    public TicketCompra(int idTicket, LocalDate fechaCompra, LocalDate fechaProyeccion, int monto, Comprador comprador, LugarAsiento lugarAsiento) {
         this.idTicket = idTicket;
         this.fechaCompra = fechaCompra;
         this.fechaProyeccion = fechaProyeccion;
         this.monto = monto;
         this.comprador = comprador;
+        this.lugarAsiento=lugarAsiento;
     }
 
     public int getIdTicket() {
@@ -32,6 +34,22 @@ public class TicketCompra {
 
     public LocalDate getFechaCompra() {
         return fechaCompra;
+    }
+
+    public Comprador getComprador() {
+        return comprador;
+    }
+
+    public void setComprador(Comprador comprador) {
+        this.comprador = comprador;
+    }
+
+    public LugarAsiento getLugarAsiento() {
+        return lugarAsiento;
+    }
+
+    public void setLugarAsiento(LugarAsiento lugarAsiento) {
+        this.lugarAsiento = lugarAsiento;
     }
 
     public void setFechaCompra(LocalDate fechaCompra) {
