@@ -2,6 +2,7 @@
 package persistencia;
 
 import java.sql.*;
+import java.util.ArrayList;
 import modelo.Pelicula;
 
 
@@ -125,6 +126,56 @@ public class PeliculaData { /*Vamos a necesitar cambiar la PK y poner una compue
             System.out.println("Error al buscar pelicula por titulo" + ex.getMessage());
         }
         return peli;
+    }
+    
+    
+    public ArrayList<Pelicula> obtenerTodasLasPeliculas() {
+    
+        // 1. Crear la lista vacía
+        ArrayList<Pelicula> peliculas = new ArrayList<>();
+    
+        // 2. La consulta SQL no necesita 'WHERE'
+        String query = "SELECT * FROM pelicula";
+
+        // 3. Usamos try-with-resources (más seguro, cierra ps y rs solos)
+        try (PreparedStatement ps = con.prepareStatement(query);
+            ResultSet rs = ps.executeQuery()) {
+
+            // 4. Usamos 'while' para recorrer TODOS los resultados
+            while (rs.next()) {
+            
+                // 5. Creamos un objeto por CADA fila
+                Pelicula peli = new Pelicula();
+            
+                // 6. Llenamos el objeto (ahora 'titulo' viene del ResultSet)
+                peli.setTitulo(rs.getString("titulo")); 
+                peli.setDirector(rs.getString("director"));
+                peli.setActores(rs.getString("actores"));
+                peli.setOrigen(rs.getString("origen"));
+                peli.setGenero(rs.getString("genero"));
+            
+                // 7. (Recomendado) Verificamos si la fecha es nula
+                java.sql.Date sqlDate = rs.getDate("estreno");
+                if (sqlDate != null) {
+                    peli.setEstreno(sqlDate.toLocalDate());
+                } else {
+                    peli.setEstreno(null);
+                }
+            
+                peli.setEnCartelera(rs.getBoolean("enCartelera"));
+            
+                // 8. Añadimos la película a la lista
+                peliculas.add(peli);
+            }
+            // No necesitas .close() gracias al try-with-resources
+
+        } catch (SQLException ex) {
+            System.out.println("Error al obtener la lista de peliculas: " + ex.getMessage());
+            ex.printStackTrace(); // Es bueno ver el error completo
+        }
+    
+        // 9. Devolvemos la lista (llena o vacía)
+        return peliculas;
     }
     
 }
