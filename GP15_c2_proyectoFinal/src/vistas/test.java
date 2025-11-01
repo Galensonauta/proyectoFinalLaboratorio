@@ -10,11 +10,13 @@ import modelo.LugarAsiento;
 import modelo.Pelicula;
 import modelo.Proyeccion;
 import modelo.Sala;
+import modelo.TicketCompra;
 import persistencia.CompradorData;
 import persistencia.LugarAsientoData;
 import persistencia.PeliculaData;
 import persistencia.ProyeccionData;
 import persistencia.SalaData;
+import persistencia.TicketCompraData;
 
 /**
  *
@@ -24,11 +26,30 @@ import persistencia.SalaData;
 public class test {
 
     public static void main(String[] args) {
+        
+        System.out.println("\n------------------------Flujo completo para ticket de compra------------------\n");
+        /*
+        CompradorData cd1 = new CompradorData();
+        ProyeccionData proyecData = new ProyeccionData();
+        LugarAsientoData lad = new LugarAsientoData();
+        
+        
+        Comprador matt = cd1.buscarCompradorDevuelveComprador(123456789);        
+        LugarAsiento la = lad.obtenerAsientoPorCod(8);
+        Proyeccion pr = proyecData.buscarProyeccionPorID(1);      
+        
+        TicketCompra tc = new TicketCompra
+        (0,LocalDate.now(),LocalDate.of(2025, 11, 10),pr.getPrecioLugar(),matt,la);
+        tcd.guardarTicketCompra(tc);
+        */
+        TicketCompraData  tcd = new TicketCompraData();
+        tcd.buscarTicketCompra(1);
+        
 
         /*
         SalaData salaData = new SalaData();
 
-    Sala s = new Sala(1, true,170,true);
+    
     salaData.guardarSala(s);
     salaData.buscarSala(1); 
     salaData.actualizarSala(1, true, 175, true);    
@@ -63,30 +84,34 @@ public class test {
         
     
 //----------------PRUEBAS CLASES  PELICULADATA, PROYECCIONDATA, LUGARASIENTODATA----------------------------
+/*
         SalaData salaData = new SalaData();
         CompradorData cd1 = new CompradorData();
         ProyeccionData proyecData = new ProyeccionData();
         PeliculaData pd = new PeliculaData();
         LugarAsientoData lad = new LugarAsientoData();
-        
-System.out.println("\n------------------------PELICULA------------------\n");
-        
+  */      
+// System.out.println("\n------------------------PELICULA------------------\n");
+        /*
         String tituloStr1 = "Pelicula de prueba 111111";
         String tituloStr2 = "Pelicula de prueba 222222";
         String tituloNuevo = "Nuevo Titulo";
+         Pelicula peliTest1 = new Pelicula(tituloStr1, "Juanito", "Varios", "AR", "Terror", LocalDate.of(2025, Month.MARCH, 20), true);
+        pd.guardarPelicula(peliTest1);
+               
+        Pelicula peliTest1 = new Pelicula(tituloStr1, "Juanito", "Varios", "AR", "Terror", LocalDate.of(2025, Month.MARCH, 20), true);
+        pd.guardarPelicula(peliTest1);
     
-        
-        /*
-    Pelicula peliTest1 = new Pelicula(tituloStr1, "Juanito", "Varios", "AR", "Terror", LocalDate.of(2025, Month.MARCH, 20), true);
     Pelicula peliTest2 = new Pelicula(tituloStr2, "Pepito", "Varios", "USA", "Terror", LocalDate.of(2025, Month.DECEMBER, 15), false);
    
-    pd.guardarPelicula(peliTest1);
+    
     pd.guardarPelicula(peliTest2);
          */
         
         
     /*
-        Pelicula encontrada1 = pd.obtenerPeliculaPorTitulo(tituloStr1);
+                Pelicula encontrada1 = pd.obtenerPeliculaPorTitulo(tituloStr1);
+
         Pelicula encontrada2 = pd.obtenerPeliculaPorTitulo(tituloStr2);//buscamos la peli
 
         if (encontrada1 != null) {
@@ -106,11 +131,12 @@ System.out.println("\n------------------------PELICULA------------------\n");
 System.out.println("\n------------------------PROYECCION------------------\n");
 
 
+        
+
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         LocalDateTime horaInicio = LocalDateTime.parse("2025-10-30 20:00:00", formatter);
         LocalDateTime horaFin = LocalDateTime.parse("2025-10-30 22:30:00", formatter);
-
-        Proyeccion proyec = new Proyeccion(0, encontrada2, sala1, "ES", false, horaInicio, horaFin, sala1.getCapacidad(), true, 12000);
+        Proyeccion proyec = new Proyeccion(0, encontrada1, sala1, "ES", false, horaInicio, horaFin, sala1.getCapacidad(), true, 12000);
 
         proyecData.guardarProyeccion(proyec);
         int idP = proyec.getIdProyeccion();

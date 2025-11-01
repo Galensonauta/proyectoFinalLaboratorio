@@ -9,27 +9,24 @@ import java.util.List;
 public class DetalleTicket {
     private int codD, cantidad, subtotal;
     private Proyeccion idProyeccion;
-    private TicketCompra ticket;
-    private List<LugarAsiento> lugaresDisp;
+    private List<LugarAsiento> lugares;
 
     public DetalleTicket() {
     }
 
-    public DetalleTicket(int codD, int cantidad, int subtotal, Proyeccion idProyeccion, TicketCompra ticket, List<LugarAsiento> lugaresDisp) {
+    public DetalleTicket(int codD, int cantidad, int subtotal, Proyeccion idProyeccion , List<LugarAsiento> lugares) {
         this.codD = codD;
         this.cantidad = cantidad;
         this.subtotal = subtotal;
         this.idProyeccion = idProyeccion;
-        this.ticket = ticket;
-        this.lugaresDisp = lugaresDisp;
+        this.lugares = lugares;
     }
     
-    public DetalleTicket(int cantidad, int subtotal, Proyeccion idProyeccion, TicketCompra ticket, List<LugarAsiento> lugaresDisp) {
+    public DetalleTicket(int cantidad, int subtotal, Proyeccion idProyeccion, TicketCompra ticket, List<LugarAsiento> lugares) {
         this.cantidad = cantidad;
         this.subtotal = subtotal;
         this.idProyeccion = idProyeccion;
-        this.ticket = ticket;
-        this.lugaresDisp = lugaresDisp;
+        this.lugares = lugares;
     }
     
     public int getCodD() {
@@ -64,20 +61,14 @@ public class DetalleTicket {
         this.idProyeccion = idProyeccion;
     }
 
-    public TicketCompra getTicket() {
-        return ticket;
+   
+
+    public List<LugarAsiento> getLugares() {
+        return lugares;
     }
 
-    public void setTicket(TicketCompra ticket) {
-        this.ticket = ticket;
-    }
-
-    public List<LugarAsiento> getLugaresDisp() {
-        return lugaresDisp;
-    }
-
-    public void setLugaresDisp(List<LugarAsiento> lugaresDisp) {
-        this.lugaresDisp = lugaresDisp;
+    public void setLugares(List<LugarAsiento> lugares) {
+        this.lugares = lugares;
     }
 
     @Override

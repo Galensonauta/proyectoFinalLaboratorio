@@ -8,17 +8,17 @@ import java.time.LocalDate;
  */
 public class TicketCompra {
     private int idTicket;
-    private LocalDate fechaCompra, fechaProyeccion;
+    private LocalDate fechCompra, fechProyeccion;
     int monto; 
     private Comprador comprador;
     private LugarAsiento lugarAsiento;
 
     public TicketCompra(){}
     
-    public TicketCompra(int idTicket, LocalDate fechaCompra, LocalDate fechaProyeccion, int monto, Comprador comprador, LugarAsiento lugarAsiento) {
+    public TicketCompra(int idTicket, LocalDate fechCompra, LocalDate fechProyeccion, int monto, Comprador comprador, LugarAsiento lugarAsiento) {
         this.idTicket = idTicket;
-        this.fechaCompra = fechaCompra;
-        this.fechaProyeccion = fechaProyeccion;
+        this.fechCompra = fechCompra;
+        this.fechProyeccion = fechProyeccion;
         this.monto = monto;
         this.comprador = comprador;
         this.lugarAsiento=lugarAsiento;
@@ -32,8 +32,8 @@ public class TicketCompra {
         this.idTicket = idTicket;
     }
 
-    public LocalDate getFechaCompra() {
-        return fechaCompra;
+    public LocalDate getFechCompra() {
+        return fechCompra;
     }
 
     public Comprador getComprador() {
@@ -52,16 +52,16 @@ public class TicketCompra {
         this.lugarAsiento = lugarAsiento;
     }
 
-    public void setFechaCompra(LocalDate fechaCompra) {
-        this.fechaCompra = fechaCompra;
+    public void setFechCompra(LocalDate fechCompra) {
+        this.fechCompra = fechCompra;
     }
 
-    public LocalDate getFechaProyeccion() {
-        return fechaProyeccion;
+    public LocalDate getFechProyeccion() {
+        return fechProyeccion;
     }
 
-    public void setFechaProyeccion(LocalDate fechaProyeccion) {
-        this.fechaProyeccion = fechaProyeccion;
+    public void setFechProyeccion(LocalDate fechProyeccion) {
+        this.fechProyeccion = fechProyeccion;
     }
 
     public int getMonto() {

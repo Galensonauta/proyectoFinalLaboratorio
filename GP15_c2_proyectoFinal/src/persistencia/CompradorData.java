@@ -33,20 +33,32 @@ public class CompradorData {
             System.out.println("Error al guardar el Comprador");
         }   
     }  
-    public void buscarComprador(int dni){
+    public Comprador buscarComprador(int dni){
+        Comprador c = null;
         String sql ="SELECT  * FROM comprador WHERE dni = ?";
         try{
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setInt(1,dni);
             ResultSet rs = ps.executeQuery();
             if(rs.next()){
+                c = new Comprador();                        
+                c.setDni(rs.getInt("dni"));
+                c.setNombre(rs.getString("nombre"));
+                c.setPass(rs.getString("pass"));
+                LocalDate localDate = rs.getObject("fechaNac", LocalDate.class);
+                c.setFechaNac(localDate);
+                c.setMedioPago(rs.getString("medioPago"));
+                
             System.out.println("Comprador con DNI: "+ dni +" encontrado:");
             }else{
                 System.out.println("No se encontro ningun comrpador con ese DNI");
             }
+            rs.close();
+            ps.close();
         }catch(SQLException e){
             System.out.println("Error al obtener comprador"+ e.getMessage());
         }
+        return c;
     }
     public void actualizarComprador(int dni,int nuevoDni, String nuevoNombre, String nuevoPass, String nuevoMedioPago, LocalDate nuevaFechaNac){
         String sql = "UPDATE comprador SET dni = ?, nombre = ?, pass = ?,medioPago=?,fechaNac=? WHERE dni = ?";
@@ -99,8 +111,7 @@ public class CompradorData {
 
             while (rs.next()) {
             
-                Comprador comprador = new Comprador();
-            
+                Comprador comprador = new Comprador();            
             
                 comprador.setDni(rs.getInt("dni"));
                 comprador.setNombre(rs.getString("nombre"));
@@ -108,8 +119,7 @@ public class CompradorData {
                 java.sql.Date utilDate = rs.getDate("fechaNac");
                 LocalDate localDate = utilDate.toLocalDate();
                 comprador.setFechaNac(localDate);
-                comprador.setMedioPago(rs.getString("medioPago"));
-                
+                comprador.setMedioPago(rs.getString("medioPago"));                
             
                 compradores.add(comprador);
         }
