@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 23-10-2025 a las 01:13:56
+-- Tiempo de generación: 01-11-2025 a las 20:15:02
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -44,7 +44,7 @@ INSERT INTO `comprador` (`dni`, `nombre`, `fechaNac`, `pass`, `medioPago`) VALUE
 (123456786, 'Evelyn Cetera', '1990-07-23', '12345', 'Debito'),
 (123456787, 'Santiago Girardi Correa', '1990-07-23', '12345', 'Debito'),
 (123456788, 'Enzo Fornes', '1990-07-23', '12345', 'Debito'),
-(123456789, 'Matias Correa', '1990-07-23', '12345', 'Debito');
+(123456789, 'Matias Correa', '1990-07-23', '12345677', 'efectivo');
 
 -- --------------------------------------------------------
 
@@ -74,6 +74,13 @@ CREATE TABLE `lugar_asiento` (
   `proyeccion` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Volcado de datos para la tabla `lugar_asiento`
+--
+
+INSERT INTO `lugar_asiento` (`codLugar`, `filaAsiento`, `numeroAsiento`, `estado`, `proyeccion`) VALUES
+(8, 'A', 33, 1, 1);
+
 -- --------------------------------------------------------
 
 --
@@ -89,6 +96,13 @@ CREATE TABLE `pelicula` (
   `estreno` date NOT NULL,
   `enCartelera` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `pelicula`
+--
+
+INSERT INTO `pelicula` (`titulo`, `director`, `actores`, `origen`, `genero`, `estreno`, `enCartelera`) VALUES
+('Pelicula de prueba 111111', 'Juanito', 'Varios', 'AR', 'Terror', '2025-03-20', 1);
 
 -- --------------------------------------------------------
 
@@ -108,6 +122,14 @@ CREATE TABLE `proyeccion` (
   `sala` int(11) NOT NULL,
   `precioLugar` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `proyeccion`
+--
+
+INSERT INTO `proyeccion` (`idProyeccion`, `pelicula`, `idioma`, `es3D`, `subtitulada`, `horaInicio`, `horaFin`, `lugaresDisponibles`, `sala`, `precioLugar`) VALUES
+(1, 'Pelicula de prueba 111111', 'ES', 1, 0, '2025-10-30 20:00:00', '2025-10-30 22:30:00', 170, 1, 12000),
+(2, 'Pelicula de prueba 111111', 'ES', 1, 0, '2025-10-30 20:00:00', '2025-10-30 22:30:00', 170, 1, 12000);
 
 -- --------------------------------------------------------
 
@@ -140,8 +162,16 @@ CREATE TABLE `ticket_compra` (
   `fechCompra` date NOT NULL,
   `fechProyeccion` date NOT NULL,
   `monto` int(30) NOT NULL,
-  `comprador` int(11) NOT NULL
+  `comprador` int(11) NOT NULL,
+  `lugarAsiento` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `ticket_compra`
+--
+
+INSERT INTO `ticket_compra` (`idTicket`, `fechCompra`, `fechProyeccion`, `monto`, `comprador`, `lugarAsiento`) VALUES
+(1, '2025-11-01', '2025-11-10', 12000, 123456789, 8);
 
 --
 -- Índices para tablas volcadas
@@ -203,13 +233,13 @@ ALTER TABLE `ticket_compra`
 -- AUTO_INCREMENT de la tabla `proyeccion`
 --
 ALTER TABLE `proyeccion`
-  MODIFY `idProyeccion` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idProyeccion` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `ticket_compra`
 --
 ALTER TABLE `ticket_compra`
-  MODIFY `idTicket` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idTicket` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- Restricciones para tablas volcadas
