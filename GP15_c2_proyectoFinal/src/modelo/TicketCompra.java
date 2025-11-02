@@ -1,6 +1,7 @@
 package modelo;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 
 /**
  *
@@ -8,20 +9,21 @@ import java.time.LocalDate;
  */
 public class TicketCompra {
     private int idTicket;
-    private LocalDate fechCompra, fechProyeccion;
-    int monto; 
+    private LocalDate fechCompra;
+    double monto; 
     private Comprador comprador;
-    private LugarAsiento lugarAsiento;
+    private ArrayList<DetalleTicket> detalles;
 
-    public TicketCompra(){}
+    public TicketCompra(){
+        this.detalles=new ArrayList<>();
+    }
     
-    public TicketCompra(int idTicket, LocalDate fechCompra, LocalDate fechProyeccion, int monto, Comprador comprador, LugarAsiento lugarAsiento) {
+    public TicketCompra(int idTicket, LocalDate fechCompra, int monto, Comprador comprador,ArrayList<DetalleTicket> detalles) {
         this.idTicket = idTicket;
-        this.fechCompra = fechCompra;
-        this.fechProyeccion = fechProyeccion;
+        this.fechCompra = fechCompra;       
         this.monto = monto;
         this.comprador = comprador;
-        this.lugarAsiento=lugarAsiento;
+        this.detalles=detalles;
     }
 
     public int getIdTicket() {
@@ -36,6 +38,18 @@ public class TicketCompra {
         return fechCompra;
     }
 
+    public void setFechCompra(LocalDate fechCompra) {
+        this.fechCompra = fechCompra;
+    }
+
+    public double getMonto() {
+        return monto;
+    }
+
+    public void setMonto(double monto) {
+        this.monto = monto;
+    }
+
     public Comprador getComprador() {
         return comprador;
     }
@@ -44,45 +58,20 @@ public class TicketCompra {
         this.comprador = comprador;
     }
 
-    public LugarAsiento getLugarAsiento() {
-        return lugarAsiento;
+    public ArrayList<DetalleTicket> getDetalles() {
+        return detalles;
     }
 
-    public void setLugarAsiento(LugarAsiento lugarAsiento) {
-        this.lugarAsiento = lugarAsiento;
+    public void setDetalles(ArrayList<DetalleTicket> detalles) {
+        this.detalles = detalles;
     }
-
-    public void setFechCompra(LocalDate fechCompra) {
-        this.fechCompra = fechCompra;
+    public void agregarDetalles(DetalleTicket detalle){
+        if (this.detalles == null) {
+            this.detalles = new ArrayList<>();
+        }
+        this.detalles.add(detalle);
     }
-
-    public LocalDate getFechProyeccion() {
-        return fechProyeccion;
-    }
-
-    public void setFechProyeccion(LocalDate fechProyeccion) {
-        this.fechProyeccion = fechProyeccion;
-    }
-
-    public int getMonto() {
-        return monto;
-    }
-
-    public void setMonto(int monto) {
-        this.monto = monto;
-    }
-
-    @Override
-    public String toString() {
-        return "Ticket de Compra[" + "Nro. Ticket: " + idTicket + ", Comprador: " + comprador.getDni() +", Monto: $" + monto + ']';
-    }
-    
-    
-    
-    
-
-    
-    
+ 
 
 
 }
