@@ -1,6 +1,7 @@
 package modelo;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 
 /**
  *
@@ -8,18 +9,21 @@ import java.time.LocalDate;
  */
 public class TicketCompra {
     private int idTicket;
-    private LocalDate fechaCompra, fechaProyeccion;
-    int monto; 
+    private LocalDate fechCompra;
+    double monto; 
     private Comprador comprador;
+    private ArrayList<DetalleTicket> detalles;
 
-    public TicketCompra(){}
+    public TicketCompra(){
+        this.detalles=new ArrayList<>();
+    }
     
-    public TicketCompra(int idTicket, LocalDate fechaCompra, LocalDate fechaProyeccion, int monto, Comprador comprador) {
+    public TicketCompra(int idTicket, LocalDate fechCompra, int monto, Comprador comprador,ArrayList<DetalleTicket> detalles) {
         this.idTicket = idTicket;
-        this.fechaCompra = fechaCompra;
-        this.fechaProyeccion = fechaProyeccion;
+        this.fechCompra = fechCompra;       
         this.monto = monto;
         this.comprador = comprador;
+        this.detalles=detalles;
     }
 
     public int getIdTicket() {
@@ -30,41 +34,44 @@ public class TicketCompra {
         this.idTicket = idTicket;
     }
 
-    public LocalDate getFechaCompra() {
-        return fechaCompra;
+    public LocalDate getFechCompra() {
+        return fechCompra;
     }
 
-    public void setFechaCompra(LocalDate fechaCompra) {
-        this.fechaCompra = fechaCompra;
+    public void setFechCompra(LocalDate fechCompra) {
+        this.fechCompra = fechCompra;
     }
 
-    public LocalDate getFechaProyeccion() {
-        return fechaProyeccion;
-    }
-
-    public void setFechaProyeccion(LocalDate fechaProyeccion) {
-        this.fechaProyeccion = fechaProyeccion;
-    }
-
-    public int getMonto() {
+    public double getMonto() {
         return monto;
     }
 
-    public void setMonto(int monto) {
+    public void setMonto(double monto) {
         this.monto = monto;
     }
 
-    @Override
-    public String toString() {
-        return "Ticket de Compra[" + "Nro. Ticket: " + idTicket + ", Comprador: " + comprador.getDni() +", Monto: $" + monto + ']';
+    public Comprador getComprador() {
+        return comprador;
     }
-    
-    
-    
-    
 
-    
-    
+    public void setComprador(Comprador comprador) {
+        this.comprador = comprador;
+    }
+
+    public ArrayList<DetalleTicket> getDetalles() {
+        return detalles;
+    }
+
+    public void setDetalles(ArrayList<DetalleTicket> detalles) {
+        this.detalles = detalles;
+    }
+    public void agregarDetalles(DetalleTicket detalle){
+        if (this.detalles == null) {
+            this.detalles = new ArrayList<>();
+        }
+        this.detalles.add(detalle);
+    }
+ 
 
 
 }

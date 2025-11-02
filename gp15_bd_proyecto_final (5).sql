@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 23-10-2025 a las 01:13:56
+-- Tiempo de generación: 02-11-2025 a las 06:56:32
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -44,7 +44,7 @@ INSERT INTO `comprador` (`dni`, `nombre`, `fechaNac`, `pass`, `medioPago`) VALUE
 (123456786, 'Evelyn Cetera', '1990-07-23', '12345', 'Debito'),
 (123456787, 'Santiago Girardi Correa', '1990-07-23', '12345', 'Debito'),
 (123456788, 'Enzo Fornes', '1990-07-23', '12345', 'Debito'),
-(123456789, 'Matias Correa', '1990-07-23', '12345', 'Debito');
+(123456789, 'Matias Correa', '1990-07-23', '12345677', 'efectivo');
 
 -- --------------------------------------------------------
 
@@ -53,12 +53,24 @@ INSERT INTO `comprador` (`dni`, `nombre`, `fechaNac`, `pass`, `medioPago`) VALUE
 --
 
 CREATE TABLE `detalle_ticket` (
+  `idDetalle` int(11) NOT NULL,
   `codD` int(11) NOT NULL,
   `idProyeccion` int(11) NOT NULL,
-  `lugar` int(30) NOT NULL,
   `cantidad` int(30) NOT NULL,
-  `subTotal` int(30) NOT NULL
+  `subTotal` decimal(30,0) NOT NULL,
+  `fechProyeccion` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `detalle_ticket`
+--
+
+INSERT INTO `detalle_ticket` (`idDetalle`, `codD`, `idProyeccion`, `cantidad`, `subTotal`, `fechProyeccion`) VALUES
+(1, 9, 1, 3, 36000, '2025-11-10'),
+(2, 10, 1, 3, 36000, '2025-11-10'),
+(3, 11, 1, 3, 36000, '2025-11-10'),
+(4, 12, 1, 3, 36000, '2025-11-10'),
+(5, 13, 1, 3, 36000, '2025-11-10');
 
 -- --------------------------------------------------------
 
@@ -73,6 +85,15 @@ CREATE TABLE `lugar_asiento` (
   `estado` tinyint(1) NOT NULL,
   `proyeccion` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `lugar_asiento`
+--
+
+INSERT INTO `lugar_asiento` (`codLugar`, `filaAsiento`, `numeroAsiento`, `estado`, `proyeccion`) VALUES
+(8, 'A', 33, 1, 1),
+(9, 'A', 34, 1, 1),
+(10, 'A', 35, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -89,6 +110,13 @@ CREATE TABLE `pelicula` (
   `estreno` date NOT NULL,
   `enCartelera` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `pelicula`
+--
+
+INSERT INTO `pelicula` (`titulo`, `director`, `actores`, `origen`, `genero`, `estreno`, `enCartelera`) VALUES
+('Pelicula de prueba 111111', 'Juanito', 'Varios', 'AR', 'Terror', '2025-03-20', 1);
 
 -- --------------------------------------------------------
 
@@ -108,6 +136,14 @@ CREATE TABLE `proyeccion` (
   `sala` int(11) NOT NULL,
   `precioLugar` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `proyeccion`
+--
+
+INSERT INTO `proyeccion` (`idProyeccion`, `pelicula`, `idioma`, `es3D`, `subtitulada`, `horaInicio`, `horaFin`, `lugaresDisponibles`, `sala`, `precioLugar`) VALUES
+(1, 'Pelicula de prueba 111111', 'ES', 1, 0, '2025-10-30 20:00:00', '2025-10-30 22:30:00', 170, 1, 12000),
+(2, 'Pelicula de prueba 111111', 'ES', 1, 0, '2025-10-30 20:00:00', '2025-10-30 22:30:00', 170, 1, 12000);
 
 -- --------------------------------------------------------
 
@@ -138,10 +174,22 @@ INSERT INTO `sala` (`nroSala`, `apta3D`, `capacidad`, `estado`) VALUES
 CREATE TABLE `ticket_compra` (
   `idTicket` int(11) NOT NULL,
   `fechCompra` date NOT NULL,
-  `fechProyeccion` date NOT NULL,
   `monto` int(30) NOT NULL,
   `comprador` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `ticket_compra`
+--
+
+INSERT INTO `ticket_compra` (`idTicket`, `fechCompra`, `monto`, `comprador`) VALUES
+(7, '2025-11-02', 36000, 123456789),
+(8, '2025-11-02', 36000, 123456789),
+(9, '2025-11-02', 36000, 123456789),
+(10, '2025-11-02', 36000, 123456789),
+(11, '2025-11-02', 36000, 123456789),
+(12, '2025-11-02', 36000, 123456789),
+(13, '2025-11-02', 36000, 123456789);
 
 --
 -- Índices para tablas volcadas
@@ -157,8 +205,8 @@ ALTER TABLE `comprador`
 -- Indices de la tabla `detalle_ticket`
 --
 ALTER TABLE `detalle_ticket`
-  ADD PRIMARY KEY (`codD`),
-  ADD KEY `lugar` (`lugar`),
+  ADD PRIMARY KEY (`idDetalle`),
+  ADD UNIQUE KEY `codD` (`codD`) USING BTREE,
   ADD KEY `idProyeccion` (`idProyeccion`);
 
 --
@@ -200,16 +248,22 @@ ALTER TABLE `ticket_compra`
 --
 
 --
+-- AUTO_INCREMENT de la tabla `detalle_ticket`
+--
+ALTER TABLE `detalle_ticket`
+  MODIFY `idDetalle` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
 -- AUTO_INCREMENT de la tabla `proyeccion`
 --
 ALTER TABLE `proyeccion`
-  MODIFY `idProyeccion` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idProyeccion` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `ticket_compra`
 --
 ALTER TABLE `ticket_compra`
-  MODIFY `idTicket` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idTicket` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- Restricciones para tablas volcadas
@@ -219,8 +273,7 @@ ALTER TABLE `ticket_compra`
 -- Filtros para la tabla `detalle_ticket`
 --
 ALTER TABLE `detalle_ticket`
-  ADD CONSTRAINT `detalle_ticket_ibfk_1` FOREIGN KEY (`lugar`) REFERENCES `lugar_asiento` (`codLugar`),
-  ADD CONSTRAINT `detalle_ticket_ibfk_2` FOREIGN KEY (`codD`) REFERENCES `ticket_compra` (`idTicket`),
+  ADD CONSTRAINT `detalle_ticket_ibfk_2` FOREIGN KEY (`codD`) REFERENCES `ticket_compra` (`idTicket`) ON DELETE CASCADE,
   ADD CONSTRAINT `detalle_ticket_ibfk_3` FOREIGN KEY (`idProyeccion`) REFERENCES `proyeccion` (`idProyeccion`);
 
 --

@@ -1,5 +1,7 @@
 package modelo;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -7,37 +9,38 @@ import java.util.List;
  * @author Grupo 15 (Evelyn Cetera, Tomas Puw Zirulnik, Matias Correa, Enzo Fornes, Santiago Girardi)
  */
 public class DetalleTicket {
-    private int codD, cantidad, subtotal;
+    private int idDetalle, cantidad, subtotal;
     private Proyeccion idProyeccion;
-    private TicketCompra ticket;
-    private List<LugarAsiento> lugaresDisp;
+    private ArrayList<LugarAsiento> lugares;
+    private LocalDate fechProyeccion;
+
+    public LocalDate getFechProyeccion() {
+        return fechProyeccion;
+    }
+
+    public void setFechProyeccion(LocalDate fechProyeccion) {
+        this.fechProyeccion = fechProyeccion;
+    }
+
 
     public DetalleTicket() {
+        this.lugares = new ArrayList<>();        
     }
 
-    public DetalleTicket(int codD, int cantidad, int subtotal, Proyeccion idProyeccion, TicketCompra ticket, List<LugarAsiento> lugaresDisp) {
-        this.codD = codD;
+    public DetalleTicket(int cantidad, int subtotal, Proyeccion idProyeccion, ArrayList<LugarAsiento>lugares, LocalDate fechProyeccion) {
+        this.idProyeccion = idProyeccion;
         this.cantidad = cantidad;
         this.subtotal = subtotal;
-        this.idProyeccion = idProyeccion;
-        this.ticket = ticket;
-        this.lugaresDisp = lugaresDisp;
-    }
-    
-    public DetalleTicket(int cantidad, int subtotal, Proyeccion idProyeccion, TicketCompra ticket, List<LugarAsiento> lugaresDisp) {
-        this.cantidad = cantidad;
-        this.subtotal = subtotal;
-        this.idProyeccion = idProyeccion;
-        this.ticket = ticket;
-        this.lugaresDisp = lugaresDisp;
-    }
-    
-    public int getCodD() {
-        return codD;
+        this.lugares = lugares;
+        this.fechProyeccion=fechProyeccion;
     }
 
-    public void setCodD(int codD) {
-        this.codD = codD;
+    public int getIdDetalle() {
+        return idDetalle;
+    }
+
+    public void setIdDetalle(int idDetalle) {
+        this.idDetalle = idDetalle;
     }
 
     public int getCantidad() {
@@ -64,27 +67,15 @@ public class DetalleTicket {
         this.idProyeccion = idProyeccion;
     }
 
-    public TicketCompra getTicket() {
-        return ticket;
+    public ArrayList<LugarAsiento> getLugares() {
+        return lugares;
     }
 
-    public void setTicket(TicketCompra ticket) {
-        this.ticket = ticket;
+    public void setLugares(ArrayList<LugarAsiento> lugares) {
+        this.lugares = lugares;
     }
-
-    public List<LugarAsiento> getLugaresDisp() {
-        return lugaresDisp;
+    public void agregarLugar(LugarAsiento lugar) {
+        this.lugares.add(lugar);
     }
-
-    public void setLugaresDisp(List<LugarAsiento> lugaresDisp) {
-        this.lugaresDisp = lugaresDisp;
-    }
-
-    @Override
-    public String toString() {
-        return "Detalle De Ticket[" + "Código: " + codD + ", Cantidad: " + cantidad + ", Subtotal: " + subtotal + ']';
-    }
-    
-    
     
 }

@@ -68,7 +68,7 @@ public class PeliculaData {
     public void modificarPelicula(Pelicula peli, String titulo){
     
         String query = "UPDATE pelicula SET titulo = ?, director = ?, actores = ?, origen = ?," +
-                       " genero = ?, estreno = ?, enCartelera = ? WHERE titulo = ?";
+                        " genero = ?, estreno = ?, enCartelera = ? WHERE titulo = ?";
         
         try{
             PreparedStatement  ps = con.prepareStatement(query);

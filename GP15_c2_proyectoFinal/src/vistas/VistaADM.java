@@ -43,7 +43,7 @@ public class VistaADM extends javax.swing.JFrame {
         JBPeliculas.setText("Peliculas");
         JBPeliculas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                JBPeliculasActionPerformed(evt);
+                jButton1ActionPerformed(evt);
             }
         });
 
@@ -122,9 +122,16 @@ public class VistaADM extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void JBPeliculasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBPeliculasActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_JBPeliculasActionPerformed
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+            
+        escritorio.repaint();
+        PeliculaVista peliculaVista = new PeliculaVista();
+        peliculaVista.setVisible(true);
+        escritorio.add(peliculaVista);
+        escritorio.moveToFront(peliculaVista);
+        
+            // TODO add your handling code here:
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     private void JBClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBClientesActionPerformed
             
