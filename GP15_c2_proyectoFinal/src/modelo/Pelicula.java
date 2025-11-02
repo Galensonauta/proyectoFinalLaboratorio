@@ -85,7 +85,7 @@ public class Pelicula {
 
     @Override
     public String toString() {
-        return "Pelicula[" + "Titulo: " + titulo + ", En Cartelera: " + enCartelera + ']';
+        return titulo;
     }
     
     

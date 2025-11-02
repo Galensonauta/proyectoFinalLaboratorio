@@ -22,7 +22,7 @@ public class Sala {
 
     public Sala(Sala sala) {
         this.nroSala = sala.getNroSala();
-        this.apta3D = sala.getApta3D();
+        this.apta3D = sala.isApta3D();
         this.capacidad = sala.getCapacidad();
         this.estado = sala.isEstado();
     }
@@ -35,7 +35,7 @@ public class Sala {
         this.nroSala = nroSala;
     }
 
-    public boolean getApta3D() {
+    public boolean isApta3D() {
         return apta3D;
     }
 
@@ -61,7 +61,13 @@ public class Sala {
 
     @Override
     public String toString() {
-        return "Sala[" + "Nro. Sala: " + nroSala + ", Apta 3D: " + apta3D + ", Capacidad: " + capacidad +']';
+        String apta3DStr;
+            if(this.isApta3D() == true){
+                apta3DStr = "SI";
+            }else {
+                apta3DStr = "Solo 2D";
+            }
+        return nroSala + ") - Apta 3D(" + apta3DStr + ") -  Capacidad(" + capacidad +")";
     }
     
     

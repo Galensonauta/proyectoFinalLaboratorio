@@ -473,7 +473,7 @@ public class SalaVista extends javax.swing.JInternalFrame {
     private void cargarSala(Sala sala){
         Object[] fila = {
             sala.getNroSala(),
-            sala.getApta3D(),
+            sala.isApta3D(),
             sala.getCapacidad(),
             sala.isEstado(),
         };
@@ -485,7 +485,7 @@ public class SalaVista extends javax.swing.JInternalFrame {
         for(Sala sala : salas){
             Object[] fila = {
                 sala.getNroSala(),
-                sala.getApta3D(),
+                sala.isApta3D(),
                 sala.getCapacidad(),
                 sala.isEstado(),
             };

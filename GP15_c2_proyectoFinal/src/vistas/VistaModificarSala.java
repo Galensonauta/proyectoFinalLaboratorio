@@ -213,7 +213,7 @@ public class VistaModificarSala extends javax.swing.JInternalFrame {
         
         JTCapacidad.setText(String.valueOf(salaModificar.getCapacidad()));
         
-        if (salaModificar.getApta3D()) {
+        if (salaModificar.isApta3D()) {
             JRApta3DSi.setSelected(true);
         } else {
             JTApta3DNo.setSelected(true);

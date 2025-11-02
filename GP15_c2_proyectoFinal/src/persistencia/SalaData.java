@@ -30,7 +30,7 @@ public class SalaData {
         try {
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setInt(1, s.getNroSala());
-            ps.setBoolean(2, s.getApta3D());
+            ps.setBoolean(2, s.isApta3D());
             ps.setInt(3, s.getCapacidad());
             ps.setBoolean(4, s.isEstado());
             ps.executeUpdate();

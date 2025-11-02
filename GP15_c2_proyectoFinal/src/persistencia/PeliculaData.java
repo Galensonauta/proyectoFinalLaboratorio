@@ -2,6 +2,8 @@
 package persistencia;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 import modelo.Pelicula;
 
 
@@ -10,16 +12,12 @@ import modelo.Pelicula;
  * @author Grupo 15 (Evelyn Cetera, Tomas Puw Zirulnik, Matias Correa, Enzo Fornes, Santiago Girardi)
  */
 
-public class PeliculaData { /*Vamos a necesitar cambiar la PK y poner una compuesta con si es 3D o 2D puede ser.*/
+public class PeliculaData {
 
     private Connection con;
 
     public PeliculaData() {
-        try {
             con = Conexion.getConexion();
-        } catch (Exception e) {
-            System.out.println("Error de conexion en clase PeliculaData" + e.getMessage());
-        }
     }
     
     public void guardarPelicula(Pelicula peli){
@@ -39,6 +37,7 @@ public class PeliculaData { /*Vamos a necesitar cambiar la PK y poner una compue
             ps.executeUpdate();
             
             System.out.println("Pelicula guardada Correctamente (PeliculaData)");
+            ps.close();
         }catch(SQLException ex){
             System.out.println("Error al tratar de guardar Pelicula");
         }
@@ -60,7 +59,7 @@ public class PeliculaData { /*Vamos a necesitar cambiar la PK y poner una compue
             } else {
                 System.out.println("Pelicula no encontrada! (Eliminar PeliculaData)");
             }
-
+            ps.close();
         } catch (SQLException ex) {
             System.out.println("Error al tratar de eliminar la pelicula (PeliculaData)");
         }
@@ -91,7 +90,7 @@ public class PeliculaData { /*Vamos a necesitar cambiar la PK y poner una compue
             } else {
                 System.out.println("Pelicula no encontrada! (Modificar PeliculaData)");
             }
-        
+            ps.close();
         }catch(SQLException ex){
             System.out.println("Error al modificar pelicula (PeliculaData)");
         
@@ -120,11 +119,37 @@ public class PeliculaData { /*Vamos a necesitar cambiar la PK y poner una compue
                 peli.setEstreno(rs.getDate("estreno").toLocalDate());
                 peli.setEnCartelera(rs.getBoolean("enCartelera"));
             }
-        
+            rs.close();
+            ps.close();
         }catch(SQLException ex){
             System.out.println("Error al buscar pelicula por titulo" + ex.getMessage());
         }
         return peli;
+    }
+    
+    public List<Pelicula> listarTodasLasPeliculas(){
+        List<Pelicula> listaPelis = new ArrayList<>();
+        
+        String query = "SELECT * FROM pelicula";
+        
+        try{
+            PreparedStatement ps = con.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()){
+                String titulo = rs.getString("titulo");
+                
+                Pelicula peli = obtenerPeliculaPorTitulo(titulo);
+                if(peli != null){
+                    listaPelis.add(peli);
+                }
+            }
+        rs.close();
+        ps.close();
+        }catch(SQLException ex){
+            System.out.println("No pudo listarse todas las peliculas: " + ex.getMessage());
+        
+        }
+        return listaPelis;
     }
     
 }
