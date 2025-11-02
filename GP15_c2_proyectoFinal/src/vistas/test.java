@@ -6,12 +6,14 @@ import java.time.LocalDateTime;
 import java.time.Month;
 import java.time.format.DateTimeFormatter;
 import modelo.Comprador;
+import modelo.DetalleTicket;
 import modelo.LugarAsiento;
 import modelo.Pelicula;
 import modelo.Proyeccion;
 import modelo.Sala;
 import modelo.TicketCompra;
 import persistencia.CompradorData;
+import persistencia.DetalleTicketData;
 import persistencia.LugarAsientoData;
 import persistencia.PeliculaData;
 import persistencia.ProyeccionData;
@@ -39,11 +41,49 @@ public class test {
         Proyeccion pr = proyecData.buscarProyeccionPorID(1);      
         
         TicketCompra tc = new TicketCompra
-        (0,LocalDate.now(),LocalDate.of(2025, 11, 10),pr.getPrecioLugar(),matt,la);
+        (LocalDate.now(),pr.getPrecioLugar(),matt);
         tcd.guardarTicketCompra(tc);
+        
+        
+         ProyeccionData proyecData = new ProyeccionData();
+        LugarAsientoData lad = new LugarAsientoData();
+        LugarAsiento lugar = new LugarAsiento(10,"A", 35, true, proyecData.buscarProyeccionPorID(1));
+        
+        lad.guardarAsiento(lugar);
         */
+        CompradorData cd1 = new CompradorData();
+        ProyeccionData proyecData = new ProyeccionData();
+        LugarAsientoData lad = new LugarAsientoData();  
         TicketCompraData  tcd = new TicketCompraData();
-        tcd.buscarTicketCompra(1);
+        Comprador matt = cd1.buscarCompradorDevuelveComprador(123456789); 
+        Proyeccion pr = proyecData.buscarProyeccionPorID(1);
+        LugarAsiento lugar1 = lad.obtenerAsientoPorCod(8);
+        LugarAsiento lugar2 = lad.obtenerAsientoPorCod(9);
+        LugarAsiento lugar3 = lad.obtenerAsientoPorCod(10);
+        
+        
+        DetalleTicket dt = new DetalleTicket();
+        dt.setIdProyeccion(pr);
+        dt.setFechProyeccion(LocalDate.of(2025, 11, 10));
+        dt.agregarLugar(lugar1);
+        dt.agregarLugar(lugar2);
+        dt.agregarLugar(lugar3);
+        dt.setCantidad(dt.getLugares().size());
+        dt.setSubtotal(dt.getCantidad()*dt.getIdProyeccion().getPrecioLugar());
+        
+        TicketCompra tc = new TicketCompra();
+        tc.setComprador(matt);
+        tc.setFechCompra(LocalDate.now());
+        //tc.agregarDetalles(dt);
+        //tcd.guardarTicketCompra(tc);
+        tcd.buscarTicketCompra(10);
+        
+        
+        
+        
+        
+        
+        
         
 
         /*
