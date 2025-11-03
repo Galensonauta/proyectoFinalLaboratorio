@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 02-11-2025 a las 06:56:32
+-- Tiempo de generación: 03-11-2025 a las 20:44:13
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -71,6 +71,26 @@ INSERT INTO `detalle_ticket` (`idDetalle`, `codD`, `idProyeccion`, `cantidad`, `
 (3, 11, 1, 3, 36000, '2025-11-10'),
 (4, 12, 1, 3, 36000, '2025-11-10'),
 (5, 13, 1, 3, 36000, '2025-11-10');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `detalle_ticket_lugares`
+--
+
+CREATE TABLE `detalle_ticket_lugares` (
+  `idDetalleTicket` int(11) NOT NULL,
+  `codLugar` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `detalle_ticket_lugares`
+--
+
+INSERT INTO `detalle_ticket_lugares` (`idDetalleTicket`, `codLugar`) VALUES
+(5, 8),
+(5, 9),
+(5, 10);
 
 -- --------------------------------------------------------
 
@@ -210,6 +230,13 @@ ALTER TABLE `detalle_ticket`
   ADD KEY `idProyeccion` (`idProyeccion`);
 
 --
+-- Indices de la tabla `detalle_ticket_lugares`
+--
+ALTER TABLE `detalle_ticket_lugares`
+  ADD KEY `detalle_ticket_lugares_ibfk_1` (`idDetalleTicket`),
+  ADD KEY `detalle_ticket_lugares_ibfk_2` (`codLugar`);
+
+--
 -- Indices de la tabla `lugar_asiento`
 --
 ALTER TABLE `lugar_asiento`
@@ -275,6 +302,13 @@ ALTER TABLE `ticket_compra`
 ALTER TABLE `detalle_ticket`
   ADD CONSTRAINT `detalle_ticket_ibfk_2` FOREIGN KEY (`codD`) REFERENCES `ticket_compra` (`idTicket`) ON DELETE CASCADE,
   ADD CONSTRAINT `detalle_ticket_ibfk_3` FOREIGN KEY (`idProyeccion`) REFERENCES `proyeccion` (`idProyeccion`);
+
+--
+-- Filtros para la tabla `detalle_ticket_lugares`
+--
+ALTER TABLE `detalle_ticket_lugares`
+  ADD CONSTRAINT `detalle_ticket_lugares_ibfk_1` FOREIGN KEY (`idDetalleTicket`) REFERENCES `detalle_ticket` (`idDetalle`) ON DELETE CASCADE,
+  ADD CONSTRAINT `detalle_ticket_lugares_ibfk_2` FOREIGN KEY (`codLugar`) REFERENCES `lugar_asiento` (`codLugar`) ON DELETE CASCADE;
 
 --
 -- Filtros para la tabla `lugar_asiento`
