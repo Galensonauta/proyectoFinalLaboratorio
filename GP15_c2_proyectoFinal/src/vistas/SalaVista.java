@@ -375,7 +375,7 @@ public class SalaVista extends javax.swing.JInternalFrame {
         
         modelo.setRowCount(0);
         
-        Sala salaBuscada = new Sala(salaData.buscarSalaDevuelveSala(buscarNumeroDeSala));
+        Sala salaBuscada = new Sala(salaData.buscarSala(buscarNumeroDeSala));
         
         cargarSala(salaBuscada);
         
@@ -404,7 +404,7 @@ public class SalaVista extends javax.swing.JInternalFrame {
         try {
             int nroSala = (Integer) modelo.getValueAt(filaSeleccionada, 0);
             
-            Sala salaParaModificar = salaData.buscarSalaDevuelveSala(nroSala);
+            Sala salaParaModificar = salaData.buscarSala(nroSala);
             
             VistaModificarSala ventanaModificar = new VistaModificarSala(salaData, salaParaModificar);
             

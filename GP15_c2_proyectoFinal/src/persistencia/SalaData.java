@@ -52,7 +52,7 @@ public class SalaData {
 
             int registros = ps.executeUpdate();
             if (registros > 0) {
-                System.out.println("La sala nro: " + nroSala + "fue modificada");
+                System.out.println("La sala nro: " + nroSala + " fue modificada");
             } else {
                 System.out.println("No se encontro ninguna sala nro: " + nroSala);
             }
@@ -126,8 +126,7 @@ public class SalaData {
                 sala.setCapacidad(rs.getInt("capacidad"));
                 sala.setEstado(rs.getBoolean("estado"));
 
-                System.out.println("Sala numero : " + nroSala + " encontrada, " +
-                                   "tiene capacidad para: " + rs.getInt("capacidad") + " espectadores.");
+                System.out.println("Sala numero : " + nroSala + " encontrada");
             } else {
                 System.out.println("No se encontro ninguna sala con ese nro");
             }
@@ -163,45 +162,5 @@ public class SalaData {
         return salas;
     }
     
-    public Sala buscarSalaDevuelveSala(int nroSala) {
-    
-        // 1. Preparamos el objeto que vamos a devolver. Lo iniciamos en null.
-        Sala salaEncontrada = null;
-        String sql = "SELECT * FROM sala WHERE nroSala = ?";
 
-        try {
-            PreparedStatement ps = con.prepareStatement(sql);
-            ps.setInt(1, nroSala);
-            ResultSet rs = ps.executeQuery();
-
-        // 2. Usamos 'if' porque esperamos un solo resultado (o ninguno)
-            if (rs.next()) {
-            
-            // 3. Si hay resultado, creamos la instancia de Sala
-                salaEncontrada = new Sala();
-            
-            // 4. Llenamos el objeto con los datos del ResultSet
-                salaEncontrada.setNroSala(nroSala); // O rs.getInt("nroSala")
-                salaEncontrada.setApta3D(rs.getBoolean("apta3D"));
-                salaEncontrada.setCapacidad(rs.getInt("capacidad"));
-                salaEncontrada.setEstado(rs.getBoolean("estado"));
-            
-            } else {
-                // Si no hay 'next()', no se encontró la sala.
-                System.out.println("No se encontro ninguna sala con ese nro de sala");
-             // 'salaEncontrada' sigue valiendo null, lo cual es correcto.
-            }
-        
-            // 5. Cerramos los recursos
-            rs.close();
-            ps.close();
-
-        } catch (SQLException e) {
-            // Cambiamos el mensaje de error para que sea más claro
-            System.out.println("Error al buscar la sala: " + e.getMessage());
-        }
-    
-        // 6. Devolvemos el objeto (será 'null' si no se encontró o si hubo un error)
-        return salaEncontrada;
-    }
 }

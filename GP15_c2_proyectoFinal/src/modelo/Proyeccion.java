@@ -32,6 +32,19 @@ public class Proyeccion {
         this.precioLugar = precioLugar;
     }
 
+    public Proyeccion(Pelicula pelicula, Sala sala, String idioma, boolean subtitulada, LocalDateTime horaInicio, LocalDateTime horaFin, int lugaresDisponibles, boolean es3D, int precioLugar) {
+        this.pelicula = pelicula;
+        this.sala = sala;
+        this.idioma = idioma;
+        this.subtitulada = subtitulada;
+        this.horaInicio = horaInicio;
+        this.horaFin = horaFin;
+        this.lugaresDisponibles = lugaresDisponibles;
+        this.es3D = es3D;
+        this.precioLugar = precioLugar;
+    }
+    
+
     public int getIdProyeccion() {
         return idProyeccion;
     }

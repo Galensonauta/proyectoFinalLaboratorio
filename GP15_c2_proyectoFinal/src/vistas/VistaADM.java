@@ -37,13 +37,16 @@ public class VistaADM extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        escritorio.setForeground(java.awt.SystemColor.activeCaption);
+        escritorio.setPreferredSize(new java.awt.Dimension(1064, 1064));
+
         jLabel1.setFont(new java.awt.Font("Dialog", 1, 48)); // NOI18N
         jLabel1.setText("ADMINISTRADOR");
 
         JBPeliculas.setText("Peliculas");
         JBPeliculas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                JBPeliculasActionPerformed(evt);
             }
         });
 
@@ -78,60 +81,54 @@ public class VistaADM extends javax.swing.JFrame {
         escritorio.setLayout(escritorioLayout);
         escritorioLayout.setHorizontalGroup(
             escritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, escritorioLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel1)
+                .addGap(605, 605, 605))
             .addGroup(escritorioLayout.createSequentialGroup()
-                .addContainerGap(408, Short.MAX_VALUE)
-                .addGroup(escritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, escritorioLayout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addGap(336, 336, 336))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, escritorioLayout.createSequentialGroup()
-                        .addGroup(escritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(BotonSala, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(JBPeliculas, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(JBProyeccion, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(JBClientes, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(460, 460, 460))))
+                .addGap(115, 115, 115)
+                .addComponent(JBPeliculas, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(254, 254, 254)
+                .addComponent(BotonSala, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(256, 256, 256)
+                .addComponent(JBProyeccion, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 242, Short.MAX_VALUE)
+                .addComponent(JBClientes, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(140, 140, 140))
         );
         escritorioLayout.setVerticalGroup(
             escritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(escritorioLayout.createSequentialGroup()
-                .addGap(31, 31, 31)
+                .addGap(27, 27, 27)
                 .addComponent(jLabel1)
-                .addGap(37, 37, 37)
-                .addComponent(JBPeliculas, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(48, 48, 48)
-                .addComponent(BotonSala, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(48, 48, 48)
-                .addComponent(JBProyeccion, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(62, 62, 62)
-                .addComponent(JBClientes, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(123, Short.MAX_VALUE))
+                .addGap(179, 179, 179)
+                .addGroup(escritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(BotonSala, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(JBPeliculas, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(JBProyeccion, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(JBClientes, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(396, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(escritorio, javax.swing.GroupLayout.Alignment.TRAILING)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(escritorio, javax.swing.GroupLayout.DEFAULT_SIZE, 1627, Short.MAX_VALUE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(escritorio)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(escritorio, javax.swing.GroupLayout.DEFAULT_SIZE, 734, Short.MAX_VALUE)
+                .addGap(20, 20, 20))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-            
-        escritorio.repaint();
-        PeliculaVista peliculaVista = new PeliculaVista();
-        peliculaVista.setVisible(true);
-        escritorio.add(peliculaVista);
-        escritorio.moveToFront(peliculaVista);
-        
-            // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
 
     private void JBClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBClientesActionPerformed
             
@@ -140,8 +137,6 @@ public class VistaADM extends javax.swing.JFrame {
         vistaCliente.setVisible(true);
         escritorio.add(vistaCliente);
         escritorio.moveToFront(vistaCliente);
-        
-        // TODO add your handling code here:
     }//GEN-LAST:event_JBClientesActionPerformed
 
     private void BotonSalaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotonSalaActionPerformed
@@ -151,11 +146,6 @@ public class VistaADM extends javax.swing.JFrame {
         salavista.setVisible(true);
         escritorio.add(salavista);
         escritorio.moveToFront(salavista);
-        
-        
-        
-        
-        // TODO add your handling code here:
     }//GEN-LAST:event_BotonSalaActionPerformed
 
     private void JBProyeccionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBProyeccionActionPerformed
@@ -165,8 +155,15 @@ public class VistaADM extends javax.swing.JFrame {
         vp.setVisible(true);
         escritorio.add(vp);
         escritorio.moveToFront(vp);
-                
     }//GEN-LAST:event_JBProyeccionActionPerformed
+
+    private void JBPeliculasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBPeliculasActionPerformed
+        escritorio.repaint();
+        PeliculaVista peliculaVista = new PeliculaVista();
+        peliculaVista.setVisible(true);
+        escritorio.add(peliculaVista);
+        escritorio.moveToFront(peliculaVista);
+    }//GEN-LAST:event_JBPeliculasActionPerformed
 
     /**
      * @param args the command line arguments

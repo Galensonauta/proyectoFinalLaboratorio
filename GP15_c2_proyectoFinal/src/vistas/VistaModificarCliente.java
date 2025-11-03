@@ -170,7 +170,7 @@ public class VistaModificarCliente extends javax.swing.JInternalFrame {
             
             
         }catch (Exception e){
-            JOptionPane.showMessageDialog(this, "eror " + e.getMessage());
+            JOptionPane.showMessageDialog(this, "error " + e.getMessage());
         }
         
         this.dispose();

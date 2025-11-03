@@ -30,6 +30,10 @@ public class test {
     public static void main(String[] args) {
         
         System.out.println("\n------------------------Flujo completo para ticket de compra------------------\n");
+        
+         ProyeccionData proyecData = new ProyeccionData();
+        
+        proyecData.listarTodasLasProyecciones();
         /*
         CompradorData cd1 = new CompradorData();
         ProyeccionData proyecData = new ProyeccionData();
@@ -45,12 +49,13 @@ public class test {
         tcd.guardarTicketCompra(tc);
         
         
-         ProyeccionData proyecData = new ProyeccionData();
+         
         LugarAsientoData lad = new LugarAsientoData();
         LugarAsiento lugar = new LugarAsiento(10,"A", 35, true, proyecData.buscarProyeccionPorID(1));
         
         lad.guardarAsiento(lugar);
         */
+        /*
         CompradorData cd1 = new CompradorData();
         ProyeccionData proyecData = new ProyeccionData();
         LugarAsientoData lad = new LugarAsientoData();  
@@ -77,15 +82,10 @@ public class test {
         //tc.agregarDetalles(dt);
         //tcd.guardarTicketCompra(tc);
         tcd.buscarTicketCompra(10);
-        
-        
-        
-        
-        
-        
-        
-        
+        */
+       
 
+        
         /*
         SalaData salaData = new SalaData();
 

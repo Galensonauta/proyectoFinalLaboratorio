@@ -85,7 +85,7 @@ public class ProyeccionData {
         
         
         String query = "UPDATE proyeccion SET pelicula = ?, idioma = ?, es3D = ?, subtitulada = ?,"
-                + "horaInicio = ?, horaFin = ?, lugaresDisponibles = ?, sala = ?, precioLugar = ?";
+                + "horaInicio = ?, horaFin = ?, lugaresDisponibles = ?, sala = ?, precioLugar = ? WHERE idProyeccion = ?";
         try {
             PreparedStatement ps = con.prepareStatement(query);
             ps.setString(1, proyec.getPelicula().getTitulo());
@@ -149,7 +149,7 @@ public class ProyeccionData {
 
     public List<Proyeccion>listarPorSalaYHora(int nroSala, LocalDateTime hora){
     
-        List<Proyeccion> listaProyec = new ArrayList();
+        List<Proyeccion> listaProyec = new ArrayList<>();
         String horaStr = hora.format(FORMAT);
         
         String query = "SELECT idProyeccion FROM proyeccion WHERE sala = ? AND horaInicio = ?";
@@ -175,4 +175,47 @@ public class ProyeccionData {
         }
         return listaProyec;
     }
+
+    public List<Proyeccion> listarTodasLasProyecciones() {
+
+        List<Proyeccion> lista = new ArrayList<>();
+        String query = "SELECT * FROM proyeccion";
+
+        try {
+            PreparedStatement ps = con.prepareStatement(query);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                Proyeccion p = new Proyeccion();
+                p.setIdProyeccion(rs.getInt("idProyeccion"));
+
+                String titulo = rs.getString("pelicula");
+                int nroSala = rs.getInt("sala");
+
+                Pelicula peli = peliculaData.obtenerPeliculaPorTitulo(titulo);
+                Sala sala = salaData.buscarSala(nroSala);
+                String inicioStr = rs.getString("horaInicio");
+                String finStr = rs.getString("horaFin");
+
+                p.setPelicula(peli);
+                p.setIdioma(rs.getString("idioma"));
+                p.setEs3D(rs.getBoolean("es3D"));
+                p.setSubtitulada(rs.getBoolean("subtitulada"));
+                p.setHoraInicio(LocalDateTime.parse(inicioStr, FORMAT));
+                p.setHoraFin(LocalDateTime.parse(finStr, FORMAT));
+                p.setLugaresDisponibles(rs.getInt("lugaresDisponibles"));
+                p.setSala(sala);
+                p.setPrecioLugar(rs.getInt("precioLugar"));
+                
+                
+                System.out.println("Proyeccion cargada: " + p.toString());
+                lista.add(p);
+            }
+
+        } catch (SQLException ex) {
+            System.out.println("Error al listar todas las Proyecciones" + ex.getMessage());
+        }
+        return lista;
+    }
+
 }

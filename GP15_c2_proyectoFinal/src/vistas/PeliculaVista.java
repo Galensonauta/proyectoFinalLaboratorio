@@ -7,7 +7,7 @@ package vistas;
 
 import java.time.LocalDate;
 import java.time.ZoneId;
-import java.util.ArrayList;
+import java.util.List;
 import javax.swing.table.DefaultTableModel;
 import modelo.Pelicula;
 import persistencia.PeliculaData;
@@ -29,7 +29,7 @@ public class PeliculaVista extends javax.swing.JInternalFrame {
     public PeliculaVista() {
         initComponents();
         armarCabecera();
-        cargarPeliculas(peliculaData.obtenerTodasLasPeliculas());
+        cargarPeliculas(peliculaData.listarTodasLasPeliculas());
         JCGenero.setSelectedIndex(-1);
         
         
@@ -379,7 +379,7 @@ public class PeliculaVista extends javax.swing.JInternalFrame {
             JTOrigen.setText("");
             JDFechaDeEstreno.setDate(null);
             JCGenero.setSelectedIndex(-1);
-         
+        
             }catch(Exception e){
                 javax.swing.JOptionPane.showMessageDialog(this, "Error al guardar pelicula " + e.getMessage());
             }
@@ -417,7 +417,7 @@ public class PeliculaVista extends javax.swing.JInternalFrame {
         
         modelo.setRowCount(0);
         
-        cargarPeliculas(peliculaData.obtenerTodasLasPeliculas());
+        cargarPeliculas(peliculaData.listarTodasLasPeliculas());
     
 // TODO add your handling code here:
     }//GEN-LAST:event_JBActualizarActionPerformed
@@ -498,7 +498,7 @@ public class PeliculaVista extends javax.swing.JInternalFrame {
         
     }
     
-    private void cargarPeliculas(ArrayList<Pelicula> peliculas){
+    private void cargarPeliculas(List<Pelicula> peliculas){
         
         modelo.setRowCount(0);
         for(Pelicula pelicula : peliculas){
@@ -518,11 +518,11 @@ public class PeliculaVista extends javax.swing.JInternalFrame {
     private void cargarPelicula(Pelicula pelicula){
     
         modelo.setRowCount(0);
-     
+    
         if(pelicula == null){
             return;
         }
-     
+    
         Object[] fila = {
             pelicula.getTitulo(),
             pelicula.getDirector(),
