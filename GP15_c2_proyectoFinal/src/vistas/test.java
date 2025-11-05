@@ -1,24 +1,9 @@
 package vistas;
 
-import java.time.LocalDate;
+import java.time.*;
 import java.sql.Date;
-import java.time.LocalDateTime;
-import java.time.Month;
-import java.time.format.DateTimeFormatter;
-import modelo.Comprador;
-import modelo.DetalleTicket;
-import modelo.LugarAsiento;
-import modelo.Pelicula;
-import modelo.Proyeccion;
-import modelo.Sala;
-import modelo.TicketCompra;
-import persistencia.CompradorData;
-import persistencia.DetalleTicketData;
-import persistencia.LugarAsientoData;
-import persistencia.PeliculaData;
-import persistencia.ProyeccionData;
-import persistencia.SalaData;
-import persistencia.TicketCompraData;
+import modelo.*;
+import persistencia.*;
 
 /**
  *
@@ -31,7 +16,7 @@ public class test {
         
         System.out.println("\n------------------------Flujo completo para ticket de compra------------------\n");
         
-         ProyeccionData proyecData = new ProyeccionData();
+        ProyeccionData proyecData = new ProyeccionData();
         
         proyecData.listarTodasLasProyecciones();
         /*
@@ -49,7 +34,7 @@ public class test {
         tcd.guardarTicketCompra(tc);
         
         
-         
+        
         LugarAsientoData lad = new LugarAsientoData();
         LugarAsiento lugar = new LugarAsiento(10,"A", 35, true, proyecData.buscarProyeccionPorID(1));
         
@@ -83,7 +68,7 @@ public class test {
         //tcd.guardarTicketCompra(tc);
         tcd.buscarTicketCompra(10);
         */
-       
+        
 
         
         /*
@@ -136,14 +121,14 @@ public class test {
         String tituloStr1 = "Pelicula de prueba 111111";
         String tituloStr2 = "Pelicula de prueba 222222";
         String tituloNuevo = "Nuevo Titulo";
-         Pelicula peliTest1 = new Pelicula(tituloStr1, "Juanito", "Varios", "AR", "Terror", LocalDate.of(2025, Month.MARCH, 20), true);
+        Pelicula peliTest1 = new Pelicula(tituloStr1, "Juanito", "Varios", "AR", "Terror", LocalDate.of(2025, Month.MARCH, 20), true);
         pd.guardarPelicula(peliTest1);
-               
+            
         Pelicula peliTest1 = new Pelicula(tituloStr1, "Juanito", "Varios", "AR", "Terror", LocalDate.of(2025, Month.MARCH, 20), true);
         pd.guardarPelicula(peliTest1);
     
     Pelicula peliTest2 = new Pelicula(tituloStr2, "Pepito", "Varios", "USA", "Terror", LocalDate.of(2025, Month.DECEMBER, 15), false);
-   
+
     
     pd.guardarPelicula(peliTest2);
          */
