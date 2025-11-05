@@ -88,6 +88,7 @@ public class VistaProyeccion extends javax.swing.JInternalFrame {
         modeloTabla.addColumn("Pelicula");
         modeloTabla.addColumn("Sala");
         modeloTabla.addColumn("¿Es 3D?");
+        modeloTabla.addColumn("Idioma");
         modeloTabla.addColumn("Fecha de Proyección");
         modeloTabla.addColumn("Hora Inicio");
         modeloTabla.addColumn("Hora Fin");
@@ -136,6 +137,7 @@ public class VistaProyeccion extends javax.swing.JInternalFrame {
                 tituloPeli,
                 nroSala,
                 es3d,
+                aux.getIdioma(),
                 aux.getHoraInicio().toLocalDate().format(fechaFormat),
                 aux.getHoraInicio().toLocalTime().format(horaFormat),
                 aux.getHoraFin().toLocalTime().format(horaFormat),
@@ -189,28 +191,18 @@ public class VistaProyeccion extends javax.swing.JInternalFrame {
         }
     }
     
-    public void desahibilitarEdicionTabla(JTable tabla){ //Metodo para desahibilitar la edicion de la tabla pero si poder seleecionar una fila
-        DefaultTableModel modeloNoEditable = (DefaultTableModel) tabla.getModel();
-        
-        String [] columnas = new String [modeloNoEditable.getColumnCount()];
-        
-        Object[][] datos = new Object[modeloNoEditable.getRowCount()][modeloNoEditable.getColumnCount()];
-        
-        for (int i = 0; i < modeloNoEditable.getRowCount(); i++) {
-            for(int j = 0; j < modeloNoEditable.getColumnCount(); j++){
-                datos[i][j] = modeloNoEditable.getValueAt(i, j);
-            }
-        }
-        
-        DefaultTableModel modelo = new DefaultTableModel(datos, columnas){
-            @Override
-            public  boolean isCellEditable(int row, int column){
-                return false;
-            }
-        };
-    tabla.setModel(modelo);
+    private void limpiarCampos(){
+        jComboBoxPelicula.setSelectedIndex(-1);
+        jComboBoxSala.setSelectedIndex(-1);
+        jComboBoxIdioma.setSelectedIndex(-1);
+        BGes3D.clearSelection();
+        JDCCalendario.setDate(null);
+        JCBHoraInicio.setSelectedIndex(-1);
+        JCBHoraFin.setSelectedIndex(-1);
+        BGSubtitulada.clearSelection();
+        jTextFieldPrecioAsiento.setText("");
+        jTextFieldLugaresDispo.setText("");
     }
-    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -456,36 +448,12 @@ public class VistaProyeccion extends javax.swing.JInternalFrame {
 
         jTableProyecciones.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null}
+
             },
             new String [] {
-                "ID Proyección", "Pelicula", "Sala", "¿es 3D?", "Fecha Proyección", "Hora de Inicio", "Hora Fin", "Subtitulos", "Precio Butaca", "Lugares Disponibles"
-            }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class
-            };
-            boolean[] canEdit = new boolean [] {
-                false, true, false, false, false, false, false, false, false, false
-            };
 
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
             }
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
+        ));
         jTableProyecciones.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_ALL_COLUMNS);
         jScrollPane1.setViewportView(jTableProyecciones);
 
@@ -531,7 +499,7 @@ public class VistaProyeccion extends javax.swing.JInternalFrame {
                         .addComponent(jTextFieldID, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(JBBuscar)))
-                .addGap(0, 3, Short.MAX_VALUE))
+                .addGap(0, 49, Short.MAX_VALUE))
         );
         jpBuscarProyeccionLayout.setVerticalGroup(
             jpBuscarProyeccionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -546,10 +514,11 @@ public class VistaProyeccion extends javax.swing.JInternalFrame {
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(34, 34, 34)
-                .addGroup(jpBuscarProyeccionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(JBEliminar)
-                    .addComponent(JBModificar)
-                    .addComponent(JBLimpiar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(jpBuscarProyeccionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(JBLimpiar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(jpBuscarProyeccionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(JBEliminar)
+                        .addComponent(JBModificar)))
                 .addContainerGap())
         );
 
@@ -573,41 +542,35 @@ public class VistaProyeccion extends javax.swing.JInternalFrame {
             .addGroup(EscritorioProyeccionLayout.createSequentialGroup()
                 .addGroup(EscritorioProyeccionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(EscritorioProyeccionLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(EscritorioProyeccionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(EscritorioProyeccionLayout.createSequentialGroup()
-                                .addComponent(jpGuardarProyeccion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18))
-                            .addGroup(EscritorioProyeccionLayout.createSequentialGroup()
-                                .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
-                        .addGap(18, 18, 18)
-                        .addComponent(jpBuscarProyeccion, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(23, 23, 23)
+                        .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(29, 29, 29)
+                        .addComponent(jpGuardarProyeccion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(70, 70, 70)
+                        .addComponent(JBGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jpBuscarProyeccion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(EscritorioProyeccionLayout.createSequentialGroup()
-                        .addGroup(EscritorioProyeccionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(EscritorioProyeccionLayout.createSequentialGroup()
-                                .addGap(540, 540, 540)
-                                .addComponent(titulo, javax.swing.GroupLayout.PREFERRED_SIZE, 369, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(EscritorioProyeccionLayout.createSequentialGroup()
-                                .addGap(267, 267, 267)
-                                .addComponent(JBGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
+                        .addGap(346, 346, 346)
+                        .addComponent(titulo, javax.swing.GroupLayout.PREFERRED_SIZE, 369, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         EscritorioProyeccionLayout.setVerticalGroup(
             EscritorioProyeccionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(EscritorioProyeccionLayout.createSequentialGroup()
-                .addComponent(titulo)
-                .addGap(41, 41, 41)
                 .addGroup(EscritorioProyeccionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(EscritorioProyeccionLayout.createSequentialGroup()
-                        .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(26, 26, 26)
+                        .addComponent(titulo)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jpGuardarProyeccion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jpBuscarProyeccion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(31, 31, 31)
-                .addComponent(JBGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(91, Short.MAX_VALUE))
+                    .addGroup(EscritorioProyeccionLayout.createSequentialGroup()
+                        .addGap(261, 261, 261)
+                        .addComponent(JBGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(EscritorioProyeccionLayout.createSequentialGroup()
+                        .addGap(85, 85, 85)
+                        .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(18, 18, 18)
+                .addComponent(jpBuscarProyeccion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(95, Short.MAX_VALUE))
         );
 
         jpBuscarProyeccion.getAccessibleContext().setAccessibleName("Buscar/Modificar Proyección");
@@ -676,6 +639,7 @@ public class VistaProyeccion extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(this, "Error en boton Guardar" + e.getMessage());
         }
         cargarTabla();
+        limpiarCampos();
     }//GEN-LAST:event_JBGuardarActionPerformed
 
     private void JBBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBBuscarActionPerformed
