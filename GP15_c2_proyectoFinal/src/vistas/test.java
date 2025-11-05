@@ -2,6 +2,7 @@ package vistas;
 
 import java.time.*;
 import java.sql.Date;
+import java.util.ArrayList;
 import modelo.*;
 import persistencia.*;
 
@@ -40,8 +41,12 @@ public class test {
         
         lad.guardarAsiento(lugar);
         */
+
         /*
         CompradorData cd1 = new CompradorData();
+
+        /*CompradorData cd1 = new CompradorData();
+
         ProyeccionData proyecData = new ProyeccionData();
         LugarAsientoData lad = new LugarAsientoData();  
         TicketCompraData  tcd = new TicketCompraData();
@@ -67,7 +72,28 @@ public class test {
         //tc.agregarDetalles(dt);
         //tcd.guardarTicketCompra(tc);
         tcd.buscarTicketCompra(10);
-        */
+        
+
+        tcd.buscarTicketCompra(10);*/
+
+
+
+    javax.swing.JFrame ventana = new javax.swing.JFrame("Prueba de InternalFrame");
+    ventana.setDefaultCloseOperation(javax.swing.JFrame.EXIT_ON_CLOSE);
+    ventana.setSize(1024, 768);
+
+    javax.swing.JDesktopPane escritorio = new javax.swing.JDesktopPane();
+    ventana.add(escritorio);
+
+    // Instancia tu InternalFrame
+    LugarAsientoVista miFrame = new LugarAsientoVista();
+    escritorio.add(miFrame);
+    miFrame.setVisible(true);
+
+    ventana.setVisible(true);
+   
+
+    ArrayList asientosSeleccionados = miFrame.getAsientosSeleccionadosEtiquetas();
         
 
         
