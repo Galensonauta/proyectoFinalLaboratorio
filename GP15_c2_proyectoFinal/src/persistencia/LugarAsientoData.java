@@ -150,7 +150,23 @@ public class LugarAsientoData {
         return asiento;
     }
     
+    public int contarLugaresDisponibles(int idProyeccion) {
+    int count = 0;
+    String sql = "SELECT COUNT(codLugar) AS libres FROM lugar_asiento WHERE proyeccion = ? AND estado = 0"; 
     
+    try (PreparedStatement ps = con.prepareStatement(sql)) {
+        ps.setInt(1, idProyeccion);
+        
+        try (ResultSet rs = ps.executeQuery()) {
+            if (rs.next()) {
+                count = rs.getInt("libres"); // Devuelve las butacas libres
+            }
+        }
+    } catch (SQLException ex) {
+        System.err.println("❌ Error al contar lugares disponibles: " + ex.getMessage());
+    }
+    return count;
+}
     
     
 }

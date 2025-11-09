@@ -203,6 +203,31 @@ public class VistaProyeccion extends javax.swing.JInternalFrame {
         jTextFieldPrecioAsiento.setText("");
         jTextFieldLugaresDispo.setText("");
     }
+    private void asignarPrecioSegunSala() {
+
+        final int PRECIO_2D = 5500;
+        final int PRECIO_3D = 8000;
+
+        Sala salaSeleccionada = (Sala) jComboBoxSala.getSelectedItem();
+
+        if (salaSeleccionada != null) {
+
+            if (salaSeleccionada.isApta3D()) {
+                jTextFieldPrecioAsiento.setText(String.valueOf(PRECIO_3D));
+                jCheckBox3DSI.setEnabled(true);
+                jCheckBox3DNO.setEnabled(true);
+            } else {
+                jTextFieldPrecioAsiento.setText(String.valueOf(PRECIO_2D));
+                jCheckBox3DSI.setSelected(false);
+                jCheckBox3DNO.setSelected(true);
+                jCheckBox3DSI.setEnabled(false);
+            }
+
+        } else {
+            jTextFieldPrecioAsiento.setText("");
+            jTextFieldLugaresDispo.setText("");
+        }
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -240,7 +265,6 @@ public class VistaProyeccion extends javax.swing.JInternalFrame {
         JCBHoraInicio = new javax.swing.JComboBox<>();
         JCBHoraFin = new javax.swing.JComboBox<>();
         jLabel12 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
         jpBuscarProyeccion = new javax.swing.JPanel();
         jLabelID = new javax.swing.JLabel();
         jTextFieldID = new javax.swing.JTextField();
@@ -317,8 +341,6 @@ public class VistaProyeccion extends javax.swing.JInternalFrame {
 
         jLabel12.setText("Fecha de Proyección:");
 
-        jButton1.setText("Elegir Asiento");
-
         javax.swing.GroupLayout jpGuardarProyeccionLayout = new javax.swing.GroupLayout(jpGuardarProyeccion);
         jpGuardarProyeccion.setLayout(jpGuardarProyeccionLayout);
         jpGuardarProyeccionLayout.setHorizontalGroup(
@@ -364,9 +386,7 @@ public class VistaProyeccion extends javax.swing.JInternalFrame {
                         .addGroup(jpGuardarProyeccionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jTextFieldLugaresDispo, javax.swing.GroupLayout.DEFAULT_SIZE, 92, Short.MAX_VALUE)
                             .addComponent(jTextFieldPrecioAsiento))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton1)
-                        .addGap(31, 31, 31))
+                        .addGap(31, 176, Short.MAX_VALUE))
                     .addGroup(jpGuardarProyeccionLayout.createSequentialGroup()
                         .addComponent(jLabel7)
                         .addGap(60, 60, 60)
@@ -416,11 +436,10 @@ public class VistaProyeccion extends javax.swing.JInternalFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpGuardarProyeccionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jCheckBoxSubSI)
                         .addComponent(jCheckBoxSubNO)))
-                .addGap(24, 24, 24)
+                .addGap(28, 28, 28)
                 .addGroup(jpGuardarProyeccionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel8)
-                    .addComponent(jTextFieldPrecioAsiento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1))
+                    .addComponent(jTextFieldPrecioAsiento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jpGuardarProyeccionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jTextFieldLugaresDispo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -570,7 +589,7 @@ public class VistaProyeccion extends javax.swing.JInternalFrame {
                         .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
                 .addComponent(jpBuscarProyeccion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(95, Short.MAX_VALUE))
+                .addContainerGap(99, Short.MAX_VALUE))
         );
 
         jpBuscarProyeccion.getAccessibleContext().setAccessibleName("Buscar/Modificar Proyección");
@@ -767,7 +786,6 @@ public class VistaProyeccion extends javax.swing.JInternalFrame {
     private javax.swing.JComboBox<String> JCBHoraFin;
     private javax.swing.JComboBox<String> JCBHoraInicio;
     private com.toedter.calendar.JDateChooser JDCCalendario;
-    private javax.swing.JButton jButton1;
     private javax.swing.JCheckBox jCheckBox3DNO;
     private javax.swing.JCheckBox jCheckBox3DSI;
     private javax.swing.JCheckBox jCheckBoxSubNO;
