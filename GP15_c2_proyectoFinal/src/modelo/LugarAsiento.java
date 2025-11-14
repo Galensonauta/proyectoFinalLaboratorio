@@ -9,6 +9,7 @@ public class LugarAsiento {
     private String fila;
     private boolean estado;
     private Proyeccion proyeccion;
+    private int idProyeccion;
     
     public LugarAsiento() {}
 
@@ -18,6 +19,13 @@ public class LugarAsiento {
         this.fila = fila;
         this.estado = estado;
         this.proyeccion = proyeccion;
+    }
+    public LugarAsiento(String fila, int numeroAsiento, boolean estado, int idProyeccion) {
+        
+        this.numeroAsiento = numeroAsiento;
+        this.fila = fila;
+        this.estado = estado;
+        this.idProyeccion = idProyeccion;
     }
 
     public int getCodLugar() {
@@ -64,7 +72,7 @@ public class LugarAsiento {
 
     @Override
     public String toString() {
-        return "Asiento[" + "Código: " + codLugar + ", Fila: " + fila + ", Numero: " + numeroAsiento + ", Estado: " + estado + ']';
+        return "\nAsiento[" + "Código: " + codLugar + ", Fila: " + fila + ", Numero: " + numeroAsiento + ", Estado: " + estado + ']';
     }
     
     

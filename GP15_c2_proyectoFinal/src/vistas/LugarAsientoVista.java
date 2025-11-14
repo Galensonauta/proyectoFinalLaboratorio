@@ -13,6 +13,7 @@ import java.util.List;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.JToggleButton;
+import modelo.LugarAsiento;
 
 /**
  *
@@ -22,8 +23,11 @@ public class LugarAsientoVista extends javax.swing.JInternalFrame {
 
     private int filasSala = 10; //estos datos podrían venir de la tabla sala    
     private int columnasSala = 7;
+    private VistaClientePrincipal madre;
     
-    public ArrayList<String> asientosSeleccionadosEtiquetas = new ArrayList<>(); 
+    public ArrayList<String> asientosSeleccionadosEtiquetas = new ArrayList<>();
+    public List<LugarAsiento> asientosFinales = new ArrayList<>();
+    public int idProyeccion;
     
     public ArrayList<String> getAsientosSeleccionadosEtiquetas(){
         return asientosSeleccionadosEtiquetas;
@@ -76,32 +80,36 @@ public class LugarAsientoVista extends javax.swing.JInternalFrame {
         //ObtenerAsientos(nrSala){ desde SalaData}
     }
     
-    
-    
+    private void convertirEtiquetasAObjetos(){
+        for (String etiqueta : asientosSeleccionadosEtiquetas) {
+            try {           
+                String fila = etiqueta.substring(0, 1); 
 
+                int numeroAsiento = Integer.parseInt(etiqueta.substring(1));
 
+                LugarAsiento nuevoAsiento = new LugarAsiento(
+                    fila, 
+                    numeroAsiento, 
+                    true, 
+                    idProyeccion
+                );
 
-    /*public void crearPanelAsientos(){
-        setearFilasYColumnas();
-        JToggleButton asiento;
+                this.asientosFinales.add(nuevoAsiento);
 
-        jPanel.setLayout(new GridLayout(filasSala, columnasSala, 5, 5));
-        
-        for (int i = 0; i < filasSala; i++) {
-            for (int j = 0; j < columnasSala; j++) {
-                asiento = new JToggleButton(""+ (i+1) + " - " + (j+1));
-                jPanel.add(asiento);
-            }
+            } catch (NumberFormatException e) {
+                System.out.println("Error de formato en número de asiento: " + etiqueta + " .Error " + e.getMessage());
+            } catch (Exception e) {
+                System.out.println("Error al procesar la etiqueta " + etiqueta + ": " + e.getMessage());
+            }    
         }
-    }*/
-    
+    }
     
 
     private String generarEtiqueta(int r, int c) {
-        // Convierte el índice numérico de la fila (r) en una letra (A=0, B=1, etc.)
+       
         char letraFila = (char) ('A' + r);
 
-        // La columna (c) se muestra sumándole 1, ya que los asientos empiezan en 1
+   
         int numeroColumna = c + 1;
 
         return String.valueOf(letraFila) + numeroColumna;
@@ -139,9 +147,12 @@ public class LugarAsientoVista extends javax.swing.JInternalFrame {
         }
     }
  
-    public LugarAsientoVista() {
+    public LugarAsientoVista(VistaClientePrincipal madre) {
         initComponents();
+        this.madre = madre;
         //crearPanelAsientos();
+        //this.idProyeccion = idProyeccion;
+        //setearFilasYColumnas();
         dibujarSala(filasSala, columnasSala);
     }
 
@@ -232,8 +243,8 @@ public class LugarAsientoVista extends javax.swing.JInternalFrame {
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
         // TODO add your handling code here:
-        
-        
+        convertirEtiquetasAObjetos();
+        madre.setAsientosSeleccionados(asientosFinales);
     }//GEN-LAST:event_btnGuardarActionPerformed
 
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed

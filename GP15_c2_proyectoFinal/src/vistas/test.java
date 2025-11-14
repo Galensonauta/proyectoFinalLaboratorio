@@ -15,11 +15,11 @@ public class test {
 
     public static void main(String[] args) {
         
-        System.out.println("\n------------------------Flujo completo para ticket de compra------------------\n");
+        /*System.out.println("\n------------------------Flujo completo para ticket de compra------------------\n");
         
         ProyeccionData proyecData = new ProyeccionData();
         
-        proyecData.listarTodasLasProyecciones();
+        proyecData.listarTodasLasProyecciones();*/
         /*
         CompradorData cd1 = new CompradorData();
         ProyeccionData proyecData = new ProyeccionData();
@@ -78,22 +78,22 @@ public class test {
 
 
 
-    javax.swing.JFrame ventana = new javax.swing.JFrame("Prueba de InternalFrame");
+    /*javax.swing.JFrame ventana = new javax.swing.JFrame("Prueba de InternalFrame");
     ventana.setDefaultCloseOperation(javax.swing.JFrame.EXIT_ON_CLOSE);
     ventana.setSize(1024, 768);
 
     javax.swing.JDesktopPane escritorio = new javax.swing.JDesktopPane();
     ventana.add(escritorio);
 
-    // Instancia tu InternalFrame
-    LugarAsientoVista miFrame = new LugarAsientoVista();
+    // Instancia InternalFrame
+    LugarAsientoVista miFrame = new LugarAsientoVista(1);
     escritorio.add(miFrame);
     miFrame.setVisible(true);
 
-    ventana.setVisible(true);
+    ventana.setVisible(true);*/
    
 
-    ArrayList asientosSeleccionados = miFrame.getAsientosSeleccionadosEtiquetas();
+    //ArrayList asientosSeleccionados = miFrame.getAsientosSeleccionadosEtiquetas();
         
 
         

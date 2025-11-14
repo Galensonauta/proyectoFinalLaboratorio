@@ -198,7 +198,6 @@
                                   <Component id="jTextFieldLugaresDispo" pref="92" max="32767" attributes="0"/>
                                   <Component id="jTextFieldPrecioAsiento" max="32767" attributes="0"/>
                               </Group>
-                              <EmptySpace min="31" pref="176" max="32767" attributes="0"/>
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
                               <Component id="jLabel7" min="-2" max="-2" attributes="0"/>
@@ -206,9 +205,9 @@
                               <Component id="jCheckBoxSubSI" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="jCheckBoxSubNO" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace max="32767" attributes="0"/>
                           </Group>
                       </Group>
+                      <EmptySpace max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
