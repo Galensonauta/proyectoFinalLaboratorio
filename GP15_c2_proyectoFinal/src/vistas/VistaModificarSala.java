@@ -18,15 +18,17 @@ public class VistaModificarSala extends javax.swing.JInternalFrame {
     
     private SalaData salaData;
     private Sala salaModificar;
+    private SalaVista vistaPadre;
 
     /**
      * Creates new form VistaModificarSala
      */
-    public VistaModificarSala(SalaData salaData , Sala sala) {
+    public VistaModificarSala(SalaData salaData , Sala sala,SalaVista vistaPadre) {
         initComponents();
         
         this.salaData = salaData;
         this.salaModificar = sala;
+        this.vistaPadre = vistaPadre;
         
         cargarDatos();
     }
@@ -56,6 +58,12 @@ public class VistaModificarSala extends javax.swing.JInternalFrame {
         JBSalir = new javax.swing.JButton();
 
         jLabel1.setText("ModificarSala");
+
+        JTCapacidad.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                JTCapacidadKeyTyped(evt);
+            }
+        });
 
         buttonGroup1.add(JRApta3DSi);
         JRApta3DSi.setText("Si");
@@ -163,6 +171,12 @@ public class VistaModificarSala extends javax.swing.JInternalFrame {
     private void JBModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBModificarActionPerformed
         
         try {
+            
+            if (JTCapacidad.getText().isEmpty()) {
+                 JOptionPane.showMessageDialog(this, "La capacidad es obligatoria.");
+                 return;
+            }
+            
             int nroSala = salaModificar.getNroSala();
             int capacidad = Integer.parseInt(JTCapacidad.getText());
             boolean apta3D = JRApta3DSi.isSelected();
@@ -172,6 +186,10 @@ public class VistaModificarSala extends javax.swing.JInternalFrame {
             salaData.actualizarSala(nroSala, apta3D, capacidad, habilitado);
             
             JOptionPane.showMessageDialog(this, "Sala actualizada con éxito.");
+            
+            if (vistaPadre != null) {
+                vistaPadre.refrescarTabla();
+            }
             
             this.dispose();
         }catch (NumberFormatException e) {
@@ -188,6 +206,19 @@ public class VistaModificarSala extends javax.swing.JInternalFrame {
         this.dispose();
         // TODO add your handling code here:
     }//GEN-LAST:event_JBSalirActionPerformed
+
+    private void JTCapacidadKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_JTCapacidadKeyTyped
+        char c = evt.getKeyChar();
+                if (!Character.isDigit(c)) {
+                    evt.consume();
+                }
+                
+                String textoActual = JTCapacidad.getText();
+                if (textoActual.length() >= 4 && JTCapacidad.getSelectedText() == null) {
+                    evt.consume();
+                }
+        // TODO add your handling code here:
+    }//GEN-LAST:event_JTCapacidadKeyTyped
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -5,6 +5,7 @@
  */
 package vistas;
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import persistencia.SalaData;
 import modelo.Sala;
@@ -17,7 +18,12 @@ public class SalaVista extends javax.swing.JInternalFrame {
 
     private SalaData salaData;
     
-    private DefaultTableModel modelo  = new DefaultTableModel();
+    private DefaultTableModel modelo  = new DefaultTableModel() {
+        public boolean isCellEditable(int row,int column){
+            return false;
+        }
+    };
+    
     /**
      * Creates new form SalaVista
      */
@@ -109,6 +115,18 @@ public class SalaVista extends javax.swing.JInternalFrame {
             }
         });
 
+        JTCapacidad.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                JTCapacidadKeyTyped(evt);
+            }
+        });
+
+        JTNumeroDeSala.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                JTNumeroDeSalaKeyTyped(evt);
+            }
+        });
+
         jLabel1.setFont(new java.awt.Font("Dialog", 1, 48)); // NOI18N
         jLabel1.setText("Sala");
 
@@ -116,6 +134,12 @@ public class SalaVista extends javax.swing.JInternalFrame {
         JBBuscar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 JBBuscarActionPerformed(evt);
+            }
+        });
+
+        JTBuscarNroDeSala.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                JTBuscarNroDeSalaKeyTyped(evt);
             }
         });
 
@@ -344,6 +368,29 @@ public class SalaVista extends javax.swing.JInternalFrame {
 
     private void botonGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonGuardarActionPerformed
         
+        
+        if(JTNumeroDeSala.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "el numero de sala es obligatorio");
+            return;
+        }
+        
+        if (JTCapacidad.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "La capacidad es obligatoria.");
+            return;
+        }
+        
+        if (!RBApta3DSi.isSelected() && !RBApta3DNo.isSelected()) {
+            JOptionPane.showMessageDialog(this, "Debe seleccionar si es Apta para 3D.");
+            return;
+        }
+        
+        if (!RBEstadoSi.isSelected() && !RBEstadoNo.isSelected()) {
+            JOptionPane.showMessageDialog(this, "Debe seleccionar un Estado.");
+            return;
+        }
+        
+        try{
+        
         int nroDeSala = Integer.parseInt(JTNumeroDeSala.getText());
         boolean estado = false;
         if(RBEstadoSi.isSelected()){
@@ -366,20 +413,47 @@ public class SalaVista extends javax.swing.JInternalFrame {
         buttonGroup2.clearSelection();
         JTCapacidad.setText("");
         
+        cargarSalas(salaData.obtenerTodasLasSalas());
+     
         
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Error en el formato de los números.");
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error al guardar: " + e.getMessage());
+        }    
         // TODO add your handling code here:
     }//GEN-LAST:event_botonGuardarActionPerformed
 
     private void JBBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBBuscarActionPerformed
-        int buscarNumeroDeSala = Integer.parseInt(JTBuscarNroDeSala.getText());
+       
         
-        modelo.setRowCount(0);
         
-        Sala salaBuscada = new Sala(salaData.buscarSala(buscarNumeroDeSala));
+        String textoBusqueda = JTBuscarNroDeSala.getText();
+       
+        if (textoBusqueda.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Debe ingresar un número de sala para buscar.");
+            return;
+        }
         
-        cargarSala(salaBuscada);
-        
-        JTBuscarNroDeSala.setText("");
+        try {
+            int buscarNumeroDeSala = Integer.parseInt(textoBusqueda);
+            modelo.setRowCount(0); 
+
+            Sala salaBuscada = salaData.buscarSala(buscarNumeroDeSala);
+
+            if (salaBuscada != null) {
+                cargarSala(salaBuscada);
+            } else {
+                JOptionPane.showMessageDialog(this, "No se encontró ninguna sala con ese número.");
+
+                cargarSalas(salaData.obtenerTodasLasSalas());
+            }
+            
+            JTBuscarNroDeSala.setText(""); 
+
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "El criterio de búsqueda debe ser numérico.");
+        }
         
         
         // TODO add your handling code here:
@@ -406,7 +480,7 @@ public class SalaVista extends javax.swing.JInternalFrame {
             
             Sala salaParaModificar = salaData.buscarSala(nroSala);
             
-            VistaModificarSala ventanaModificar = new VistaModificarSala(salaData, salaParaModificar);
+            VistaModificarSala ventanaModificar = new VistaModificarSala(salaData, salaParaModificar,this);
             
             this.getParent().add(ventanaModificar);
             
@@ -426,6 +500,37 @@ public class SalaVista extends javax.swing.JInternalFrame {
         this.dispose();
         // TODO add your handling code here:
     }//GEN-LAST:event_JBSalirActionPerformed
+
+    private void JTNumeroDeSalaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_JTNumeroDeSalaKeyTyped
+       char c = evt.getKeyChar();
+        if (!Character.isDigit(c)) {
+            evt.consume();
+        } 
+        
+        // TODO add your handling code here:
+    }//GEN-LAST:event_JTNumeroDeSalaKeyTyped
+
+    private void JTCapacidadKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_JTCapacidadKeyTyped
+        
+        char c = evt.getKeyChar();
+        if (!Character.isDigit(c)) {
+            evt.consume();
+        }
+        String textoActual = JTCapacidad.getText();
+                if (textoActual.length() >= 4 && JTCapacidad.getSelectedText() == null) {
+                    evt.consume();
+                }
+        
+            // TODO add your handling code here:
+    }//GEN-LAST:event_JTCapacidadKeyTyped
+
+    private void JTBuscarNroDeSalaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_JTBuscarNroDeSalaKeyTyped
+        char c = evt.getKeyChar();
+        if (!Character.isDigit(c)) {
+            evt.consume();
+        }
+        // TODO add your handling code here:
+    }//GEN-LAST:event_JTBuscarNroDeSalaKeyTyped
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -492,5 +597,9 @@ public class SalaVista extends javax.swing.JInternalFrame {
             modelo.addRow(fila);
         }
     }
+    
+    public void refrescarTabla() {
+        cargarSalas(salaData.obtenerTodasLasSalas());
+}
 
 }

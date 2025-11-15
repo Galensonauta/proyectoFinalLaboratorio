@@ -292,8 +292,14 @@
           </Events>
         </Component>
         <Component class="javax.swing.JTextField" name="JTCapacidad">
+          <Events>
+            <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="JTCapacidadKeyTyped"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JTextField" name="JTNumeroDeSala">
+          <Events>
+            <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="JTNumeroDeSalaKeyTyped"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel1">
           <Properties>
@@ -312,6 +318,9 @@
           </Events>
         </Component>
         <Component class="javax.swing.JTextField" name="JTBuscarNroDeSala">
+          <Events>
+            <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="JTBuscarNroDeSalaKeyTyped"/>
+          </Events>
         </Component>
         <Container class="javax.swing.JScrollPane" name="jScrollPane1">
           <AuxValues>

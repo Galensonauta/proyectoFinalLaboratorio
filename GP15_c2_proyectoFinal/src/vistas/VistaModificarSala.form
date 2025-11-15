@@ -116,6 +116,9 @@
     <Component class="javax.swing.JTextField" name="JTModificarNroSala">
     </Component>
     <Component class="javax.swing.JTextField" name="JTCapacidad">
+      <Events>
+        <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="JTCapacidadKeyTyped"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JRadioButton" name="JRApta3DSi">
       <Properties>
