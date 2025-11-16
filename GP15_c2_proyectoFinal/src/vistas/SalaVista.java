@@ -392,6 +392,18 @@ public class SalaVista extends javax.swing.JInternalFrame {
         try{
         
         int nroDeSala = Integer.parseInt(JTNumeroDeSala.getText());
+        
+        
+        Sala salaExistente = salaData.buscarSala(nroDeSala);
+            
+            if (salaExistente != null) {
+                JOptionPane.showMessageDialog(this, "Error: El número de sala " + nroDeSala + " ya está registrado.");
+                
+
+                JTNumeroDeSala.setText("");
+                return; 
+            }
+            
         boolean estado = false;
         if(RBEstadoSi.isSelected()){
             estado = true;
@@ -506,6 +518,9 @@ public class SalaVista extends javax.swing.JInternalFrame {
         if (!Character.isDigit(c)) {
             evt.consume();
         } 
+        if (JTNumeroDeSala.getText().length() >= 6 && JTNumeroDeSala.getSelectedText() == null) {
+                    evt.consume();
+                }
         
         // TODO add your handling code here:
     }//GEN-LAST:event_JTNumeroDeSalaKeyTyped
