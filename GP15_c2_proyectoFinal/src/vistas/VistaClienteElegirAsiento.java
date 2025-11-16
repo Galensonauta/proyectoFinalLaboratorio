@@ -19,7 +19,7 @@ import modelo.LugarAsiento;
  *
  * @author Hueso
  */
-public class LugarAsientoVista extends javax.swing.JInternalFrame {
+public class VistaClienteElegirAsiento extends javax.swing.JInternalFrame {
 
     private int filasSala = 10; //estos datos podrían venir de la tabla sala    
     private int columnasSala = 7;
@@ -147,7 +147,7 @@ public class LugarAsientoVista extends javax.swing.JInternalFrame {
         }
     }
  
-    public LugarAsientoVista(VistaClientePrincipal madre) {
+    public VistaClienteElegirAsiento(VistaClientePrincipal madre) {
         initComponents();
         this.madre = madre;
         //crearPanelAsientos();

@@ -54,7 +54,7 @@ public class VistaClientePrincipal extends javax.swing.JFrame {
             break;
         case 2:
             escritorio.repaint();
-            LugarAsientoVista lav = new LugarAsientoVista(this);
+            VistaClienteElegirAsiento lav = new VistaClienteElegirAsiento(this);
             lav.setVisible(true);
             escritorio.add(lav);
             escritorio.moveToFront(lav);
@@ -92,7 +92,7 @@ public class VistaClientePrincipal extends javax.swing.JFrame {
         jButton1.setText("Retirar Entrada");
 
         jButton3.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
-        jButton3.setText("Lista Películas");
+        jButton3.setText("Cartelera");
 
         btnProyeccinoes.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
         btnProyeccinoes.setText("Proyecciones");
@@ -123,9 +123,10 @@ public class VistaClientePrincipal extends javax.swing.JFrame {
                 .addGroup(escritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, escritorioLayout.createSequentialGroup()
                         .addGroup(escritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jButton3)
-                            .addComponent(btnProyeccinoes)
-                            .addComponent(jButton1))
+                            .addComponent(jButton1)
+                            .addGroup(escritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(jButton3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(btnProyeccinoes, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                         .addGap(95, 95, 95))
                     .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 393, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(443, Short.MAX_VALUE))
