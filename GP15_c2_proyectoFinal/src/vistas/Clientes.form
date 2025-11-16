@@ -114,7 +114,7 @@
                   </Group>
                   <Group type="102" alignment="1" attributes="0">
                       <EmptySpace max="32767" attributes="0"/>
-                      <Component id="jButton1" min="-2" pref="90" max="-2" attributes="0"/>
+                      <Component id="JBGuardarCliente" min="-2" pref="90" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="56" max="-2" attributes="0"/>
                   </Group>
               </Group>
@@ -150,7 +150,7 @@
                           <Component id="JCBMedioDePago" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace min="-2" pref="38" max="-2" attributes="0"/>
-                      <Component id="jButton1" min="-2" max="-2" attributes="0"/>
+                      <Component id="JBGuardarCliente" min="-2" max="-2" attributes="0"/>
                       <EmptySpace pref="69" max="32767" attributes="0"/>
                   </Group>
               </Group>
@@ -166,6 +166,9 @@
               </Properties>
             </Component>
             <Component class="javax.swing.JTextField" name="JTNombre">
+              <Events>
+                <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="JTNombreKeyTyped"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel2">
               <Properties>
@@ -177,6 +180,9 @@
               </Properties>
             </Component>
             <Component class="javax.swing.JTextField" name="JTDni">
+              <Events>
+                <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="JTDniKeyTyped"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel4">
               <Properties>
@@ -197,6 +203,9 @@
               </Properties>
             </Component>
             <Component class="javax.swing.JTextField" name="JTPass">
+              <Events>
+                <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="JTPassKeyTyped"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel6">
               <Properties>
@@ -229,12 +238,12 @@
                 <Property name="text" type="java.lang.String" value="Guardar Cliente"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JButton" name="jButton1">
+            <Component class="javax.swing.JButton" name="JBGuardarCliente">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Guardar"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton1ActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="JBGuardarClienteActionPerformed"/>
               </Events>
             </Component>
           </SubComponents>
@@ -268,7 +277,7 @@
                                   <EmptySpace type="separate" max="-2" attributes="0"/>
                                   <Component id="JTBuscarPorDni" min="-2" pref="142" max="-2" attributes="0"/>
                                   <EmptySpace min="-2" pref="57" max="-2" attributes="0"/>
-                                  <Component id="JBGuardar" min="-2" max="-2" attributes="0"/>
+                                  <Component id="JBBuscar" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <Group type="102" alignment="0" attributes="0">
                                   <EmptySpace max="-2" attributes="0"/>
@@ -289,7 +298,7 @@
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="jLabel7" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="JTBuscarPorDni" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="JBGuardar" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="JBBuscar" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Component id="jScrollPane1" min="-2" pref="260" max="-2" attributes="0"/>
@@ -342,13 +351,16 @@
               </Properties>
             </Component>
             <Component class="javax.swing.JTextField" name="JTBuscarPorDni">
+              <Events>
+                <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="JTBuscarPorDniKeyTyped"/>
+              </Events>
             </Component>
-            <Component class="javax.swing.JButton" name="JBGuardar">
+            <Component class="javax.swing.JButton" name="JBBuscar">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Buscar"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="JBGuardarActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="JBBuscarActionPerformed"/>
               </Events>
             </Component>
             <Component class="javax.swing.JButton" name="JBLimpiar">

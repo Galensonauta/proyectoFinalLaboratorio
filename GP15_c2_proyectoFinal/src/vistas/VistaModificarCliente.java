@@ -11,6 +11,7 @@ import java.util.Date;
 import javax.swing.JOptionPane;
 import modelo.Comprador;
 import persistencia.CompradorData;
+import java.time.Period;
 
 /**
  *
@@ -21,14 +22,15 @@ public class VistaModificarCliente extends javax.swing.JInternalFrame {
         
     private CompradorData compradorData;
     private Comprador comprador;
-    
+    private Clientes vistaPadre;
     /**
      * Creates new form VistaModificarCliente
      */
-    public VistaModificarCliente(CompradorData compradorData,Comprador comprador) {
+    public VistaModificarCliente(CompradorData compradorData,Comprador comprador,Clientes vistaPadre) {
         initComponents();
         this.comprador = comprador;
         this.compradorData = compradorData;
+        this.vistaPadre = vistaPadre;
         cargarDatos();
     }
 
@@ -58,13 +60,31 @@ public class VistaModificarCliente extends javax.swing.JInternalFrame {
         jLabel1.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         jLabel1.setText("Modificar Cliente");
 
+        JTDni.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                JTDniKeyTyped(evt);
+            }
+        });
+
         jLabel2.setText("DNI");
 
         jLabel3.setText("Nombre");
 
+        JTNombre.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                JTNombreKeyTyped(evt);
+            }
+        });
+
         jLabel4.setText("Fecha Nacimiento");
 
         jLabel5.setText("Pass");
+
+        JTPass.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                JTPassKeyTyped(evt);
+            }
+        });
 
         jLabel6.setText("Medio de pago");
 
@@ -151,29 +171,85 @@ public class VistaModificarCliente extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void JBGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBGuardarActionPerformed
+        if (JTNombre.getText().trim().isEmpty()) {
+             JOptionPane.showMessageDialog(this, "El nombre es obligatorio.");
+             return;
+        }
         
+        if (JTPass.getText().trim().isEmpty()) {
+             JOptionPane.showMessageDialog(this, "El pass es obligatorio.");
+             return;
+        }
+        
+        if (JDFechaNacimiento.getDate() == null) {
+             JOptionPane.showMessageDialog(this, "La fecha de nacimiento es obligatoria.");
+             return;
+        }
+        
+        LocalDate fechaNacimiento = null;
+        
+        try {
+        java.util.Date fechaElegida = JDFechaNacimiento.getDate();
+        
+        // Aquí solo asignamos el valor (ya no ponemos 'LocalDate' al principio)
+        fechaNacimiento = fechaElegida.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        
+        LocalDate fechaActual = LocalDate.now();
+
+        Period edad = Period.between(fechaNacimiento, fechaActual);
+
+        if (edad.getYears() < 12) {
+            javax.swing.JOptionPane.showMessageDialog(this, "El cliente debe ser mayor de 12 años (Edad actual: " + edad.getYears() + ").");
+            return;
+        }
+        
+        if (fechaNacimiento.isAfter(fechaActual)) {
+             javax.swing.JOptionPane.showMessageDialog(this, "La fecha de nacimiento no puede ser futura.");
+             return;
+        }
+        
+    } catch (Exception e) {
+        javax.swing.JOptionPane.showMessageDialog(this, "Error al validar la fecha.");
+        return;
+    }
+
+    if (JTPass.getText().isEmpty()) {
+        javax.swing.JOptionPane.showMessageDialog(this, "La contraseña es obligatoria.");
+        return;
+    }
         
         try{
             
             int dniSinModificar = comprador.getDni();
             int dni = Integer.parseInt(JTDni.getText());
-            String nombre = JTNombre.getText();
+            
+            
+            
+            String nombre = JTNombre.getText().trim().replaceAll("\\s+", " ");
             String pass = JTPass.getText();
             
             java.util.Date fecha = JDFechaNacimiento.getDate();
         
-            LocalDate fechaNacimiento = fecha.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+            fechaNacimiento = fecha.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
 
             String medioDePago = JCMedioDePago.getSelectedItem().toString();
             
             compradorData.actualizarComprador(dniSinModificar,dni, nombre, pass, medioDePago, fechaNacimiento);
+            
+            JOptionPane.showMessageDialog(this, "Cliente actualizado correctamente.");
+            
+            if (vistaPadre != null) {
+                vistaPadre.refrescarTabla();
+            }
+            
+             this.dispose();
             
             
         }catch (Exception e){
             JOptionPane.showMessageDialog(this, "error " + e.getMessage());
         }
         
-        this.dispose();
+       
         // TODO add your handling code here:
     }//GEN-LAST:event_JBGuardarActionPerformed
 
@@ -181,6 +257,36 @@ public class VistaModificarCliente extends javax.swing.JInternalFrame {
         this.dispose();
         // TODO add your handling code here:
     }//GEN-LAST:event_JBSalirActionPerformed
+
+    private void JTDniKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_JTDniKeyTyped
+        
+        // TODO add your handling code here:
+    }//GEN-LAST:event_JTDniKeyTyped
+
+    private void JTNombreKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_JTNombreKeyTyped
+        char c = evt.getKeyChar();
+                
+                if (!Character.isLetter(c) && c != ' ') {
+                    evt.consume();
+                    return;
+                }
+                
+                if (JTNombre.getText().length() >= 35 && JTNombre.getSelectedText() == null) {
+                    evt.consume();
+                }
+        // TODO add your handling code here:
+    }//GEN-LAST:event_JTNombreKeyTyped
+
+    private void JTPassKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_JTPassKeyTyped
+        char c = evt.getKeyChar();
+                if (!Character.isDigit(c)) {
+                    evt.consume();
+                }
+         if (JTPass.getText().length() >= 10 && JTPass.getSelectedText() == null) {
+                    evt.consume();
+                }
+        // TODO add your handling code here:
+    }//GEN-LAST:event_JTPassKeyTyped
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -201,8 +307,12 @@ public class VistaModificarCliente extends javax.swing.JInternalFrame {
 
     public void cargarDatos(){
         JTDni.setText(String.valueOf(comprador.getDni()));
+        
+        JTDni.setEditable(false);
         JTNombre.setText(comprador.getNombre());
         JTPass.setText(comprador.getPass());
+        
+
         
         String metodoDePago = comprador.getMedioPago();
         

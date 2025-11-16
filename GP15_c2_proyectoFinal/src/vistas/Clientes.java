@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import javax.swing.table.DefaultTableModel;
 import persistencia.CompradorData;
 import modelo.Comprador;
+import java.time.Period;
 import modelo.Sala;
 /**
  *
@@ -20,7 +21,11 @@ public class Clientes extends javax.swing.JInternalFrame {
     CompradorData compradorData = new CompradorData();
     Comprador comprador = new Comprador();
     
-    private DefaultTableModel modelo = new DefaultTableModel();
+    private DefaultTableModel modelo = new DefaultTableModel(){
+        public boolean isCellEditable(int row, int column) {
+            return false;
+        }
+    };
     /**
      * Creates new form Clientes
      */
@@ -55,14 +60,14 @@ public class Clientes extends javax.swing.JInternalFrame {
         jLabel6 = new javax.swing.JLabel();
         JCBMedioDePago = new javax.swing.JComboBox<>();
         jLabel8 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        JBGuardarCliente = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         JTClientes = new javax.swing.JTable();
         jLabel9 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         JTBuscarPorDni = new javax.swing.JTextField();
-        JBGuardar = new javax.swing.JButton();
+        JBBuscar = new javax.swing.JButton();
         JBLimpiar = new javax.swing.JButton();
         JBModificar = new javax.swing.JButton();
 
@@ -78,15 +83,33 @@ public class Clientes extends javax.swing.JInternalFrame {
         jLabel3.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
         jLabel3.setText("Nombre");
 
+        JTNombre.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                JTNombreKeyTyped(evt);
+            }
+        });
+
         jLabel2.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel2.setText("DNI");
+
+        JTDni.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                JTDniKeyTyped(evt);
+            }
+        });
 
         jLabel4.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
         jLabel4.setText("Fecha de Nacimiento");
 
         jLabel5.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
         jLabel5.setText("Pass");
+
+        JTPass.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                JTPassKeyTyped(evt);
+            }
+        });
 
         jLabel6.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jLabel6.setText("Medio de pago");
@@ -96,10 +119,10 @@ public class Clientes extends javax.swing.JInternalFrame {
         jLabel8.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         jLabel8.setText("Guardar Cliente");
 
-        jButton1.setText("Guardar");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        JBGuardarCliente.setText("Guardar");
+        JBGuardarCliente.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                JBGuardarClienteActionPerformed(evt);
             }
         });
 
@@ -135,7 +158,7 @@ public class Clientes extends javax.swing.JInternalFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(JBGuardarCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(56, 56, 56))
         );
         jPanel1Layout.setVerticalGroup(
@@ -164,7 +187,7 @@ public class Clientes extends javax.swing.JInternalFrame {
                     .addComponent(jLabel6)
                     .addComponent(JCBMedioDePago, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(38, 38, 38)
-                .addComponent(jButton1)
+                .addComponent(JBGuardarCliente)
                 .addContainerGap(69, Short.MAX_VALUE))
         );
 
@@ -190,10 +213,16 @@ public class Clientes extends javax.swing.JInternalFrame {
         jLabel7.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jLabel7.setText("DNI");
 
-        JBGuardar.setText("Buscar");
-        JBGuardar.addActionListener(new java.awt.event.ActionListener() {
+        JTBuscarPorDni.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                JTBuscarPorDniKeyTyped(evt);
+            }
+        });
+
+        JBBuscar.setText("Buscar");
+        JBBuscar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                JBGuardarActionPerformed(evt);
+                JBBuscarActionPerformed(evt);
             }
         });
 
@@ -232,7 +261,7 @@ public class Clientes extends javax.swing.JInternalFrame {
                             .addGap(18, 18, 18)
                             .addComponent(JTBuscarPorDni, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGap(57, 57, 57)
-                            .addComponent(JBGuardar))
+                            .addComponent(JBBuscar))
                         .addGroup(jPanel2Layout.createSequentialGroup()
                             .addContainerGap()
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 569, javax.swing.GroupLayout.PREFERRED_SIZE))))
@@ -247,7 +276,7 @@ public class Clientes extends javax.swing.JInternalFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel7)
                     .addComponent(JTBuscarPorDni, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(JBGuardar))
+                    .addComponent(JBBuscar))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
@@ -280,51 +309,133 @@ public class Clientes extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void JBGuardarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBGuardarClienteActionPerformed
         
+        // CAMBIO 4: Validaciones de campos vacíos antes de intentar guardar
+        if (JTDni.getText().isEmpty()) {
+            javax.swing.JOptionPane.showMessageDialog(this, "El DNI es obligatorio.");
+            return;
+        }
+        
+        if (JTNombre.getText().isEmpty()) {
+            javax.swing.JOptionPane.showMessageDialog(this, "El nombre es obligatorio.");
+            return;
+        }
+        
+        if (JDFechaNacimiento.getDate() == null) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Debe seleccionar una fecha de nacimiento.");
+            return;
+        }
+        
+        LocalDate fechaNacimiento = null;
         try {
-        int dni = Integer.parseInt(JTDni.getText());
-        String nombre = JTNombre.getText();
-        
-        java.util.Date fecha = JDFechaNacimiento.getDate();
-        
-        LocalDate fechaNacimiento = fecha.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-        
-        String pass = JTPass.getText();
-        
-        String metodoDePago = JCBMedioDePago.getSelectedItem().toString();
-        
-        compradorData.guardarComprador(new Comprador(dni,nombre,pass,metodoDePago,fechaNacimiento));
-        
-        JTNombre.setText("");
-        JTDni.setText("");
-        JTPass.setText("");
-        
-        
-        }catch (Exception e){
-            javax.swing.JOptionPane.showMessageDialog(this, "Error " );
+
+            java.util.Date fechaElegida = JDFechaNacimiento.getDate();
+            fechaNacimiento = fechaElegida.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+            LocalDate fechaActual = LocalDate.now(); // Fecha de hoy
+
+
+            Period edad = Period.between(fechaNacimiento, fechaActual);
+
+
+            if (edad.getYears() < 12) {
+                javax.swing.JOptionPane.showMessageDialog(this, "El cliente debe ser mayor de 12 años (Edad actual: " + edad.getYears() + ").");
+                return;
+            }
+            
+
+            if (fechaNacimiento.isAfter(fechaActual)) {
+                 javax.swing.JOptionPane.showMessageDialog(this, "La fecha de nacimiento no puede ser futura.");
+                 return;
+            }
+            
+        } catch (Exception e) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Error al validar la fecha.");
+            return;
+        }
+
+        if (JTPass.getText().isEmpty()) {
+            javax.swing.JOptionPane.showMessageDialog(this, "La contraseña es obligatoria.");
+            return;
+        }
+
+        try {
+            int dni = Integer.parseInt(JTDni.getText());
+ 
+            Comprador compradorExistente = compradorData.buscarCompradorDevuelveComprador(dni);
+            
+            if (compradorExistente != null) {
+                javax.swing.JOptionPane.showMessageDialog(this, "Error: El DNI " + dni + " ya se encuentra registrado en la base de datos.");
+                JTNombre.setText("");
+            JTDni.setText("");
+            JTPass.setText("");
+            JDFechaNacimiento.setDate(null);
+                return; 
+            }
+            
+            String nombre = JTNombre.getText().trim().replaceAll("\\s+", " ");
+            
+ 
+            
+            String pass = JTPass.getText();
+            String metodoDePago = JCBMedioDePago.getSelectedItem().toString();
+            
+            // Lógica de guardado
+            compradorData.guardarComprador(new Comprador(dni, nombre, pass, metodoDePago, fechaNacimiento));
+            
+            javax.swing.JOptionPane.showMessageDialog(this, "Cliente guardado exitosamente.");
+            
+            // Limpiar campos
+            JTNombre.setText("");
+            JTDni.setText("");
+            JTPass.setText("");
+            JDFechaNacimiento.setDate(null); // Limpiar fecha
+            
+            // Actualizar tabla
+            refrescarTabla();
+            
+        } catch (NumberFormatException e) {
+            javax.swing.JOptionPane.showMessageDialog(this, "El DNI debe ser un número válido.");
+        } catch (Exception e) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Error al guardar: " + e.getMessage());
         }
         
         
         
 
             // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_JBGuardarClienteActionPerformed
 
-    private void JBGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBGuardarActionPerformed
+    private void JBBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBBuscarActionPerformed
         
-        int dni = Integer.parseInt(JTBuscarPorDni.getText());
+        String textoBusqueda = JTBuscarPorDni.getText();
         
-        modelo.setRowCount(0);
+        if (textoBusqueda.isEmpty()) {
+             javax.swing.JOptionPane.showMessageDialog(this, "Ingrese un DNI para buscar.");
+             return;
+        }
         
-        Comprador compra = compradorData.buscarCompradorDevuelveComprador(dni);
-        
-        cargarComprador(compra);
-        
-        JTBuscarPorDni.setText("");
+        try {
+            int dni = Integer.parseInt(textoBusqueda);
+            modelo.setRowCount(0);
+            
+            Comprador compra = compradorData.buscarCompradorDevuelveComprador(dni);
+            
+            if (compra != null) {
+                cargarComprador(compra);
+            } else {
+                javax.swing.JOptionPane.showMessageDialog(this, "No se encontró cliente con ese DNI.");
+                refrescarTabla();
+            }
+            
+            JTBuscarPorDni.setText("");
+            
+        } catch (NumberFormatException e) {
+             javax.swing.JOptionPane.showMessageDialog(this, "DNI inválido.");
+        }
         
         // TODO add your handling code here:
-    }//GEN-LAST:event_JBGuardarActionPerformed
+    }//GEN-LAST:event_JBBuscarActionPerformed
 
     private void JBLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBLimpiarActionPerformed
         
@@ -334,7 +445,7 @@ public class Clientes extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_JBLimpiarActionPerformed
 
     private void JBModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBModificarActionPerformed
-    
+        
         int filaSeleccionada = JTClientes.getSelectedRow();
         
         if(filaSeleccionada == -1 ){
@@ -347,7 +458,7 @@ public class Clientes extends javax.swing.JInternalFrame {
             
             Comprador compradorParaModificar = compradorData.buscarCompradorDevuelveComprador(dni);
             
-            VistaModificarCliente vistaModificarCliente =  new VistaModificarCliente(compradorData,compradorParaModificar);
+            VistaModificarCliente vistaModificarCliente =  new VistaModificarCliente(compradorData,compradorParaModificar,this);
             
             this.getParent().add(vistaModificarCliente);
             
@@ -359,10 +470,62 @@ public class Clientes extends javax.swing.JInternalFrame {
     // TODO add your handling code here:
     }//GEN-LAST:event_JBModificarActionPerformed
 
+    private void JTDniKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_JTDniKeyTyped
+        char c = evt.getKeyChar();
+        if (!Character.isDigit(c)) {
+                    evt.consume();
+                    return;
+                }
+                if (JTDni.getText().length() >= 10 && JTDni.getSelectedText() == null) {
+                    evt.consume();
+                }
+        // TODO add your handling code here:
+    }//GEN-LAST:event_JTDniKeyTyped
+
+    private void JTBuscarPorDniKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_JTBuscarPorDniKeyTyped
+         char c = evt.getKeyChar();
+        if (!Character.isDigit(c)) {
+                    evt.consume();
+                    return;
+                }
+                if (JTDni.getText().length() >= 10 && JTDni.getSelectedText() == null) {
+                    evt.consume();
+                }
+        // TODO add your handling code here:
+    }//GEN-LAST:event_JTBuscarPorDniKeyTyped
+
+    private void JTNombreKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_JTNombreKeyTyped
+        char c = evt.getKeyChar();
+        if (!Character.isLetter(c) && c != ' ') {
+            evt.consume();
+            return;
+        }
+        if (JTNombre.getText().length() >= 35 && JTNombre.getSelectedText() == null) {
+            evt.consume();
+        }
+        
+        
+        
+        // TODO add your handling code here:
+    }//GEN-LAST:event_JTNombreKeyTyped
+
+    private void JTPassKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_JTPassKeyTyped
+        char c = evt.getKeyChar();
+        if (!Character.isDigit(c)) {
+                    evt.consume();
+                }
+        if (JTPass.getText().length() >= 10 && JTPass.getSelectedText() == null) {
+                    evt.consume();
+                }
+        
+        // TODO add your handling code here:
+    }//GEN-LAST:event_JTPassKeyTyped
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JDesktopPane EscritorioModificarCliente;
-    private javax.swing.JButton JBGuardar;
+    private javax.swing.JButton JBBuscar;
+    private javax.swing.JButton JBGuardarCliente;
     private javax.swing.JButton JBLimpiar;
     private javax.swing.JButton JBModificar;
     private javax.swing.JComboBox<String> JCBMedioDePago;
@@ -372,7 +535,6 @@ public class Clientes extends javax.swing.JInternalFrame {
     private javax.swing.JTextField JTDni;
     private javax.swing.JTextField JTNombre;
     private javax.swing.JTextField JTPass;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -443,5 +605,7 @@ public class Clientes extends javax.swing.JInternalFrame {
     }
 
 
-
+    public void refrescarTabla() {
+        cargarCompradores(compradorData.obtenerTodosLosCompradores());
+    }
 }
