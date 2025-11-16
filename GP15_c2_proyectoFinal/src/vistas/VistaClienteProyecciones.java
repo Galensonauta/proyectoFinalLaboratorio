@@ -218,7 +218,7 @@ public class VistaClienteProyecciones extends javax.swing.JInternalFrame {
          int filaSelec = jTableProyecciones.getSelectedRow();
 
         if (filaSelec == -1) {
-            JOptionPane.showMessageDialog(this, "Debe Seleccionar una Proyección de la Tabla para modificar.");
+            JOptionPane.showMessageDialog(this, "Debe Seleccionar una Proyección de la Tabla para continuar.");
             return;
         }
 
@@ -227,6 +227,7 @@ public class VistaClienteProyecciones extends javax.swing.JInternalFrame {
             Proyeccion p = proData.buscarProyeccionPorID(id);
         madre.setProyeccionSeleccionada(p);
         madre.avanzarFlujoVenta(2);
+        this.dispose();
     }//GEN-LAST:event_btnSiguienteActionPerformed
 
 
