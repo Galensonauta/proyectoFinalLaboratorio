@@ -17,10 +17,7 @@ import modelo.TicketCompra;
  * @author Hueso
  */
 public class VistaClientePrincipal extends javax.swing.JFrame {
-    
-    private List<LugarAsiento> asientosSeleccionados = new ArrayList<>();
-    private Proyeccion proyeccionSeleccionada = new Proyeccion();
-    
+
     private DetalleTicket dt = new DetalleTicket();
     private TicketCompra tc = new TicketCompra(); 
     
@@ -32,20 +29,12 @@ public class VistaClientePrincipal extends javax.swing.JFrame {
         
     }
 
-    public List<LugarAsiento> getAsientosSeleccionados() {
-        return asientosSeleccionados;
+    public TicketCompra getTc() {
+        return tc;
     }
 
-    public void setAsientosSeleccionados(List<LugarAsiento> asientosSeleccionados) {
-        this.asientosSeleccionados = asientosSeleccionados;
-    }
-
-    public Proyeccion getProyeccionSeleccionada() {
-        return proyeccionSeleccionada;
-    }
-
-    public void setProyeccionSeleccionada(Proyeccion proyeccionSeleccionada) {
-        this.proyeccionSeleccionada = proyeccionSeleccionada;
+    public void setTc(TicketCompra tc) {
+        this.tc = tc;
     }
 
     public DetalleTicket getDt() {
