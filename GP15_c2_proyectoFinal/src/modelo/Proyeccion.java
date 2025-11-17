@@ -130,7 +130,7 @@ public class Proyeccion {
 
     @Override
     public String toString() {
-        return "Proyeccion[" + "Nro. Proyección: " + idProyeccion + ", idioma: " + idioma + ", subtitulada: " + subtitulada + ", Hora de Inicio: " + horaInicio + ", Hora de Finalización: " + horaFin + ", Lugares Disponibles: " + lugaresDisponibles + ']';
+        return "Pelicula: " + pelicula.getTitulo()+ "\nIdioma: "  + idioma + "\nSubtitulada: " + subtitulada +  "\nHora de Inicio: " + horaInicio + "\nHora de Finalización: " + horaFin + "\nSala: " + sala.getNroSala();
     }
     
     
