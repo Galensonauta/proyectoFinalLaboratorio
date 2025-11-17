@@ -18,16 +18,12 @@ public class ProyeccionData {
     private Connection con;
     private PeliculaData peliculaData;
     private SalaData salaData;
-    private DetalleTicketData dtData;
-    private LugarAsientoData butacaData;
     private static final DateTimeFormatter FORMAT = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
     public ProyeccionData() {
         con = Conexion.getConexion();
         peliculaData = new PeliculaData();
         salaData = new SalaData();
-        dtData = new DetalleTicketData();
-        butacaData = new LugarAsientoData();
     }
 
     //alta
@@ -64,7 +60,7 @@ public class ProyeccionData {
     }
 
     //baja
-    public void eliminarProyeccion(int idProyec) {
+    public void eliminarProyeccion(int idProyec, DetalleTicketData dtData, LugarAsientoData butacaData) {
         try{
             dtData.eliminarDetalleSegunProyeccion(idProyec);
             butacaData.eliminarButacaSegunProyeccion(idProyec);
