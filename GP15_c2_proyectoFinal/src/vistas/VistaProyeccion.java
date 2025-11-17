@@ -390,6 +390,7 @@ public class VistaProyeccion extends javax.swing.JInternalFrame {
         jLabel12 = new javax.swing.JLabel();
         jCBIdioma = new javax.swing.JComboBox<>();
         JTFHoraFin = new javax.swing.JTextField();
+        JBGuardar = new javax.swing.JButton();
         jpBuscarProyeccion = new javax.swing.JPanel();
         jLabelID = new javax.swing.JLabel();
         JTFID = new javax.swing.JTextField();
@@ -400,7 +401,6 @@ public class VistaProyeccion extends javax.swing.JInternalFrame {
         JBModificar = new javax.swing.JButton();
         JBEliminar = new javax.swing.JButton();
         JBLimpiar = new javax.swing.JButton();
-        JBGuardar = new javax.swing.JButton();
 
         setClosable(true);
         setMaximizable(true);
@@ -467,86 +467,79 @@ public class VistaProyeccion extends javax.swing.JInternalFrame {
 
         jLabel12.setText("Fecha de Proyección:");
 
+        JBGuardar.setText("Guardar");
+        JBGuardar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                JBGuardarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jpGuardarProyeccionLayout = new javax.swing.GroupLayout(jpGuardarProyeccion);
         jpGuardarProyeccion.setLayout(jpGuardarProyeccionLayout);
         jpGuardarProyeccionLayout.setHorizontalGroup(
             jpGuardarProyeccionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jpGuardarProyeccionLayout.createSequentialGroup()
-                .addGroup(jpGuardarProyeccionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(jpGuardarProyeccionLayout.createSequentialGroup()
-                        .addGap(67, 67, 67)
-                        .addGroup(jpGuardarProyeccionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel2)
-                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addGroup(jpGuardarProyeccionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jCBSala, 0, 230, Short.MAX_VALUE)
-                            .addComponent(jCBPelicula, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpGuardarProyeccionLayout.createSequentialGroup()
-                        .addContainerGap(81, Short.MAX_VALUE)
-                        .addComponent(jLabel4)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jCheckBox3DSI)
-                        .addGap(18, 18, 18)
-                        .addComponent(jCheckBox3DNO)
-                        .addGap(128, 128, 128)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 37, Short.MAX_VALUE)
                 .addGroup(jpGuardarProyeccionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpGuardarProyeccionLayout.createSequentialGroup()
+                    .addGroup(jpGuardarProyeccionLayout.createSequentialGroup()
+                        .addContainerGap()
                         .addGroup(jpGuardarProyeccionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel5)
-                            .addComponent(jLabel3)
-                            .addComponent(jLabel6))
-                        .addGap(18, 18, 18)
-                        .addGroup(jpGuardarProyeccionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jCBIdioma, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(jpGuardarProyeccionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addComponent(JTFHoraFin, javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(JCBHoraInicio, javax.swing.GroupLayout.Alignment.LEADING, 0, 122, Short.MAX_VALUE)))
-                        .addContainerGap())
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpGuardarProyeccionLayout.createSequentialGroup()
-                        .addGroup(jpGuardarProyeccionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(jLabel7)
-                            .addComponent(jLabel9))
-                        .addGap(18, 18, 18)
-                        .addGroup(jpGuardarProyeccionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpGuardarProyeccionLayout.createSequentialGroup()
-                                .addComponent(JTFLugaresDispo, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(82, 82, 82))
-                            .addGroup(jpGuardarProyeccionLayout.createSequentialGroup()
+                            .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jpGuardarProyeccionLayout.createSequentialGroup()
+                                .addGroup(jpGuardarProyeccionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jLabel5)
+                                    .addComponent(jLabel3))
+                                .addGap(18, 18, 18)
+                                .addGroup(jpGuardarProyeccionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jCBIdioma, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(JCBHoraInicio, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jpGuardarProyeccionLayout.createSequentialGroup()
+                                .addGroup(jpGuardarProyeccionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jLabel12)
+                                    .addGroup(jpGuardarProyeccionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(jLabel7)
+                                        .addComponent(jLabel8)))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(jpGuardarProyeccionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(JDCCalendario, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(JTFPrecioAsiento, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jpGuardarProyeccionLayout.createSequentialGroup()
+                                .addGap(128, 128, 128)
                                 .addComponent(jCBSubSI)
                                 .addGap(18, 18, 18)
-                                .addComponent(jCBSubNO)
-                                .addContainerGap())))))
-            .addGroup(jpGuardarProyeccionLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jpGuardarProyeccionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel12)
-                    .addComponent(jLabel8))
-                .addGap(12, 12, 12)
-                .addGroup(jpGuardarProyeccionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(JTFPrecioAsiento, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(JDCCalendario, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(jCBSubNO))
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jpGuardarProyeccionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(JBGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(jpGuardarProyeccionLayout.createSequentialGroup()
+                                    .addComponent(jLabel9)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                    .addComponent(JTFLugaresDispo, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                    .addGroup(jpGuardarProyeccionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(jpGuardarProyeccionLayout.createSequentialGroup()
+                            .addGap(67, 67, 67)
+                            .addGroup(jpGuardarProyeccionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(jLabel2)
+                                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGap(18, 18, 18)
+                            .addGroup(jpGuardarProyeccionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(jCBSala, 0, 230, Short.MAX_VALUE)
+                                .addComponent(jCBPelicula, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpGuardarProyeccionLayout.createSequentialGroup()
+                            .addContainerGap(81, Short.MAX_VALUE)
+                            .addComponent(jLabel4)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addGroup(jpGuardarProyeccionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(JTFHoraFin, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(jpGuardarProyeccionLayout.createSequentialGroup()
+                                    .addComponent(jCheckBox3DSI)
+                                    .addGap(18, 18, 18)
+                                    .addComponent(jCheckBox3DNO)))
+                            .addGap(108, 108, 108))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jpGuardarProyeccionLayout.setVerticalGroup(
             jpGuardarProyeccionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jpGuardarProyeccionLayout.createSequentialGroup()
                 .addGroup(jpGuardarProyeccionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jpGuardarProyeccionLayout.createSequentialGroup()
-                        .addGap(17, 17, 17)
-                        .addGroup(jpGuardarProyeccionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel1)
-                            .addComponent(jLabel3)
-                            .addComponent(jCBIdioma, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addGroup(jpGuardarProyeccionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel5)
-                            .addComponent(JCBHoraInicio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addGroup(jpGuardarProyeccionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel6)
-                            .addComponent(JTFHoraFin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jpGuardarProyeccionLayout.createSequentialGroup()
                         .addGap(27, 27, 27)
                         .addComponent(jCBPelicula, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -557,28 +550,43 @@ public class VistaProyeccion extends javax.swing.JInternalFrame {
                         .addGap(18, 18, 18)
                         .addGroup(jpGuardarProyeccionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel12)
-                            .addComponent(JDCCalendario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 20, Short.MAX_VALUE)
-                .addGroup(jpGuardarProyeccionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpGuardarProyeccionLayout.createSequentialGroup()
-                        .addGroup(jpGuardarProyeccionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel7)
-                            .addComponent(jCBSubSI)
-                            .addComponent(jCBSubNO))
-                        .addGap(24, 24, 24))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpGuardarProyeccionLayout.createSequentialGroup()
-                        .addGroup(jpGuardarProyeccionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel4)
-                            .addComponent(jCheckBox3DSI)
-                            .addComponent(jCheckBox3DNO))
-                        .addGap(21, 21, 21)))
-                .addGap(2, 2, 2)
+                            .addComponent(JDCCalendario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jpGuardarProyeccionLayout.createSequentialGroup()
+                        .addGap(22, 22, 22)
+                        .addComponent(jLabel1)))
+                .addGap(28, 28, 28)
+                .addGroup(jpGuardarProyeccionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jCBIdioma, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel3))
+                .addGap(18, 18, 18)
+                .addGroup(jpGuardarProyeccionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(JCBHoraInicio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel5))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
+                .addGroup(jpGuardarProyeccionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(JTFHoraFin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel6))
+                .addGap(21, 21, 21)
+                .addGroup(jpGuardarProyeccionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel4)
+                    .addComponent(jCheckBox3DSI)
+                    .addComponent(jCheckBox3DNO))
+                .addGap(23, 23, 23)
                 .addGroup(jpGuardarProyeccionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel8)
-                    .addComponent(JTFPrecioAsiento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(JTFPrecioAsiento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(23, 23, 23)
+                .addGroup(jpGuardarProyeccionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel7)
+                    .addComponent(jCBSubSI)
+                    .addComponent(jCBSubNO))
+                .addGap(16, 16, 16)
+                .addGroup(jpGuardarProyeccionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel9)
                     .addComponent(JTFLugaresDispo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(18, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(JBGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         jpBuscarProyeccion.setBorder(javax.swing.BorderFactory.createEtchedBorder(new java.awt.Color(102, 102, 102), new java.awt.Color(153, 153, 153)));
@@ -642,100 +650,89 @@ public class VistaProyeccion extends javax.swing.JInternalFrame {
         jpBuscarProyeccionLayout.setHorizontalGroup(
             jpBuscarProyeccionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jpBuscarProyeccionLayout.createSequentialGroup()
-                .addContainerGap()
                 .addGroup(jpBuscarProyeccionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1)
                     .addGroup(jpBuscarProyeccionLayout.createSequentialGroup()
-                        .addComponent(jLabelID, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(JTFID, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(JBBuscar)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(jpBuscarProyeccionLayout.createSequentialGroup()
+                        .addContainerGap()
                         .addGroup(jpBuscarProyeccionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jpBuscarProyeccionLayout.createSequentialGroup()
+                                .addGroup(jpBuscarProyeccionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jpBuscarProyeccionLayout.createSequentialGroup()
+                                        .addGap(249, 249, 249)
+                                        .addComponent(jLabel10))
+                                    .addGroup(jpBuscarProyeccionLayout.createSequentialGroup()
+                                        .addComponent(jLabelID, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(JTFID, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(JBBuscar)))
+                                .addGap(0, 0, Short.MAX_VALUE))
                             .addGroup(jpBuscarProyeccionLayout.createSequentialGroup()
                                 .addComponent(JBLimpiar)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(JBModificar)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(JBEliminar))
-                            .addComponent(jScrollPane1))
-                        .addContainerGap())))
-            .addGroup(jpBuscarProyeccionLayout.createSequentialGroup()
-                .addGap(428, 428, 428)
-                .addComponent(jLabel10)
-                .addGap(0, 0, Short.MAX_VALUE))
+                                .addGap(36, 36, 36)
+                                .addComponent(JBEliminar)))))
+                .addGap(24, 24, 24))
         );
         jpBuscarProyeccionLayout.setVerticalGroup(
             jpBuscarProyeccionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jpBuscarProyeccionLayout.createSequentialGroup()
                 .addGap(22, 22, 22)
                 .addComponent(jLabel10)
-                .addGap(13, 13, 13)
-                .addGroup(jpBuscarProyeccionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabelID, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(10, 10, 10)
+                .addGroup(jpBuscarProyeccionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(JTFID, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(JBBuscar)
-                    .addComponent(JTFID, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                    .addComponent(jLabelID, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(21, 21, 21)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(34, 34, 34)
-                .addGroup(jpBuscarProyeccionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(JBLimpiar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(jpBuscarProyeccionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(JBEliminar)
-                        .addComponent(JBModificar)))
-                .addContainerGap())
+                .addGroup(jpBuscarProyeccionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(JBEliminar)
+                    .addComponent(JBModificar)
+                    .addComponent(JBLimpiar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(119, Short.MAX_VALUE))
         );
-
-        JBGuardar.setText("Guardar");
-        JBGuardar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                JBGuardarActionPerformed(evt);
-            }
-        });
 
         EscritorioProyeccion.setLayer(jLabel11, javax.swing.JLayeredPane.DEFAULT_LAYER);
         EscritorioProyeccion.setLayer(titulo, javax.swing.JLayeredPane.DEFAULT_LAYER);
         EscritorioProyeccion.setLayer(jpGuardarProyeccion, javax.swing.JLayeredPane.DEFAULT_LAYER);
         EscritorioProyeccion.setLayer(jpBuscarProyeccion, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        EscritorioProyeccion.setLayer(JBGuardar, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         javax.swing.GroupLayout EscritorioProyeccionLayout = new javax.swing.GroupLayout(EscritorioProyeccion);
         EscritorioProyeccion.setLayout(EscritorioProyeccionLayout);
         EscritorioProyeccionLayout.setHorizontalGroup(
             EscritorioProyeccionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(EscritorioProyeccionLayout.createSequentialGroup()
-                .addGroup(EscritorioProyeccionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(EscritorioProyeccionLayout.createSequentialGroup()
-                        .addGap(346, 346, 346)
-                        .addComponent(titulo, javax.swing.GroupLayout.PREFERRED_SIZE, 369, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(EscritorioProyeccionLayout.createSequentialGroup()
-                        .addGap(19, 19, 19)
-                        .addGroup(EscritorioProyeccionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jpBuscarProyeccion, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addGroup(EscritorioProyeccionLayout.createSequentialGroup()
-                                .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jpGuardarProyeccion, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(29, 29, 29)
-                                .addComponent(JBGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 226, Short.MAX_VALUE)))))
-                .addContainerGap())
+                .addGap(94, 94, 94)
+                .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(63, 63, 63)
+                .addComponent(titulo, javax.swing.GroupLayout.PREFERRED_SIZE, 369, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, EscritorioProyeccionLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jpGuardarProyeccion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jpBuscarProyeccion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(334, 334, 334))
         );
         EscritorioProyeccionLayout.setVerticalGroup(
             EscritorioProyeccionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(EscritorioProyeccionLayout.createSequentialGroup()
-                .addGroup(EscritorioProyeccionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(JBGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(EscritorioProyeccionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(titulo)
                     .addGroup(EscritorioProyeccionLayout.createSequentialGroup()
-                        .addComponent(titulo)
+                        .addGap(53, 53, 53)
+                        .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGroup(EscritorioProyeccionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(EscritorioProyeccionLayout.createSequentialGroup()
                         .addGap(18, 18, 18)
-                        .addComponent(jpBuscarProyeccion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(43, 43, 43)
-                        .addGroup(EscritorioProyeccionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jpGuardarProyeccion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(17, Short.MAX_VALUE))
+                        .addComponent(jpGuardarProyeccion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(EscritorioProyeccionLayout.createSequentialGroup()
+                        .addGap(26, 26, 26)
+                        .addComponent(jpBuscarProyeccion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(25, Short.MAX_VALUE))
         );
 
         jpBuscarProyeccion.getAccessibleContext().setAccessibleName("Buscar/Modificar Proyección");
@@ -751,7 +748,9 @@ public class VistaProyeccion extends javax.swing.JInternalFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(EscritorioProyeccion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(EscritorioProyeccion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 12, Short.MAX_VALUE))
         );
 
         pack();
@@ -788,6 +787,10 @@ public class VistaProyeccion extends javax.swing.JInternalFrame {
             proData.guardarProyeccion(proyeccion);
 
             JOptionPane.showMessageDialog(this, "Proyección guardada correctamente!");
+            
+            if (peli != null) {
+        peliData.actualizarEstadoCartelera(peli.getTitulo(), true);
+        }
 
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(this, "Error al tratar de convertir Horarios");
@@ -932,6 +935,13 @@ public class VistaProyeccion extends javax.swing.JInternalFrame {
         }
         int id = Integer.parseInt(modeloTabla.getValueAt(filaSelec, 0).toString());
         
+        Proyeccion proyeccionABorrar = proData.buscarProyeccionPorID(id);
+        if (proyeccionABorrar == null) {
+            JOptionPane.showMessageDialog(this, "Error: No se encontró la proyección en la base de datos.");
+            return;
+        }
+        String tituloPelicula = proyeccionABorrar.getPelicula().getTitulo();
+        
         int confirm = JOptionPane.showConfirmDialog(this, "¿Está seguro de eliminar la proyeccion seleccionada con el ID: "+ id + "?", "Confirmar eliminación", JOptionPane.YES_NO_OPTION);
         
         if(confirm == JOptionPane.YES_OPTION){
@@ -939,6 +949,17 @@ public class VistaProyeccion extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(this, "Poryección eliminada correctamente!");
             cargarTabla();
         }
+        List<Proyeccion> proyeccionesRestantes = proData.buscarProyeccionesPorPelicula(tituloPelicula);
+        
+        if (proyeccionesRestantes.isEmpty()) {
+                // Si la lista está vacía, ya no hay funciones.
+                // Actualizamos la película a "enCartelera = false"
+                peliData.actualizarEstadoCartelera(tituloPelicula, false);
+                System.out.println("Era la última proyección. " + tituloPelicula + " ahora está fuera de cartelera.");
+           }
+        cargarTabla();
+        
+        
     }//GEN-LAST:event_JBEliminarActionPerformed
 
     private void JTFIDKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_JTFIDKeyTyped

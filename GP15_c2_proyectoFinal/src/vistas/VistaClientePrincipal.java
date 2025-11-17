@@ -112,6 +112,11 @@ public class VistaClientePrincipal extends javax.swing.JFrame {
 
         jButton3.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
         jButton3.setText("Cartelera");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
         btnProyeccinoes.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
         btnProyeccinoes.setText("Proyecciones");
@@ -189,6 +194,21 @@ public class VistaClientePrincipal extends javax.swing.JFrame {
         // TODO add your handling code here:
         avanzarFlujoVenta(1);
     }//GEN-LAST:event_btnProyeccinoesActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        
+            escritorio.repaint();
+
+        // 2. Crea la nueva vista "Catalogo" que acabamos de diseñar
+        Catalogo vistaCatalogo = new Catalogo();
+
+        // 3. La hace visible, la agrega al escritorio y la pone al frente
+        vistaCatalogo.setVisible(true);
+        escritorio.add(vistaCatalogo);
+        escritorio.moveToFront(vistaCatalogo);
+            
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton3ActionPerformed
 
     /**
      * @param args the command line arguments
