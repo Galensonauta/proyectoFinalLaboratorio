@@ -134,7 +134,17 @@ private Connection con;
         }
         return detalles;        
     }
-    
-    
+    public void eliminarDetalleSegunProyeccion(int idPro) {
+        String query = "DELETE FROM detalle_ticket WHERE idProyeccion = ?";
+        try {
+            PreparedStatement ps = con.prepareStatement(query);
+            ps.setInt(1, idPro);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println("Error al tratar de eliminar detalle según ID Proyeccion: " + e.getMessage());
+        }
+    }
+
 }
+
 

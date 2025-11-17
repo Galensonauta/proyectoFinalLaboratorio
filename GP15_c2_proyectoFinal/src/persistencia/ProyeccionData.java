@@ -18,12 +18,16 @@ public class ProyeccionData {
     private Connection con;
     private PeliculaData peliculaData;
     private SalaData salaData;
+    private DetalleTicketData dtData;
+    private LugarAsientoData butacaData;
     private static final DateTimeFormatter FORMAT = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
     public ProyeccionData() {
         con = Conexion.getConexion();
         peliculaData = new PeliculaData();
         salaData = new SalaData();
+        dtData = new DetalleTicketData();
+        butacaData = new LugarAsientoData();
     }
 
     //alta
@@ -61,6 +65,15 @@ public class ProyeccionData {
 
     //baja
     public void eliminarProyeccion(int idProyec) {
+        try{
+            dtData.eliminarDetalleSegunProyeccion(idProyec);
+            butacaData.eliminarButacaSegunProyeccion(idProyec);
+            
+        }catch(Exception e){
+            System.out.println("Error al eliminar detalle y lugarAsiento asociado a la proyeccion: " + idProyec + " " + e.getMessage());
+           return;
+        }
+        
         String query = "DELETE FROM proyeccion WHERE idProyeccion = ?";
 
         try {
@@ -219,3 +232,4 @@ public class ProyeccionData {
     }
 
 }
+
