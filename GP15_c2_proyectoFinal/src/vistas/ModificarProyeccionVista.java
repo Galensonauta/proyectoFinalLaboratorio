@@ -46,7 +46,6 @@ public class ModificarProyeccionVista extends javax.swing.JInternalFrame {
         conectarEventos();
         cargarCampos(proyec);
         
-        
     }
     private void cargarComboPelis() {
         for (Pelicula aux : listaPelis) {
@@ -59,7 +58,7 @@ public class ModificarProyeccionVista extends javax.swing.JInternalFrame {
         for (Sala aux : listaSalas) {
             JCBSala.addItem(aux);
         }
-        JCBSala.setSelectedIndex(-1);
+        
     }
     
     private void cargarHorarios() {

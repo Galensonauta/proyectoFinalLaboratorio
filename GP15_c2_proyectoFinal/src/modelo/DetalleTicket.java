@@ -10,7 +10,7 @@ import java.util.List;
  */
 public class DetalleTicket {
     private int idDetalle, cantidad, subtotal;
-    private Proyeccion idProyeccion;
+    private Proyeccion proyeccion;
     private ArrayList<LugarAsiento> lugares;
     private LocalDate fechProyeccion;
 
@@ -28,8 +28,16 @@ public class DetalleTicket {
     }
 
     public DetalleTicket(int cantidad, int subtotal, Proyeccion idProyeccion, ArrayList<LugarAsiento>lugares, LocalDate fechProyeccion) {
-        this.idProyeccion = idProyeccion;
+        this.proyeccion = idProyeccion;
         this.cantidad = cantidad;
+        this.subtotal = subtotal;
+        this.lugares = lugares;
+        this.fechProyeccion=fechProyeccion;
+    }
+    
+    public DetalleTicket( int subtotal, Proyeccion idProyeccion, ArrayList<LugarAsiento>lugares, LocalDate fechProyeccion) {
+        this.proyeccion = idProyeccion;
+        this.cantidad = lugares.size();
         this.subtotal = subtotal;
         this.lugares = lugares;
         this.fechProyeccion=fechProyeccion;
@@ -59,12 +67,12 @@ public class DetalleTicket {
         this.subtotal = subtotal;
     }
 
-    public Proyeccion getIdProyeccion() {
-        return idProyeccion;
+    public Proyeccion getProyeccion() {
+        return proyeccion;
     }
 
-    public void setIdProyeccion(Proyeccion idProyeccion) {
-        this.idProyeccion = idProyeccion;
+    public void setProyeccion(Proyeccion idProyeccion) {
+        this.proyeccion = idProyeccion;
     }
 
     public ArrayList<LugarAsiento> getLugares() {
@@ -76,6 +84,14 @@ public class DetalleTicket {
     }
     public void agregarLugar(LugarAsiento lugar) {
         this.lugares.add(lugar);
+    }
+    
+    public String asientosToString(){
+        String a = "Asiento/s: ";
+        for (LugarAsiento asiento : lugares) {
+            a.concat(asiento.toString());
+        }
+        return a;
     }
     
 }

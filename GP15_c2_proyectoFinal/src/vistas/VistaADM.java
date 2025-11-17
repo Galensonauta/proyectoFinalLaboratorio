@@ -34,6 +34,7 @@ public class VistaADM extends javax.swing.JFrame {
         BotonSala = new javax.swing.JButton();
         JBProyeccion = new javax.swing.JButton();
         JBClientes = new javax.swing.JButton();
+        JBInformes = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setSize(new java.awt.Dimension(0, 0));
@@ -72,11 +73,19 @@ public class VistaADM extends javax.swing.JFrame {
             }
         });
 
+        JBInformes.setText("Informes");
+        JBInformes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                JBInformesActionPerformed(evt);
+            }
+        });
+
         escritorio.setLayer(jLabel1, javax.swing.JLayeredPane.DEFAULT_LAYER);
         escritorio.setLayer(JBPeliculas, javax.swing.JLayeredPane.DEFAULT_LAYER);
         escritorio.setLayer(BotonSala, javax.swing.JLayeredPane.DEFAULT_LAYER);
         escritorio.setLayer(JBProyeccion, javax.swing.JLayeredPane.DEFAULT_LAYER);
         escritorio.setLayer(JBClientes, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        escritorio.setLayer(JBInformes, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         javax.swing.GroupLayout escritorioLayout = new javax.swing.GroupLayout(escritorio);
         escritorio.setLayout(escritorioLayout);
@@ -93,9 +102,11 @@ public class VistaADM extends javax.swing.JFrame {
                 .addComponent(BotonSala, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(256, 256, 256)
                 .addComponent(JBProyeccion, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 242, Short.MAX_VALUE)
+                .addGap(40, 40, 40)
                 .addComponent(JBClientes, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(140, 140, 140))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(JBInformes, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(175, Short.MAX_VALUE))
         );
         escritorioLayout.setVerticalGroup(
             escritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -107,8 +118,9 @@ public class VistaADM extends javax.swing.JFrame {
                     .addComponent(BotonSala, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(JBPeliculas, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(JBProyeccion, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(JBClientes, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(632, Short.MAX_VALUE))
+                    .addComponent(JBClientes, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(JBInformes, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(396, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -166,6 +178,15 @@ public class VistaADM extends javax.swing.JFrame {
         escritorio.moveToFront(peliculaVista);
     }//GEN-LAST:event_JBPeliculasActionPerformed
 
+    private void JBInformesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBInformesActionPerformed
+        // TODO add your handling code here:
+        escritorio.repaint();
+        VistasTicket vistasTicket = new VistasTicket();
+        vistasTicket.setVisible(true);
+        escritorio.add(vistasTicket);
+        escritorio.moveToFront(vistasTicket);
+    }//GEN-LAST:event_JBInformesActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -204,6 +225,7 @@ public class VistaADM extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton BotonSala;
     private javax.swing.JButton JBClientes;
+    private javax.swing.JButton JBInformes;
     private javax.swing.JButton JBPeliculas;
     private javax.swing.JButton JBProyeccion;
     private javax.swing.JDesktopPane escritorio;

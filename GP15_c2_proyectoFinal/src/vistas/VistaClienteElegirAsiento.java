@@ -14,6 +14,7 @@ import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.JToggleButton;
 import modelo.LugarAsiento;
+import persistencia.SalaData;
 
 /**
  *
@@ -21,12 +22,12 @@ import modelo.LugarAsiento;
  */
 public class VistaClienteElegirAsiento extends javax.swing.JInternalFrame {
 
-    private int filasSala = 23; //estos datos podrían venir de la tabla sala    
-    private int columnasSala = 11;
+    private int filasSala = 0; //estos datos podrían venir de la tabla sala    
+    private int columnasSala = 0;
     private VistaClientePrincipal madre;
-    
+    private SalaData sd = new SalaData();
     public ArrayList<String> asientosSeleccionadosEtiquetas = new ArrayList<>();
-    public List<LugarAsiento> asientosFinales = new ArrayList<>();
+    public ArrayList<LugarAsiento> asientosFinales = new ArrayList<>();
     public int idProyeccion;
     
     public ArrayList<String> getAsientosSeleccionadosEtiquetas(){
@@ -35,8 +36,6 @@ public class VistaClienteElegirAsiento extends javax.swing.JInternalFrame {
     
     // Clase separada dentro del paquete Vista-Controlador
     private class SimpleToggleListener implements ActionListener {
-
-        
 
         public SimpleToggleListener(ArrayList<String> seleccionados) {
             asientosSeleccionadosEtiquetas = seleccionados;
@@ -78,6 +77,8 @@ public class VistaClienteElegirAsiento extends javax.swing.JInternalFrame {
    
     public void setearFilasYColumnas(){
         //ObtenerAsientos(nrSala){ desde SalaData}
+        this.columnasSala = 10;
+        this.filasSala = madre.getDt().getProyeccion().getSala().getCapacidad() / 10;
     }
     
     private void convertirEtiquetasAObjetos(){
@@ -150,8 +151,8 @@ public class VistaClienteElegirAsiento extends javax.swing.JInternalFrame {
     public VistaClienteElegirAsiento(VistaClientePrincipal madre) {
         initComponents();
         this.madre = madre;
-        //crearPanelAsientos();
-        //this.idProyeccion = idProyeccion;
+        
+        this.idProyeccion = madre.getDt().getProyeccion().getIdProyeccion();
         //setearFilasYColumnas();
         
         dibujarSala(filasSala, columnasSala);
@@ -280,7 +281,7 @@ public class VistaClienteElegirAsiento extends javax.swing.JInternalFrame {
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
         // TODO add your handling code here:
         convertirEtiquetasAObjetos();
-        madre.setAsientosSeleccionados(asientosFinales);
+        madre.getDt().setLugares(asientosFinales);
         madre.avanzarFlujoVenta(3);
         this.dispose();
     }//GEN-LAST:event_btnGuardarActionPerformed
