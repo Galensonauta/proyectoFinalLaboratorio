@@ -134,7 +134,5 @@ private Connection con;
         }
         return detalles;        
     }
-    
-    
 }
 

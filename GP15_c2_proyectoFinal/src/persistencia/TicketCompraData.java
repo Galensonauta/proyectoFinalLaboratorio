@@ -156,5 +156,47 @@ public class TicketCompraData {
             System.out.println("Error al buscar ticket en la base de datos" + ex.getMessage());
         }
         return tc;
-    }    
+    }  
+    
+    public ArrayList<TicketCompra>listarTicketsPorFecha(LocalDate fecha){
+        ArrayList<TicketCompra> tickets = new ArrayList<>();
+        String sql  = "Select * FROM ticket_compra WHERE fechCompra =?";
+        try{
+        PreparedStatement ps = con.prepareStatement(sql);
+        ps.setDate(1, java.sql.Date.valueOf(fecha));
+        ResultSet rs = ps.executeQuery(); 
+        while(rs.next()){
+            int idTicket = rs.getInt("idTicket");
+            TicketCompra tc = this.buscarTicketCompra(idTicket);
+            tickets.add(tc);
+        }
+        }catch (SQLException ex) {
+        System.out.println("Error al listar tickets por fecha: " + ex.getMessage());
+    }
+        return tickets;        
+    }
+    
+    public ArrayList<TicketCompra> listarTicketsPorPelicula(String titulo) {
+    ArrayList<TicketCompra> tickets = new ArrayList<>();
+    
+    String sql = "SELECT DISTINCT tc.idTicket " + 
+                 "FROM ticket_compra tc " +
+                 "JOIN detalle_ticket dt ON tc.idTicket = dt.codD " +
+                 "JOIN proyeccion pr ON dt.idProyeccion = pr.idProyeccion " +
+                 "WHERE pr.pelicula = ?";
+    
+    try {
+        PreparedStatement ps = con.prepareStatement(sql);
+        ps.setString(1, titulo);
+        ResultSet rs = ps.executeQuery();
+        while (rs.next()) {
+            int idTicketEncontrado = rs.getInt("idTicket");
+            TicketCompra tc = this.buscarTicketCompra(idTicketEncontrado);
+            tickets.add(tc);
+        }        
+    } catch (SQLException ex) {
+        System.out.println("Error al listar tickets por película: " + ex.getMessage());
+    }
+    return tickets;
+}
 }

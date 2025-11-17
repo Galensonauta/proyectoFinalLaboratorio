@@ -136,9 +136,15 @@ public class PeliculaData {
             PreparedStatement ps = con.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
             ResultSet rs = ps.executeQuery();
             while(rs.next()){
-                String titulo = rs.getString("titulo");
+                Pelicula peli = new Pelicula();
+                peli.setTitulo(rs.getString("titulo"));                
+                peli.setDirector(rs.getString("director"));
+                peli.setActores(rs.getString("actores"));
+                peli.setOrigen(rs.getString("origen"));
+                peli.setGenero(rs.getString("genero"));
+                peli.setEstreno(rs.getDate("estreno").toLocalDate());
+                peli.setEnCartelera(rs.getBoolean("enCartelera"));
                 
-                Pelicula peli = obtenerPeliculaPorTitulo(titulo);
                 if(peli != null){
                     listaPelis.add(peli);
                 }
