@@ -6,18 +6,18 @@
 package vistas;
 
 import java.awt.HeadlessException;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.time.*;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 import javax.swing.JOptionPane;
 import modelo.*;
-import persistencia.PeliculaData;
-import persistencia.ProyeccionData;
-import persistencia.SalaData;
+import persistencia.*;
 
 /**
  *
- * @author Cetera Evelyn
+ * @author Grupo 15 (Evelyn Cetera, Tomas Puw Zirulnik, Matias Correa, Enzo Fornes, Santiago Girardi)
  */
 public class ModificarProyeccionVista extends javax.swing.JInternalFrame {
 
@@ -25,6 +25,7 @@ public class ModificarProyeccionVista extends javax.swing.JInternalFrame {
     private ProyeccionData proData;
     private PeliculaData peliData;
     private SalaData salaData;
+    private LugarAsientoData butacaData;
     private List<Pelicula> listaPelis;
     private List<Sala> listaSalas;
     private List<Proyeccion> listaProyeccion;
@@ -35,20 +36,23 @@ public class ModificarProyeccionVista extends javax.swing.JInternalFrame {
         this.proData = proData;
         this.peliData = peliData;
         this.salaData = salaData;
+        this.butacaData = new LugarAsientoData();
         listaPelis = peliData.listarTodasLasPeliculas();
         listaSalas = salaData.obtenerTodasLasSalas();
         cargarComboPelis();
         cargarComboSalas();
         cargarComboIdiomas();
         cargarHorarios();
+        conectarEventos();
         cargarCampos(proyec);
+        
         
     }
     private void cargarComboPelis() {
         for (Pelicula aux : listaPelis) {
             JCBPelicula.addItem(aux);
         }
-        JCBPelicula.setSelectedIndex(-1);
+        
     }
 
     private void cargarComboSalas() {
@@ -57,6 +61,7 @@ public class ModificarProyeccionVista extends javax.swing.JInternalFrame {
         }
         JCBSala.setSelectedIndex(-1);
     }
+    
     private void cargarHorarios() {
         String[] horarios = {
             "10:00", "10:30", "11:00", "11:30", "12:00", "12:30",
@@ -67,19 +72,38 @@ public class ModificarProyeccionVista extends javax.swing.JInternalFrame {
         };
 
         JCBHoraInicio.removeAllItems();
-        JCBHoraFin.removeAllItems();
 
         for (String aux : horarios) {
             JCBHoraInicio.addItem(aux);
-            JCBHoraFin.addItem(aux);
         }
 
         JCBHoraInicio.setSelectedIndex(-1);
-        JCBHoraFin.setSelectedIndex(-1);
+        JTFHoraFin.setText("");
     }
 
+    private void actualizarHoraFin() {
+        String horaInicioStr = (String) JCBHoraInicio.getSelectedItem();
+
+        if (horaInicioStr == null) {
+            JTFHoraFin.setText("");
+            return;
+        }
+
+        try {
+            LocalTime inicio = LocalTime.parse(horaInicioStr);
+            LocalTime fin = inicio.plusHours(2);
+
+            String horaFinStr = fin.format(DateTimeFormatter.ofPattern("HH:mm"));
+            
+            JTFHoraFin.setText(horaFinStr); 
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error al calcular horario de finalización: " + e.getMessage());
+            JTFHoraFin.setText("");
+        }
+    }
+    
     private void cargarComboIdiomas() {
-        String[] idiomas = {"Español", "Inglés", "Portugués", "Italiano", "Frances"};
+        String[] idiomas = {"Español", "Inglés", "Portugués"};
 
         JCBIdioma.removeAllItems();
         for (String aux : idiomas) {
@@ -92,14 +116,32 @@ public class ModificarProyeccionVista extends javax.swing.JInternalFrame {
         JTFID.setText(String.valueOf(pro.getIdProyeccion()));
         JTFID.setEditable(false);
         
-        JCBPelicula.setSelectedItem(pro.getPelicula());
-        JCBSala.setSelectedItem(pro.getSala());
+        Pelicula peliPro = pro.getPelicula();
+        for (int i = 0; i < JCBPelicula.getItemCount(); i++) {
+            Pelicula peliCombo = JCBPelicula.getItemAt(i);
+        
+            if(peliCombo.getTitulo().equals(peliPro.getTitulo())){
+                JCBPelicula.setSelectedIndex(i);
+                break;
+            }
+        }
+        
+        Sala salaPro = pro.getSala();
+        for (int i = 0; i < JCBSala.getItemCount(); i++) {
+            Sala salaCombo = JCBSala.getItemAt(i);
+            
+            if(salaCombo.getNroSala() == salaPro.getNroSala()){
+                JCBSala.setSelectedIndex(i);
+                break;
+            }
+        }
+        
+        
         JCBIdioma.setSelectedItem(pro.getIdioma());
         
         LocalDateTime inicio = pro.getHoraInicio();
         
         Date fecha = Date.from(inicio.atZone(ZoneId.systemDefault()).toInstant());
-        JOptionPane.showMessageDialog(this, "Tipo de dato: " + fecha.getClass().getName());
         // Asegura que sea del tipo correcto
         JDCCalendario.setDate(new java.util.Date(fecha.getTime()));
         
@@ -107,27 +149,151 @@ public class ModificarProyeccionVista extends javax.swing.JInternalFrame {
         String finStr = pro.getHoraFin().format(DateTimeFormatter.ofPattern("HH:mm"));
         
         JCBHoraInicio.setSelectedItem(inicioStr);
-        JCBHoraFin.setSelectedItem(finStr);
+        JTFHoraFin.setText(finStr);
         
-        if (pro.isEs3D()){
-            jCheckBox3DSI.setSelected(true);
-        }else {
-            jCheckBox3DNO.setSelected(true);
-        }
-        
-        if(pro.isSubtitulada()){
-            jCheckBoxSubSI.setSelected(true);
-        }else {
-            jCheckBoxSubNO.setSelected(true);
-        }
-        
-        JTFPrecioAsiento.setText(String.valueOf(pro.getPrecioLugar()));
-        JTFLugaresDispo.setText(String.valueOf(pro.getLugaresDisponibles()));
+        asignarPrecioSegunSala();
+        actualizarHoraFin();
+    }
+    
+    private void asignarPrecioSegunSala() {
+        JTFPrecioAsiento.setEditable(false);
         JTFLugaresDispo.setEditable(false);
         
-        
-    
+        final int PRECIO_2D = 5500;
+        final int PRECIO_3D = 8000;
+
+        Sala salaSeleccionada = (Sala) JCBSala.getSelectedItem();
+        if (salaSeleccionada != null) {
+            //logica para lugares disponibles obteniendo la capacidad de la sala
+            int capacidad = salaSeleccionada.getCapacidad();
+            JTFLugaresDispo.setText(String.valueOf(capacidad));
+            
+            //-------------------------------------------------------------------
+
+            if (salaSeleccionada.isApta3D()) {
+                JCBox3DSI.setEnabled(true);
+                JCBox3DNO.setEnabled(true);
+                
+                if (JCBox3DSI.isSelected()){
+                    JTFPrecioAsiento.setText(String.valueOf(PRECIO_3D));
+                    JCBox3DNO.setSelected(false);
+                } else{
+                    JTFPrecioAsiento.setText(String.valueOf(PRECIO_2D));
+                    JCBox3DSI.setSelected(false);
+                    JCBox3DNO.setSelected(true);
+                }
+            } else {
+                JCBox3DSI.setSelected(false);
+                JCBox3DSI.setEnabled(false);
+                
+                JCBox3DNO.setSelected(true);
+                JCBox3DNO.setEnabled(true);
+                
+                JTFPrecioAsiento.setText(String.valueOf(PRECIO_2D));
+            }
+        } else {
+            JTFPrecioAsiento.setText("");
+            JTFLugaresDispo.setText("");
+            JCBox3DSI.setEnabled(true);
+            JCBox3DNO.setEnabled(true);
+        }
     }
+    
+    private void conectarEventos(){
+        //este metodo es para agregarle los listener al comboBoxSala, y los checkBox de 3D o 2D 
+        // ----------- Al cambiar de sala ----------
+        JCBSala.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent ie) {
+                if(ie.getStateChange() == ItemEvent.SELECTED){
+                    asignarPrecioSegunSala();
+                }
+            }
+        });
+        // --------- checkbox 3D -------------
+        JCBox3DSI.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent ie) {
+                if(ie.getStateChange() == ItemEvent.SELECTED){
+                    asignarPrecioSegunSala();
+                }
+            }
+        });
+        // -----------checkbox 2D -----------
+        JCBox3DNO.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent ie) {
+                if(ie.getStateChange() == ItemEvent.SELECTED){
+                    asignarPrecioSegunSala();
+                }
+            }
+        });
+    }
+    
+    private boolean validarCampos() {
+    
+    // -------------ComboBox----------
+    if (JCBPelicula.getSelectedItem() == null) {
+        JOptionPane.showMessageDialog(this, "Debe seleccionar una Película.", "Error de Validación", JOptionPane.ERROR_MESSAGE);
+        JCBPelicula.requestFocus();
+        return false;
+    }
+
+    if (JCBSala.getSelectedItem() == null) {
+        JOptionPane.showMessageDialog(this, "Debe seleccionar una Sala.", "Error de Validación", JOptionPane.ERROR_MESSAGE);
+        JCBSala.requestFocus();
+        return false;
+    }
+
+    if (JCBIdioma.getSelectedItem() == null) {
+        JOptionPane.showMessageDialog(this, "Debe seleccionar un Idioma.", "Error de Validación", JOptionPane.ERROR_MESSAGE);
+        JCBIdioma.requestFocus();
+        return false;
+    }
+
+    // ------------Fecha----------
+    if (JDCCalendario.getDate() == null) {
+        JOptionPane.showMessageDialog(this, "Debe seleccionar una Fecha de Proyección.", "Error de Validación", JOptionPane.ERROR_MESSAGE);
+        JDCCalendario.requestFocus();
+        return false;
+    }
+
+    //-------------Horarios-------------
+    if (JCBHoraInicio.getSelectedItem() == null) {
+        JOptionPane.showMessageDialog(this, "Debe seleccionar una Hora de Inicio.", "Error de Validación", JOptionPane.ERROR_MESSAGE);
+        JCBHoraInicio.requestFocus();
+        return false;
+    }
+
+    if (JTFHoraFin.getText().trim().isEmpty()) { 
+        JOptionPane.showMessageDialog(this, "La hora de finalización no pudo ser calculada. Verifique la hora de inicio.", "Error de Validación", JOptionPane.ERROR_MESSAGE);
+        JCBHoraInicio.requestFocus();
+        return false;
+    }
+
+    // ------------campos de texto----------
+    if (JTFLugaresDispo.getText().trim().isEmpty()) {
+        JOptionPane.showMessageDialog(this, "El precio del asiento no puede estar vacío. Verifique la Sala.", "Error de Validación", JOptionPane.ERROR_MESSAGE);
+        JCBSala.requestFocus();
+        return false;
+    }
+    
+    //--------------CheckBox-------
+    if (!JCBox3DSI.isSelected() && !JCBox3DNO.isSelected()) {
+        JOptionPane.showMessageDialog(this, "Debe seleccionar una opción para 'Es 3D'.", "Error de Validación", JOptionPane.ERROR_MESSAGE);
+        JCBox3DSI.requestFocus();
+        return false;
+    }
+    
+    if (!JCBoxSubSI.isSelected() && !JCBoxSubNO.isSelected()) {
+        JOptionPane.showMessageDialog(this, "Debe seleccionar una opción para 'Subtitulada'.", "Error de Validación", JOptionPane.ERROR_MESSAGE);
+        JCBoxSubSI.requestFocus();
+        return false;
+    }
+
+    return true; 
+}
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -137,6 +303,8 @@ public class ModificarProyeccionVista extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        BGroup3D = new javax.swing.ButtonGroup();
+        BgroupSub = new javax.swing.ButtonGroup();
         jLabel1 = new javax.swing.JLabel();
         jpGuardarProyeccion = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
@@ -146,24 +314,23 @@ public class ModificarProyeccionVista extends javax.swing.JInternalFrame {
         jLabel5 = new javax.swing.JLabel();
         JCBIdioma = new javax.swing.JComboBox<>();
         jLabel6 = new javax.swing.JLabel();
-        jCheckBox3DSI = new javax.swing.JCheckBox();
-        jCheckBox3DNO = new javax.swing.JCheckBox();
+        JCBox3DSI = new javax.swing.JCheckBox();
+        JCBox3DNO = new javax.swing.JCheckBox();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
-        jCheckBoxSubSI = new javax.swing.JCheckBox();
-        jCheckBoxSubNO = new javax.swing.JCheckBox();
+        JCBoxSubSI = new javax.swing.JCheckBox();
+        JCBoxSubNO = new javax.swing.JCheckBox();
         jLabel10 = new javax.swing.JLabel();
         JTFPrecioAsiento = new javax.swing.JTextField();
         jLabel11 = new javax.swing.JLabel();
         JTFLugaresDispo = new javax.swing.JTextField();
         JDCCalendario = new com.toedter.calendar.JDateChooser();
         JCBHoraInicio = new javax.swing.JComboBox<>();
-        JCBHoraFin = new javax.swing.JComboBox<>();
         jLabel12 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         JTFID = new javax.swing.JTextField();
+        JTFHoraFin = new javax.swing.JTextField();
         JBActualizar = new javax.swing.JButton();
 
         setClosable(true);
@@ -185,9 +352,11 @@ public class ModificarProyeccionVista extends javax.swing.JInternalFrame {
 
         jLabel6.setText("¿Es 3D?");
 
-        jCheckBox3DSI.setText("SI");
+        BGroup3D.add(JCBox3DSI);
+        JCBox3DSI.setText("SI");
 
-        jCheckBox3DNO.setText("NO");
+        BGroup3D.add(JCBox3DNO);
+        JCBox3DNO.setText("NO");
 
         jLabel7.setText("Hora Inicio:");
 
@@ -195,9 +364,11 @@ public class ModificarProyeccionVista extends javax.swing.JInternalFrame {
 
         jLabel9.setText("Subtitulada:");
 
-        jCheckBoxSubSI.setText("SI");
+        BgroupSub.add(JCBoxSubSI);
+        JCBoxSubSI.setText("SI");
 
-        jCheckBoxSubNO.setText("NO");
+        BgroupSub.add(JCBoxSubNO);
+        JCBoxSubNO.setText("NO");
 
         jLabel10.setText("Precio Asiento:");
 
@@ -209,12 +380,13 @@ public class ModificarProyeccionVista extends javax.swing.JInternalFrame {
         JDCCalendario.setMinSelectableDate(new Date());
 
         JCBHoraInicio.setSelectedItem(-1);
-
-        JCBHoraFin.setSelectedItem(-1);
+        JCBHoraInicio.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                JCBHoraInicioActionPerformed(evt);
+            }
+        });
 
         jLabel12.setText("Fecha de Proyección:");
-
-        jButton1.setText("Elegir Asiento");
 
         jLabel2.setText("ID:");
 
@@ -233,19 +405,20 @@ public class ModificarProyeccionVista extends javax.swing.JInternalFrame {
                         .addGroup(jpGuardarProyeccionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(JTFLugaresDispo, javax.swing.GroupLayout.DEFAULT_SIZE, 92, Short.MAX_VALUE)
                             .addComponent(JTFPrecioAsiento))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton1)
-                        .addGap(31, 31, 31))
+                        .addGap(31, 176, Short.MAX_VALUE))
                     .addGroup(jpGuardarProyeccionLayout.createSequentialGroup()
                         .addGroup(jpGuardarProyeccionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel2)
                             .addGroup(jpGuardarProyeccionLayout.createSequentialGroup()
                                 .addComponent(jLabel9)
                                 .addGap(60, 60, 60)
-                                .addComponent(jCheckBoxSubSI)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jCheckBoxSubNO))
-                            .addComponent(jLabel2))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                                .addGroup(jpGuardarProyeccionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jpGuardarProyeccionLayout.createSequentialGroup()
+                                        .addComponent(JCBoxSubSI)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(JCBoxSubNO))
+                                    .addComponent(JTFHoraFin, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addContainerGap(147, Short.MAX_VALUE))))
             .addGroup(jpGuardarProyeccionLayout.createSequentialGroup()
                 .addGroup(jpGuardarProyeccionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jpGuardarProyeccionLayout.createSequentialGroup()
@@ -268,12 +441,11 @@ public class ModificarProyeccionVista extends javax.swing.JInternalFrame {
                     .addGroup(jpGuardarProyeccionLayout.createSequentialGroup()
                         .addGroup(jpGuardarProyeccionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jpGuardarProyeccionLayout.createSequentialGroup()
-                                .addComponent(jCheckBox3DSI)
+                                .addComponent(JCBox3DSI)
                                 .addGap(18, 18, 18)
-                                .addComponent(jCheckBox3DNO))
+                                .addComponent(JCBox3DNO))
                             .addComponent(JDCCalendario, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(JCBHoraInicio, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(JCBHoraFin, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(JTFID, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(0, 70, Short.MAX_VALUE)))
                 .addContainerGap())
@@ -300,8 +472,8 @@ public class ModificarProyeccionVista extends javax.swing.JInternalFrame {
                 .addGap(18, 18, 18)
                 .addGroup(jpGuardarProyeccionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
-                    .addComponent(jCheckBox3DSI)
-                    .addComponent(jCheckBox3DNO))
+                    .addComponent(JCBox3DSI)
+                    .addComponent(JCBox3DNO))
                 .addGroup(jpGuardarProyeccionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jpGuardarProyeccionLayout.createSequentialGroup()
                         .addGap(25, 25, 25)
@@ -313,21 +485,24 @@ public class ModificarProyeccionVista extends javax.swing.JInternalFrame {
                 .addGroup(jpGuardarProyeccionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel7)
                     .addComponent(JCBHoraInicio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(21, 21, 21)
                 .addGroup(jpGuardarProyeccionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel8, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(JCBHoraFin, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(23, 23, 23)
+                    .addGroup(jpGuardarProyeccionLayout.createSequentialGroup()
+                        .addGap(31, 31, 31)
+                        .addComponent(jLabel8)
+                        .addGap(23, 23, 23))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpGuardarProyeccionLayout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(JTFHoraFin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)))
                 .addGroup(jpGuardarProyeccionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel9, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpGuardarProyeccionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jCheckBoxSubSI)
-                        .addComponent(jCheckBoxSubNO)))
-                .addGap(24, 24, 24)
+                        .addComponent(JCBoxSubSI)
+                        .addComponent(JCBoxSubNO)))
+                .addGap(28, 28, 28)
                 .addGroup(jpGuardarProyeccionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel10)
-                    .addComponent(JTFPrecioAsiento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1))
+                    .addComponent(JTFPrecioAsiento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jpGuardarProyeccionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(JTFLugaresDispo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -373,16 +548,15 @@ public class ModificarProyeccionVista extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void JBActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBActualizarActionPerformed
+        if(!validarCampos()){
+            return;
+        }
         try {
-            if (JDCCalendario.getDate() == null) {
-                JOptionPane.showMessageDialog(this, "Debe seleccionar la fecha");
-                return;
-            }
-
+            
             LocalDate fecha = JDCCalendario.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
 
             String inicioStr = (String) JCBHoraInicio.getSelectedItem();
-            String finStr = (String) JCBHoraFin.getSelectedItem();
+            String finStr = JTFHoraFin.getText();
 
             LocalTime inicio = LocalTime.parse(inicioStr);
             LocalTime fin = LocalTime.parse(finStr);
@@ -394,8 +568,8 @@ public class ModificarProyeccionVista extends javax.swing.JInternalFrame {
             Sala sala = (Sala) JCBSala.getSelectedItem();
             String idioma = (String) JCBIdioma.getSelectedItem();
             int precioButaca = Integer.parseInt(JTFPrecioAsiento.getText());
-            boolean es3D = jCheckBox3DSI.isSelected();
-            boolean subtitulada = jCheckBoxSubSI.isSelected();
+            boolean es3D = JCBox3DSI.isSelected();
+            boolean subtitulada = JCBoxSubSI.isSelected();
             int lugarDispo = Integer.parseInt(JTFLugaresDispo.getText());
 
             proyec.setPelicula(peli);
@@ -410,11 +584,11 @@ public class ModificarProyeccionVista extends javax.swing.JInternalFrame {
 
             proData.actualizarProyeccion(proyec);
 
-            JOptionPane.showMessageDialog(this, "Proyección modificiada correctamente, ");
-
+            JOptionPane.showMessageDialog(this, "Proyección modificada correctamente, ");
             this.dispose();
+            
         } catch (NumberFormatException ex) {
-            JOptionPane.showMessageDialog(this, "Precio, lugar o ID no válido: ");
+            JOptionPane.showMessageDialog(this, "ID no válido: ");
             ex.getStackTrace();
         } catch (HeadlessException e) {
             JOptionPane.showMessageDialog(this, "Error al modificar la proyección: ");
@@ -423,23 +597,28 @@ public class ModificarProyeccionVista extends javax.swing.JInternalFrame {
 
     }//GEN-LAST:event_JBActualizarActionPerformed
 
+    private void JCBHoraInicioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JCBHoraInicioActionPerformed
+        actualizarHoraFin();
+    }//GEN-LAST:event_JCBHoraInicioActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.ButtonGroup BGroup3D;
+    private javax.swing.ButtonGroup BgroupSub;
     private javax.swing.JButton JBActualizar;
-    private javax.swing.JComboBox<String> JCBHoraFin;
     private javax.swing.JComboBox<String> JCBHoraInicio;
     private javax.swing.JComboBox<String> JCBIdioma;
     private javax.swing.JComboBox<Pelicula> JCBPelicula;
     private javax.swing.JComboBox<Sala> JCBSala;
+    private javax.swing.JCheckBox JCBox3DNO;
+    private javax.swing.JCheckBox JCBox3DSI;
+    private javax.swing.JCheckBox JCBoxSubNO;
+    private javax.swing.JCheckBox JCBoxSubSI;
     private com.toedter.calendar.JDateChooser JDCCalendario;
+    private javax.swing.JTextField JTFHoraFin;
     private javax.swing.JTextField JTFID;
     private javax.swing.JTextField JTFLugaresDispo;
     private javax.swing.JTextField JTFPrecioAsiento;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JCheckBox jCheckBox3DNO;
-    private javax.swing.JCheckBox jCheckBox3DSI;
-    private javax.swing.JCheckBox jCheckBoxSubNO;
-    private javax.swing.JCheckBox jCheckBoxSubSI;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;

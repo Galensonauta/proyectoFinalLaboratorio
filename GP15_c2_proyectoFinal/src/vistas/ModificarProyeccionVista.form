@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
 <Form version="1.3" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JInternalFrameFormInfo">
+  <NonVisualComponents>
+    <Component class="javax.swing.ButtonGroup" name="BGroup3D">
+    </Component>
+    <Component class="javax.swing.ButtonGroup" name="BgroupSub">
+    </Component>
+  </NonVisualComponents>
   <Properties>
     <Property name="closable" type="boolean" value="true"/>
     <Property name="title" type="java.lang.String" value="Modificar Proyecci&#xf3;n"/>
@@ -99,22 +105,25 @@
                               <Component id="JTFLugaresDispo" alignment="0" pref="92" max="32767" attributes="0"/>
                               <Component id="JTFPrecioAsiento" alignment="0" max="32767" attributes="0"/>
                           </Group>
-                          <EmptySpace max="32767" attributes="0"/>
-                          <Component id="jButton1" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace min="-2" pref="31" max="-2" attributes="0"/>
+                          <EmptySpace min="31" pref="176" max="32767" attributes="0"/>
                       </Group>
                       <Group type="102" attributes="0">
                           <Group type="103" groupAlignment="0" attributes="0">
+                              <Component id="jLabel2" alignment="0" min="-2" max="-2" attributes="0"/>
                               <Group type="102" alignment="0" attributes="0">
                                   <Component id="jLabel9" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace min="-2" pref="60" max="-2" attributes="0"/>
-                                  <Component id="jCheckBoxSubSI" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="jCheckBoxSubNO" min="-2" max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="0" attributes="0">
+                                      <Group type="102" attributes="0">
+                                          <Component id="JCBoxSubSI" min="-2" max="-2" attributes="0"/>
+                                          <EmptySpace max="-2" attributes="0"/>
+                                          <Component id="JCBoxSubNO" min="-2" max="-2" attributes="0"/>
+                                      </Group>
+                                      <Component id="JTFHoraFin" min="-2" pref="122" max="-2" attributes="0"/>
+                                  </Group>
                               </Group>
-                              <Component id="jLabel2" alignment="0" min="-2" max="-2" attributes="0"/>
                           </Group>
-                          <EmptySpace max="32767" attributes="0"/>
+                          <EmptySpace pref="147" max="32767" attributes="0"/>
                       </Group>
                   </Group>
               </Group>
@@ -144,13 +153,12 @@
                       <Group type="102" attributes="0">
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="102" alignment="0" attributes="0">
-                                  <Component id="jCheckBox3DSI" min="-2" max="-2" attributes="0"/>
+                                  <Component id="JCBox3DSI" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace type="separate" max="-2" attributes="0"/>
-                                  <Component id="jCheckBox3DNO" min="-2" max="-2" attributes="0"/>
+                                  <Component id="JCBox3DNO" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <Component id="JDCCalendario" alignment="0" min="-2" pref="193" max="-2" attributes="0"/>
                               <Component id="JCBHoraInicio" alignment="0" min="-2" pref="122" max="-2" attributes="0"/>
-                              <Component id="JCBHoraFin" alignment="0" min="-2" pref="122" max="-2" attributes="0"/>
                               <Component id="JTFID" alignment="0" min="-2" pref="117" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace min="0" pref="70" max="32767" attributes="0"/>
@@ -186,8 +194,8 @@
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="jLabel6" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="jCheckBox3DSI" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="jCheckBox3DNO" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="JCBox3DSI" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="JCBox3DNO" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="0" attributes="0">
@@ -204,24 +212,29 @@
                       <Component id="jLabel7" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="JCBHoraInicio" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace min="-2" pref="21" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="jLabel8" alignment="1" min="-2" max="-2" attributes="0"/>
-                      <Component id="JCBHoraFin" alignment="1" min="-2" max="-2" attributes="0"/>
+                      <Group type="102" attributes="0">
+                          <EmptySpace min="-2" pref="31" max="-2" attributes="0"/>
+                          <Component id="jLabel8" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="23" max="-2" attributes="0"/>
+                      </Group>
+                      <Group type="102" alignment="1" attributes="0">
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="JTFHoraFin" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                      </Group>
                   </Group>
-                  <EmptySpace min="-2" pref="23" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Component id="jLabel9" alignment="1" min="-2" max="-2" attributes="0"/>
                       <Group type="103" alignment="1" groupAlignment="3" attributes="0">
-                          <Component id="jCheckBoxSubSI" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="jCheckBoxSubNO" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="JCBoxSubSI" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="JCBoxSubNO" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                   </Group>
-                  <EmptySpace min="-2" pref="24" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="jLabel10" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="JTFPrecioAsiento" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="jButton1" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
@@ -284,13 +297,19 @@
             <Property name="text" type="java.lang.String" value="&#xbf;Es 3D?"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JCheckBox" name="jCheckBox3DSI">
+        <Component class="javax.swing.JCheckBox" name="JCBox3DSI">
           <Properties>
+            <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
+              <ComponentRef name="BGroup3D"/>
+            </Property>
             <Property name="text" type="java.lang.String" value="SI"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JCheckBox" name="jCheckBox3DNO">
+        <Component class="javax.swing.JCheckBox" name="JCBox3DNO">
           <Properties>
+            <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
+              <ComponentRef name="BGroup3D"/>
+            </Property>
             <Property name="text" type="java.lang.String" value="NO"/>
           </Properties>
         </Component>
@@ -309,13 +328,19 @@
             <Property name="text" type="java.lang.String" value="Subtitulada:"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JCheckBox" name="jCheckBoxSubSI">
+        <Component class="javax.swing.JCheckBox" name="JCBoxSubSI">
           <Properties>
+            <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
+              <ComponentRef name="BgroupSub"/>
+            </Property>
             <Property name="text" type="java.lang.String" value="SI"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JCheckBox" name="jCheckBoxSubNO">
+        <Component class="javax.swing.JCheckBox" name="JCBoxSubNO">
           <Properties>
+            <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
+              <ComponentRef name="BgroupSub"/>
+            </Property>
             <Property name="text" type="java.lang.String" value="NO"/>
           </Properties>
         </Component>
@@ -357,19 +382,9 @@
               <Connection code="-1" type="code"/>
             </Property>
           </Properties>
-          <AuxValues>
-            <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
-          </AuxValues>
-        </Component>
-        <Component class="javax.swing.JComboBox" name="JCBHoraFin">
-          <Properties>
-            <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-              <StringArray count="0"/>
-            </Property>
-            <Property name="selectedItem" type="java.lang.Object" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-              <Connection code="-1" type="code"/>
-            </Property>
-          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="JCBHoraInicioActionPerformed"/>
+          </Events>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
           </AuxValues>
@@ -379,17 +394,14 @@
             <Property name="text" type="java.lang.String" value="Fecha de Proyecci&#xf3;n:"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JButton" name="jButton1">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="Elegir Asiento"/>
-          </Properties>
-        </Component>
         <Component class="javax.swing.JLabel" name="jLabel2">
           <Properties>
             <Property name="text" type="java.lang.String" value="ID:"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="JTFID">
+        </Component>
+        <Component class="javax.swing.JTextField" name="JTFHoraFin">
         </Component>
       </SubComponents>
     </Container>
