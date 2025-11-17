@@ -12,6 +12,9 @@ import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import javax.swing.JOptionPane;
+import javax.swing.event.InternalFrameAdapter;
+import javax.swing.event.InternalFrameEvent;
+import javax.swing.event.InternalFrameListener;
 import javax.swing.table.DefaultTableModel;
 import modelo.*;
 import persistencia.DetalleTicketData;
@@ -257,7 +260,7 @@ public class VistaProyeccion extends javax.swing.JInternalFrame {
         jCBSala.addItemListener(new ItemListener() {
             @Override
             public void itemStateChanged(ItemEvent ie) {
-                if(ie.getStateChange() == ItemEvent.SELECTED){
+                if (ie.getStateChange() == ItemEvent.SELECTED) {
                     asignarPrecioSegunSala();
                 }
             }
@@ -266,7 +269,7 @@ public class VistaProyeccion extends javax.swing.JInternalFrame {
         jCheckBox3DSI.addItemListener(new ItemListener() {
             @Override
             public void itemStateChanged(ItemEvent ie) {
-                if(ie.getStateChange() == ItemEvent.SELECTED){
+                if (ie.getStateChange() == ItemEvent.SELECTED) {
                     asignarPrecioSegunSala();
                 }
             }
@@ -275,7 +278,7 @@ public class VistaProyeccion extends javax.swing.JInternalFrame {
         jCheckBox3DNO.addItemListener(new ItemListener() {
             @Override
             public void itemStateChanged(ItemEvent ie) {
-                if(ie.getStateChange() == ItemEvent.SELECTED){
+                if (ie.getStateChange() == ItemEvent.SELECTED) {
                     asignarPrecioSegunSala();
                 }
             }
@@ -287,72 +290,73 @@ public class VistaProyeccion extends javax.swing.JInternalFrame {
                 JTFIDKeyTyped(evt);
             }
         });
-        
+
     }
-    
+
     private boolean validarCampos() {
-    
-    // -------------ComboBox----------
-    if (jCBPelicula.getSelectedItem() == null) {
-        JOptionPane.showMessageDialog(this, "Debe seleccionar una Película.", "Error de Validación", JOptionPane.ERROR_MESSAGE);
-        jCBPelicula.requestFocus();
-        return false;
+
+        // -------------ComboBox----------
+        if (jCBPelicula.getSelectedItem() == null) {
+            JOptionPane.showMessageDialog(this, "Debe seleccionar una Película.", "Error de Validación", JOptionPane.ERROR_MESSAGE);
+            jCBPelicula.requestFocus();
+            return false;
+        }
+
+        if (jCBSala.getSelectedItem() == null) {
+            JOptionPane.showMessageDialog(this, "Debe seleccionar una Sala.", "Error de Validación", JOptionPane.ERROR_MESSAGE);
+            jCBSala.requestFocus();
+            return false;
+        }
+
+        if (jCBIdioma.getSelectedItem() == null) {
+            JOptionPane.showMessageDialog(this, "Debe seleccionar un Idioma.", "Error de Validación", JOptionPane.ERROR_MESSAGE);
+            jCBIdioma.requestFocus();
+            return false;
+        }
+
+        // ------------Fecha----------
+        if (JDCCalendario.getDate() == null) {
+            JOptionPane.showMessageDialog(this, "Debe seleccionar una Fecha de Proyección.", "Error de Validación", JOptionPane.ERROR_MESSAGE);
+            JDCCalendario.requestFocus();
+            return false;
+        }
+
+        //-------------Horarios-------------
+        if (JCBHoraInicio.getSelectedItem() == null) {
+            JOptionPane.showMessageDialog(this, "Debe seleccionar una Hora de Inicio.", "Error de Validación", JOptionPane.ERROR_MESSAGE);
+            JCBHoraInicio.requestFocus();
+            return false;
+        }
+
+        if (JTFHoraFin.getText().trim().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "La hora de finalización no pudo ser calculada. Verifique la hora de inicio.", "Error de Validación", JOptionPane.ERROR_MESSAGE);
+            JCBHoraInicio.requestFocus();
+            return false;
+        }
+
+        // ------------campos de texto----------
+        if (JTFLugaresDispo.getText().trim().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "El precio del asiento no puede estar vacío. Verifique la Sala.", "Error de Validación", JOptionPane.ERROR_MESSAGE);
+            jCBSala.requestFocus();
+            return false;
+        }
+
+        //--------------CheckBox-------
+        if (!jCheckBox3DSI.isSelected() && !jCheckBox3DNO.isSelected()) {
+            JOptionPane.showMessageDialog(this, "Debe seleccionar una opción para 'Es 3D'.", "Error de Validación", JOptionPane.ERROR_MESSAGE);
+            jCheckBox3DSI.requestFocus();
+            return false;
+        }
+
+        if (!jCBSubSI.isSelected() && !jCBSubNO.isSelected()) {
+            JOptionPane.showMessageDialog(this, "Debe seleccionar una opción para 'Subtitulada'.", "Error de Validación", JOptionPane.ERROR_MESSAGE);
+            jCBSubSI.requestFocus();
+            return false;
+        }
+
+        return true;
     }
 
-    if (jCBSala.getSelectedItem() == null) {
-        JOptionPane.showMessageDialog(this, "Debe seleccionar una Sala.", "Error de Validación", JOptionPane.ERROR_MESSAGE);
-        jCBSala.requestFocus();
-        return false;
-    }
-
-    if (jCBIdioma.getSelectedItem() == null) {
-        JOptionPane.showMessageDialog(this, "Debe seleccionar un Idioma.", "Error de Validación", JOptionPane.ERROR_MESSAGE);
-        jCBIdioma.requestFocus();
-        return false;
-    }
-
-    // ------------Fecha----------
-    if (JDCCalendario.getDate() == null) {
-        JOptionPane.showMessageDialog(this, "Debe seleccionar una Fecha de Proyección.", "Error de Validación", JOptionPane.ERROR_MESSAGE);
-        JDCCalendario.requestFocus();
-        return false;
-    }
-
-    //-------------Horarios-------------
-    if (JCBHoraInicio.getSelectedItem() == null) {
-        JOptionPane.showMessageDialog(this, "Debe seleccionar una Hora de Inicio.", "Error de Validación", JOptionPane.ERROR_MESSAGE);
-        JCBHoraInicio.requestFocus();
-        return false;
-    }
-
-    if (JTFHoraFin.getText().trim().isEmpty()) { 
-        JOptionPane.showMessageDialog(this, "La hora de finalización no pudo ser calculada. Verifique la hora de inicio.", "Error de Validación", JOptionPane.ERROR_MESSAGE);
-        JCBHoraInicio.requestFocus();
-        return false;
-    }
-
-    // ------------campos de texto----------
-    if (JTFLugaresDispo.getText().trim().isEmpty()) {
-        JOptionPane.showMessageDialog(this, "El precio del asiento no puede estar vacío. Verifique la Sala.", "Error de Validación", JOptionPane.ERROR_MESSAGE);
-        jCBSala.requestFocus();
-        return false;
-    }
-    
-    //--------------CheckBox-------
-    if (!jCheckBox3DSI.isSelected() && !jCheckBox3DNO.isSelected()) {
-        JOptionPane.showMessageDialog(this, "Debe seleccionar una opción para 'Es 3D'.", "Error de Validación", JOptionPane.ERROR_MESSAGE);
-        jCheckBox3DSI.requestFocus();
-        return false;
-    }
-    
-    if (!jCBSubSI.isSelected() && !jCBSubNO.isSelected()) {
-        JOptionPane.showMessageDialog(this, "Debe seleccionar una opción para 'Subtitulada'.", "Error de Validación", JOptionPane.ERROR_MESSAGE);
-        jCBSubSI.requestFocus();
-        return false;
-    }
-
-    return true; 
-}
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -794,23 +798,22 @@ public class VistaProyeccion extends javax.swing.JInternalFrame {
         } catch (HeadlessException e) {
             JOptionPane.showMessageDialog(this, "Error en boton Guardar: " + e.getMessage());
         }
-        
+
         cargarTabla();
         limpiarCampos();
     }//GEN-LAST:event_JBGuardarActionPerformed
 
     private void JBBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBBuscarActionPerformed
         modeloTabla.setRowCount(0);
-        
+
         String idStr = JTFID.getText().trim();
-        
-        if(idStr.isEmpty()){
+
+        if (idStr.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Debe ingresar un ID para buscar");
             JTFID.requestFocus();
             return;
         }
-        
-        
+
         try {
             int id = Integer.valueOf(idStr);
             Proyeccion aux = proData.buscarProyeccionPorID(id);
@@ -861,13 +864,13 @@ public class VistaProyeccion extends javax.swing.JInternalFrame {
                     aux.getPrecioLugar(),
                     aux.getLugaresDisponibles()
                 });
-                
+
                 jTableProyecciones.setRowSelectionInterval(0, 0);
 
             } else {
                 JOptionPane.showMessageDialog(this, "No se encontró ninguna proyección con el ID ingresado");
             }
-            
+
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(this, "Ingrese un número de ID válido.", "Error de Formato", JOptionPane.WARNING_MESSAGE);
         }
@@ -875,8 +878,10 @@ public class VistaProyeccion extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_JBBuscarActionPerformed
 
     private void JBLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBLimpiarActionPerformed
+        limpiarCampos();
         modeloTabla.setRowCount(0);
         cargarTabla();
+        
     }//GEN-LAST:event_JBLimpiarActionPerformed
 
     private void JBModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBModificarActionPerformed
@@ -895,26 +900,37 @@ public class VistaProyeccion extends javax.swing.JInternalFrame {
 
             if (p == null) {
                 JOptionPane.showMessageDialog(this, "Error, no se pudo cargar la proyección");
-            }else {
+            } else {
                 Proyeccion proSinModificar = new Proyeccion( //esta va a ser la copia que se va a modificar en la ventana hija. 
-                        p.getIdProyeccion(), 
-                        p.getPelicula(), 
-                        p.getSala(), 
-                        p.getIdioma(), 
-                        p.isSubtitulada(), 
-                        p.getHoraInicio(), 
-                        p.getHoraFin(), 
-                        p.getLugaresDisponibles(), 
-                        p.isEs3D(), 
+                        p.getIdProyeccion(),
+                        p.getPelicula(),
+                        p.getSala(),
+                        p.getIdioma(),
+                        p.isSubtitulada(),
+                        p.getHoraInicio(),
+                        p.getHoraFin(),
+                        p.getLugaresDisponibles(),
+                        p.isEs3D(),
                         p.getPrecioLugar());
-                
 
-            ModificarProyeccionVista mpv = new ModificarProyeccionVista(proSinModificar, proData, peliData, salaData);
-            EscritorioProyeccion.add(mpv);
-            mpv.setVisible(true);
-            mpv.moveToFront();
+                ModificarProyeccionVista mpv = new ModificarProyeccionVista(proSinModificar, proData, peliData, salaData);
+
+                mpv.addInternalFrameListener(new InternalFrameAdapter() {
+                
+                @Override
+                public void internalFrameClosed(InternalFrameEvent e) {
+                    System.out.println("Ventana de modificación cerrada, recargando tabla..."); 
+                
+                    cargarTabla(); 
+                }
+            });
+
+                EscritorioProyeccion.add(mpv);
+                mpv.setVisible(true);
+                mpv.moveToFront();
+
             }
-        }catch(NumberFormatException e){
+        } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(this, "El ID de la tabla no es numérico", "ERROR", JOptionPane.WARNING_MESSAGE);
         } catch (HeadlessException e) {
             JOptionPane.showMessageDialog(this, "Error al abrir nueva ventana. " + e.getMessage());
