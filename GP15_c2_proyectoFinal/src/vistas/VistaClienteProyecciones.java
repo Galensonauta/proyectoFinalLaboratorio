@@ -223,7 +223,7 @@ public class VistaClienteProyecciones extends javax.swing.JInternalFrame {
         }
 
      
-            int id = (Integer) modeloTabla.getValueAt(filaSelec, 0);
+            int id = (int) modeloTabla.getValueAt(filaSelec, 0);
             Proyeccion p = proData.buscarProyeccionPorID(id);
         madre.getDt().setProyeccion(p);
         madre.avanzarFlujoVenta(2);

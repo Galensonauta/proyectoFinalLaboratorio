@@ -5,15 +5,18 @@
  */
 package vistas;
 
+import java.awt.Color;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.JToggleButton;
 import modelo.LugarAsiento;
+import persistencia.LugarAsientoData;
 import persistencia.SalaData;
 
 /**
@@ -22,13 +25,19 @@ import persistencia.SalaData;
  */
 public class VistaClienteElegirAsiento extends javax.swing.JInternalFrame {
 
-    private int filasSala = 0; //estos datos podrían venir de la tabla sala    
-    private int columnasSala = 0;
+    private int filasSala = 10; //estos datos podrían venir de la tabla sala    
+    private int columnasSala = 20;
+    public int idProyeccion;
+    
     private VistaClientePrincipal madre;
     private SalaData sd = new SalaData();
+    private LugarAsientoData lad = new LugarAsientoData();
+    
+    private HashSet<String> asientosOcupadosEtiquetas = new HashSet();
+    
     public ArrayList<String> asientosSeleccionadosEtiquetas = new ArrayList<>();
     public ArrayList<LugarAsiento> asientosFinales = new ArrayList<>();
-    public int idProyeccion;
+    
     
     public ArrayList<String> getAsientosSeleccionadosEtiquetas(){
         return asientosSeleccionadosEtiquetas;
@@ -50,7 +59,7 @@ public class VistaClienteElegirAsiento extends javax.swing.JInternalFrame {
 
             
             if (boton.isSelected() && asientosSeleccionadosEtiquetas.size() < 4) {
-                
+                boton.setBackground(new Color(0, 153, 204));
                 asientosSeleccionadosEtiquetas.add(etiquetaAsiento);
 
             } else if (boton.isSelected() && asientosSeleccionadosEtiquetas.size() == 4) {
@@ -59,7 +68,7 @@ public class VistaClienteElegirAsiento extends javax.swing.JInternalFrame {
                 boton.setSelected(false);
                 
             } else {
-                
+                boton.setBackground(Color.lightGray);
                 asientosSeleccionadosEtiquetas.remove(etiquetaAsiento);
             }
             
@@ -77,8 +86,10 @@ public class VistaClienteElegirAsiento extends javax.swing.JInternalFrame {
    
     public void setearFilasYColumnas(){
         //ObtenerAsientos(nrSala){ desde SalaData}
+        int capacidad =  madre.getDt().getProyeccion().getSala().getCapacidad();
+        System.out.println("CAPACIDAD SALA:  " + capacidad);
         this.columnasSala = 10;
-        this.filasSala = madre.getDt().getProyeccion().getSala().getCapacidad() / 10;
+        this.filasSala = capacidad / 10;
     }
     
     private void convertirEtiquetasAObjetos(){
@@ -116,27 +127,31 @@ public class VistaClienteElegirAsiento extends javax.swing.JInternalFrame {
         return String.valueOf(letraFila) + numeroColumna;
     }
     
+    
     public void dibujarSala(int filas, int columnas) {
         
         ActionListener selectorListener = new SimpleToggleListener(asientosSeleccionadosEtiquetas);
         
-        jPanel.setLayout(new GridLayout(filasSala, columnasSala, 0, 0));
+        jPanel.setLayout(new GridLayout(filasSala, columnasSala));
         
         for (int r = 0; r < filas; r++) {
             for (int c = 0; c < columnas; c++) {
 
                 JToggleButton asiento = new JToggleButton();
 
-                // 1. Obtener datos (de la BD)
-                boolean ocupado = false; //como no los tengo pongo todo false
+              
+               
                 String etiqueta = generarEtiqueta(r, c);
+                
+                boolean ocupado = asientosOcupadosEtiquetas.contains(etiqueta);
 
-                // 2. Configurar el botón
+                // Configurar el botón
                 asiento.setText(etiqueta); 
 
                 if (ocupado) {
                     
                     asiento.setEnabled(false); 
+                    
                 } else {
                     
                     asiento.setEnabled(true);
@@ -151,9 +166,10 @@ public class VistaClienteElegirAsiento extends javax.swing.JInternalFrame {
     public VistaClienteElegirAsiento(VistaClientePrincipal madre) {
         initComponents();
         this.madre = madre;
-        
         this.idProyeccion = madre.getDt().getProyeccion().getIdProyeccion();
-        //setearFilasYColumnas();
+        this.asientosOcupadosEtiquetas = lad.obtenerAsientosOcupados(idProyeccion);
+        System.out.println(asientosOcupadosEtiquetas);
+        setearFilasYColumnas();
         
         dibujarSala(filasSala, columnasSala);
     }
@@ -172,6 +188,8 @@ public class VistaClienteElegirAsiento extends javax.swing.JInternalFrame {
         btnSalir = new javax.swing.JButton();
         btnAtras = new javax.swing.JButton();
 
+        jDesktopPane1.setMaximumSize(new java.awt.Dimension(1024, 768));
+
         btnGuardar.setText("Siguiente >");
         btnGuardar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -179,7 +197,8 @@ public class VistaClienteElegirAsiento extends javax.swing.JInternalFrame {
             }
         });
 
-        jPanel.setMaximumSize(new java.awt.Dimension(1024, 768));
+        jPanel.setAutoscrolls(true);
+        jPanel.setMaximumSize(new java.awt.Dimension(768, 480));
 
         javax.swing.GroupLayout jPanelLayout = new javax.swing.GroupLayout(jPanel);
         jPanel.setLayout(jPanelLayout);
@@ -189,7 +208,7 @@ public class VistaClienteElegirAsiento extends javax.swing.JInternalFrame {
         );
         jPanelLayout.setVerticalGroup(
             jPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 643, Short.MAX_VALUE)
+            .addGap(0, 695, Short.MAX_VALUE)
         );
 
         jLabel1.setFont(new java.awt.Font("Dialog", 1, 36)); // NOI18N
@@ -224,13 +243,6 @@ public class VistaClienteElegirAsiento extends javax.swing.JInternalFrame {
         jDesktopPane1Layout.setHorizontalGroup(
             jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jDesktopPane1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(btnAtras)
-                .addGap(518, 518, 518)
-                .addComponent(btnGuardar)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnSalir))
-            .addGroup(jDesktopPane1Layout.createSequentialGroup()
                 .addGroup(jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jDesktopPane1Layout.createSequentialGroup()
                         .addGap(448, 448, 448)
@@ -238,41 +250,46 @@ public class VistaClienteElegirAsiento extends javax.swing.JInternalFrame {
                         .addGap(40, 40, 40)
                         .addComponent(jLabel2))
                     .addGroup(jDesktopPane1Layout.createSequentialGroup()
-                        .addGap(242, 242, 242)
-                        .addComponent(jPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(254, 254, 254)
+                        .addComponent(jPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addContainerGap(236, Short.MAX_VALUE))
+            .addGroup(jDesktopPane1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(btnAtras)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnGuardar)
+                .addGap(512, 512, 512)
+                .addComponent(btnSalir)
+                .addContainerGap())
         );
         jDesktopPane1Layout.setVerticalGroup(
             jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jDesktopPane1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnSalir)
-                .addContainerGap())
             .addGroup(jDesktopPane1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(jLabel2))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 57, Short.MAX_VALUE)
+                .addComponent(jPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnGuardar)
                     .addComponent(btnAtras)
-                    .addComponent(btnGuardar)))
+                    .addComponent(btnSalir))
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jDesktopPane1)
+            .addComponent(jDesktopPane1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jDesktopPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jDesktopPane1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();

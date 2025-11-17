@@ -98,13 +98,13 @@ public class VistaADM extends javax.swing.JFrame {
             .addGroup(escritorioLayout.createSequentialGroup()
                 .addGap(115, 115, 115)
                 .addComponent(JBPeliculas, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(254, 254, 254)
+                .addGap(104, 104, 104)
                 .addComponent(BotonSala, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(256, 256, 256)
+                .addGap(130, 130, 130)
                 .addComponent(JBProyeccion, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(40, 40, 40)
+                .addGap(154, 154, 154)
                 .addComponent(JBClientes, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(174, 174, 174)
                 .addComponent(JBInformes, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(175, Short.MAX_VALUE))
         );
@@ -120,7 +120,7 @@ public class VistaADM extends javax.swing.JFrame {
                     .addComponent(JBProyeccion, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(JBClientes, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(JBInformes, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(396, Short.MAX_VALUE))
+                .addContainerGap(632, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());

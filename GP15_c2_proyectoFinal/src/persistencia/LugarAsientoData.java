@@ -1,6 +1,7 @@
 package persistencia;
 
 import java.sql.*;
+import java.util.HashSet;
 import modelo.*;
 
 /**
@@ -13,6 +14,7 @@ public class LugarAsientoData {
 
     private Connection con;
     private ProyeccionData proyeccionData;
+    
 
     public LugarAsientoData() {
         try {
@@ -180,5 +182,39 @@ public class LugarAsientoData {
         } catch (SQLException e) {
             System.out.println("Error al tratar de eliminar lugar asiento según ID Proyeccion: " + e.getMessage());
         }
+    }
+    
+    
+    public HashSet<String> obtenerAsientosOcupados(int idProyeccion){
+        HashSet<String> ocupados = new HashSet();
+        
+        String query = "SELECT filaAsiento, numeroAsiento FROM lugar_asiento WHERE proyeccion = ? AND estado = 1";
+        
+        try {
+            PreparedStatement ps = con.prepareStatement(query);
+            ps.setInt(1, idProyeccion);
+
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+            
+            // Obtener los valores de las columnas
+            String fila = rs.getString("filaAsiento");
+            int numero = rs.getInt("numeroAsiento");
+            
+            //Construir la etiqueta 
+            String etiqueta = fila + String.valueOf(numero);
+            
+            // Agregar la etiqueta al HashSet
+            ocupados.add(etiqueta);
+        }
+            
+        rs.close(); 
+        ps.close();
+
+        } catch (SQLException ex) {
+            System.out.println("Error al obtener Asiento: " + ex.getMessage());
+        }
+        
+        return ocupados;
     }
 }
