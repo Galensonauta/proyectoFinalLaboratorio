@@ -21,7 +21,7 @@ public class LugarAsiento {
         this.proyeccion = proyeccion;
     }
     public LugarAsiento(String fila, int numeroAsiento, boolean estado, int idProyeccion) {
-        
+        this.idProyeccion = idProyeccion;
         this.numeroAsiento = numeroAsiento;
         this.fila = fila;
         this.estado = estado;
@@ -72,7 +72,7 @@ public class LugarAsiento {
 
     @Override
     public String toString() {
-        return "\nAsiento[" + "Código: " + codLugar + ", Fila: " + fila + ", Numero: " + numeroAsiento + ", Estado: " + estado + ']';
+        return "[" + fila + "-" + numeroAsiento +"] ";
     }
     
     

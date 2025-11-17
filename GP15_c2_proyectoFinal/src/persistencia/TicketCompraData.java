@@ -140,9 +140,9 @@ public class TicketCompraData {
         );       
                 for (DetalleTicket dt : detalles) {
                         System.out.println("  > Renglón ID: " + dt.getIdDetalle());
-                        System.out.println("    Proyección: " + dt.getIdProyeccion().getPelicula().getTitulo());
+                        System.out.println("    Proyección: " + dt.getProyeccion().getPelicula().getTitulo());
                         System.out.println("    Fecha Función: " + dt.getFechProyeccion());
-                        System.out.println("    Hora Función: " + dt.getIdProyeccion().getHoraInicio());
+                        System.out.println("    Hora Función: " + dt.getProyeccion().getHoraInicio());
                         System.out.println("    Cantidad: " + dt.getCantidad());
                         System.out.println("    Subtotal: $" + dt.getSubtotal());
                         System.out.println("    Asientos: ");

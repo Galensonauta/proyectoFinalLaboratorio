@@ -37,7 +37,7 @@ private Connection con;
             psDetalle.setInt(1, codD);
             psDetalle.setInt(2, dt.getCantidad());
             psDetalle.setInt(3, dt.getSubtotal());
-            psDetalle.setInt(4, dt.getIdProyeccion().getIdProyeccion());    
+            psDetalle.setInt(4, dt.getProyeccion().getIdProyeccion());    
             psDetalle.setDate(5, java.sql.Date.valueOf(dt.getFechProyeccion()));
 
             psDetalle.executeUpdate();
@@ -117,7 +117,7 @@ private Connection con;
                 dt.setFechProyeccion(rsDetalles.getObject("fechProyeccion", LocalDate.class));
                 
                 Proyeccion p = proyeccionData.buscarProyeccionPorID(rsDetalles.getInt("idProyeccion"));
-                dt.setIdProyeccion(p);
+                dt.setProyeccion(p);
                
                     PreparedStatement psLugares = con.prepareStatement(sqlLugares);
                     psLugares.setInt(1, idDetalle);

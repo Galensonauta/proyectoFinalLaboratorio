@@ -7,8 +7,10 @@ package vistas;
 
 import java.util.ArrayList;
 import java.util.List;
+import modelo.DetalleTicket;
 import modelo.LugarAsiento;
 import modelo.Proyeccion;
+import modelo.TicketCompra;
 
 /**
  *
@@ -17,12 +19,17 @@ import modelo.Proyeccion;
 public class VistaClientePrincipal extends javax.swing.JFrame {
     
     private List<LugarAsiento> asientosSeleccionados = new ArrayList<>();
-    private Proyeccion proyeccionSeleccionada;
+    private Proyeccion proyeccionSeleccionada = new Proyeccion();
+    
+    private DetalleTicket dt = new DetalleTicket();
+    private TicketCompra tc = new TicketCompra(); 
+    
     /**
      * Creates new form VistaPrincipal
      */
     public VistaClientePrincipal() {
         initComponents();
+        
     }
 
     public List<LugarAsiento> getAsientosSeleccionados() {
@@ -39,6 +46,14 @@ public class VistaClientePrincipal extends javax.swing.JFrame {
 
     public void setProyeccionSeleccionada(Proyeccion proyeccionSeleccionada) {
         this.proyeccionSeleccionada = proyeccionSeleccionada;
+    }
+
+    public DetalleTicket getDt() {
+        return dt;
+    }
+
+    public void setDt(DetalleTicket dt) {
+        this.dt = dt;
     }
     
     
