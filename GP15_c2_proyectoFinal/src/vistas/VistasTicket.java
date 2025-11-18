@@ -241,12 +241,20 @@ public class VistasTicket extends javax.swing.JInternalFrame {
         modeloTabla.addColumn("ID Ticket");
         modeloTabla.addColumn("Fecha Compra");
         modeloTabla.addColumn("Comprador");
+        modeloTabla.addColumn("Cantidad entradas");
         
         for (TicketCompra tc : tickets) {
+            int entradasTotales=0;
+            if (tc.getDetalles() != null) { 
+            for (DetalleTicket dt : tc.getDetalles()) {
+                entradasTotales += dt.getCantidad();
+            }
+            }
         modeloTabla.addRow(new Object[]{
             tc.getIdTicket(),
             tc.getFechCompra().toString(),
-            tc.getComprador().getNombre() 
+            tc.getComprador().getNombre(),
+            entradasTotales
         });
     }
         
@@ -265,12 +273,21 @@ public class VistasTicket extends javax.swing.JInternalFrame {
         modeloTabla.addColumn("ID Ticket");
         modeloTabla.addColumn("Fecha Compra");
         modeloTabla.addColumn("Comprador");
+        modeloTabla.addColumn("Cantidad entradas");
+        
         
         for (TicketCompra tc : tickets) {
+            int entradasTotales=0;
+            if (tc.getDetalles() != null) { 
+            for (DetalleTicket dt : tc.getDetalles()) {
+                entradasTotales += dt.getCantidad();
+            }
+            }
         modeloTabla.addRow(new Object[]{
             tc.getIdTicket(),
             tc.getFechCompra().toString(),
-            tc.getComprador().getNombre() 
+            tc.getComprador().getNombre(),       
+            entradasTotales
         });
     }
     }//GEN-LAST:event_jbTicketsPorFechaActionPerformed
