@@ -8,12 +8,13 @@ package vistas;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Date;
+import javax.swing.JOptionPane;
 import modelo.Pelicula;
 import persistencia.PeliculaData;
 
 /**
  *
- * @author Charly Cimino
+ * @author Grupo 15 (Evelyn Cetera, Tomas Puw Zirulnik, Matias Correa, Enzo Fornes, Santiago Girardi)
  */
 public class ModificarPeliculaVista extends javax.swing.JInternalFrame {
     
@@ -28,8 +29,53 @@ public class ModificarPeliculaVista extends javax.swing.JInternalFrame {
         this.peliculaData = peliculaData;
         initComponents();
         cargarDatos();
+        JTTitulo.setEditable(false);
+        JREnCartelera.setEnabled(false);
+        
     }
 
+    public void cargarDatos(){
+        
+        
+        JTTitulo.setText(pelicula.getTitulo());
+        JTActores.setText(pelicula.getActores());
+        JTDirector.setText(pelicula.getDirector());
+        JTOrigen.setText(pelicula.getOrigen());
+        
+        String genero = pelicula.getGenero();
+        
+        for(int i = 0 ; i < JCGenero.getItemCount() ; i++ ){
+            
+            String peliculaEnLista = JCGenero.getItemAt(i);
+            
+            if(peliculaEnLista.equalsIgnoreCase(genero)){
+                
+                JCGenero.setSelectedIndex(i);
+                
+                break;
+            }
+        }
+        
+        LocalDate fechaDeEstreno = pelicula.getEstreno();
+        
+        Date utilDate = Date.from(fechaDeEstreno.atStartOfDay(ZoneId.systemDefault()).toInstant());
+        
+        JDFechaDeEstreno.setDate(utilDate);
+        
+        BGroupEnCartelera.clearSelection(); //limpiar cualquier Seleccion
+        
+        boolean enCartelera = pelicula.isEnCartelera();
+        
+        if(enCartelera){
+            JREnCartelera.setSelected(true);
+        }else{
+            JREnCarteleraNo.setSelected(true);
+        }
+        
+        JREnCartelera.setEnabled(false);
+        JREnCarteleraNo.setEnabled(true);
+        
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -39,7 +85,7 @@ public class ModificarPeliculaVista extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        buttonGroup1 = new javax.swing.ButtonGroup();
+        BGroupEnCartelera = new javax.swing.ButtonGroup();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -57,7 +103,8 @@ public class ModificarPeliculaVista extends javax.swing.JInternalFrame {
         JREnCartelera = new javax.swing.JRadioButton();
         JREnCarteleraNo = new javax.swing.JRadioButton();
         JBGuardar = new javax.swing.JButton();
-        JBSalir = new javax.swing.JButton();
+
+        setClosable(true);
 
         jLabel1.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         jLabel1.setText("MODIFICAR PELICULA");
@@ -83,42 +130,45 @@ public class ModificarPeliculaVista extends javax.swing.JInternalFrame {
         jLabel8.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jLabel8.setText("EN CARTELERA");
 
-        JTTitulo.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                JTTituloActionPerformed(evt);
+        JTDirector.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                JTDirectorKeyTyped(evt);
             }
         });
 
-        JTDirector.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                JTDirectorActionPerformed(evt);
+        JTActores.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                JTActoresKeyTyped(evt);
             }
         });
 
-        JCGenero.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "TERROR", "COMEDIA" }));
-        JCGenero.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                JCGeneroActionPerformed(evt);
+        JTOrigen.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                JTOrigenKeyTyped(evt);
             }
         });
 
-        buttonGroup1.add(JREnCartelera);
+        JCGenero.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "TERROR", "COMEDIA", "DRAMA", "CIENCIA FICCIÓN", "DOCUMENTAL", "AVENTURA", "SUSPENSO" }));
+        JCGenero.setSelectedIndex(-1);
+
+        JDFechaDeEstreno.setMaxSelectableDate(java.util.Date.from(java.time.LocalDate.now().plusYears(1).atStartOfDay(java.time.ZoneId.systemDefault()).toInstant()));
+        JDFechaDeEstreno.setMinSelectableDate(java.util.Date.from(java.time.LocalDate.now().atStartOfDay(java.time.ZoneId.systemDefault()).toInstant()));
+
+        BGroupEnCartelera.add(JREnCartelera);
         JREnCartelera.setText("Si");
+        JREnCartelera.setEnabled(false);
+        JREnCartelera.setEnabled(true);
 
-        buttonGroup1.add(JREnCarteleraNo);
+        BGroupEnCartelera.add(JREnCarteleraNo);
+        JREnCarteleraNo.setSelected(true);
         JREnCarteleraNo.setText("No");
+        JREnCarteleraNo.setSelected(true);
+        JREnCarteleraNo.setEnabled(true);
 
         JBGuardar.setText("Guardar");
         JBGuardar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 JBGuardarActionPerformed(evt);
-            }
-        });
-
-        JBSalir.setText("Salir");
-        JBSalir.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                JBSalirActionPerformed(evt);
             }
         });
 
@@ -130,38 +180,33 @@ public class ModificarPeliculaVista extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(156, 156, 156)
-                        .addComponent(JBGuardar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(JBSalir))
+                        .addComponent(JBGuardar))
                     .addGroup(layout.createSequentialGroup()
+                        .addGap(48, 48, 48)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel2)
+                            .addComponent(jLabel6)
+                            .addComponent(jLabel7)
+                            .addComponent(jLabel8)
+                            .addComponent(jLabel5)
+                            .addComponent(jLabel4)
+                            .addComponent(jLabel3))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(48, 48, 48)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel2)
-                                    .addComponent(jLabel6)
-                                    .addComponent(jLabel7)
-                                    .addComponent(jLabel8)
-                                    .addComponent(jLabel5)
-                                    .addComponent(jLabel4)
-                                    .addComponent(jLabel3))
-                                .addGap(18, 18, 18)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(JREnCartelera)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(JREnCarteleraNo))
-                                    .addComponent(JDFechaDeEstreno, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(JCGenero, javax.swing.GroupLayout.Alignment.TRAILING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(JTOrigen, javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(JTActores, javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(JTDirector, javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(JTTitulo, javax.swing.GroupLayout.Alignment.TRAILING)))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(112, 112, 112)
-                                .addComponent(jLabel1)))
-                        .addGap(0, 95, Short.MAX_VALUE)))
-                .addContainerGap())
+                                .addComponent(JREnCartelera)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(JREnCarteleraNo))
+                            .addComponent(JDFechaDeEstreno, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(JCGenero, javax.swing.GroupLayout.Alignment.TRAILING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(JTOrigen, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(JTActores, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(JTDirector, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(JTTitulo, javax.swing.GroupLayout.Alignment.TRAILING)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(112, 112, 112)
+                        .addComponent(jLabel1)))
+                .addContainerGap(96, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -200,61 +245,97 @@ public class ModificarPeliculaVista extends javax.swing.JInternalFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(JBGuardar)
                 .addContainerGap(19, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(JBSalir)
-                .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void JTDirectorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JTDirectorActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_JTDirectorActionPerformed
-
-    private void JCGeneroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JCGeneroActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_JCGeneroActionPerformed
-
-    private void JTTituloActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JTTituloActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_JTTituloActionPerformed
-
-    private void JBSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBSalirActionPerformed
-        this.dispose();
-        // TODO add your handling code here:
-    }//GEN-LAST:event_JBSalirActionPerformed
-
     private void JBGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBGuardarActionPerformed
-        
-        String titulo = JTTitulo.getText();
+        //validaciones antes de guardar 
+        if (JTActores.getText().trim().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "El campo 'Actores' no puede estar vacio. ");
+            requestFocus();
+            return;
+        }
+
+        if (JTDirector.getText().trim().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "El campo 'Director' no puede estar vacio. ");
+            requestFocus();
+            return;
+        }
+
+        if (JTOrigen.getText().trim().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "El campo 'Origen' no puede estar vacio. ");
+            requestFocus();
+            return;
+        }
+
+        if (JCGenero.getSelectedIndex() == -1 || JCGenero.getSelectedItem() == null) {
+            JOptionPane.showMessageDialog(this, "Debe seleccionar un valor para el campo 'Género'");
+            requestFocus();
+            return;
+        }
+
+        if (JDFechaDeEstreno.getDate() == null) {
+            JOptionPane.showMessageDialog(this, "Debe selecionar una fecha para el campo 'Fecha de Estreno'");
+            JDFechaDeEstreno.requestFocus();
+            return;
+        }
+
+        try { // y ahora si guardamos
+            String titulo = JTTitulo.getText();
             String actores = JTActores.getText();
             String director = JTDirector.getText();
             String origen = JTOrigen.getText();
             String genero = JCGenero.getSelectedItem().toString();
+            
             java.util.Date fecha = JDFechaDeEstreno.getDate();
             LocalDate fechaConvertida = fecha.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-            boolean enCartelera = false;
-            if(JREnCartelera.isSelected()){
-                enCartelera = true;
-            }if(JREnCarteleraNo.isSelected()){
-                enCartelera = false;
-            }
             
-            Pelicula peliculaAModificar = new Pelicula(titulo,director, actores,origen, genero, fechaConvertida,enCartelera  );
-            
+            boolean enCartelera = JREnCartelera.isSelected();
+
+
+            Pelicula peliculaAModificar = new Pelicula(titulo, director, actores, origen, genero, fechaConvertida, enCartelera);
+
             peliculaData.modificarPelicula(peliculaAModificar, pelicula.getTitulo());
             
+            JOptionPane.showMessageDialog(this, "Pelicula Modificada Correctamente");
             this.dispose();
-        
-        // TODO add your handling code here:
+            
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "No pudo modificarse la Pelicula", "Error al modificar", JOptionPane.ERROR_MESSAGE);
+        }
+
     }//GEN-LAST:event_JBGuardarActionPerformed
+
+    private void JTDirectorKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_JTDirectorKeyTyped
+        char c = evt.getKeyChar();
+        
+        if(!Character.isLetter(c) && c != ' ' && c != java.awt.event.KeyEvent.VK_BACK_SPACE){
+            evt.consume();
+        }
+    }//GEN-LAST:event_JTDirectorKeyTyped
+
+    private void JTActoresKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_JTActoresKeyTyped
+        char c = evt.getKeyChar();
+        
+        if(!Character.isLetter(c) && c != ' ' && c != java.awt.event.KeyEvent.VK_BACK_SPACE){
+            evt.consume();
+        }
+    }//GEN-LAST:event_JTActoresKeyTyped
+
+    private void JTOrigenKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_JTOrigenKeyTyped
+        char c = evt.getKeyChar();
+        
+        if(!Character.isLetter(c) && c != ' ' && c != java.awt.event.KeyEvent.VK_BACK_SPACE){
+            evt.consume();
+        }
+    }//GEN-LAST:event_JTOrigenKeyTyped
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.ButtonGroup BGroupEnCartelera;
     private javax.swing.JButton JBGuardar;
-    private javax.swing.JButton JBSalir;
     private javax.swing.JComboBox<String> JCGenero;
     private com.toedter.calendar.JDateChooser JDFechaDeEstreno;
     private javax.swing.JRadioButton JREnCartelera;
@@ -263,7 +344,6 @@ public class ModificarPeliculaVista extends javax.swing.JInternalFrame {
     private javax.swing.JTextField JTDirector;
     private javax.swing.JTextField JTOrigen;
     private javax.swing.JTextField JTTitulo;
-    private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -275,45 +355,7 @@ public class ModificarPeliculaVista extends javax.swing.JInternalFrame {
     // End of variables declaration//GEN-END:variables
 
 
-    public void cargarDatos(){
-        
-        
-        JTTitulo.setText(pelicula.getTitulo());
-        JTActores.setText(pelicula.getActores());
-        JTDirector.setText(pelicula.getDirector());
-        JTOrigen.setText(pelicula.getOrigen());
-        
-        String genero = pelicula.getGenero();
-        
-        for(int i = 0 ; i < JCGenero.getItemCount() ; i++ ){
-            
-            String peliculaEnLista = JCGenero.getItemAt(i);
-            
-            if(peliculaEnLista.equalsIgnoreCase(genero)){
-                
-                JCGenero.setSelectedIndex(i);
-                
-                break;
-            }
-        }
-        
-        LocalDate fechaDeEstreno = pelicula.getEstreno();
-        
-        Date utilDate = Date.from(fechaDeEstreno.atStartOfDay(ZoneId.systemDefault()).toInstant());
-        
-        JDFechaDeEstreno.setDate(utilDate);
-        
-        
-        boolean enCartelera = pelicula.isEnCartelera();
-        
-        if(enCartelera){
-            JREnCartelera.setSelected(true);
-        }else{
-            JREnCarteleraNo.setSelected(true);
-        }
-        
-        
-    }
+    
     
 
 }

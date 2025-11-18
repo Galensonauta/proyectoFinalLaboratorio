@@ -4,7 +4,6 @@ package vistas;
 import java.awt.HeadlessException;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
-import java.sql.Date;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -14,7 +13,6 @@ import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.event.InternalFrameAdapter;
 import javax.swing.event.InternalFrameEvent;
-import javax.swing.event.InternalFrameListener;
 import javax.swing.table.DefaultTableModel;
 import modelo.*;
 import persistencia.DetalleTicketData;
@@ -460,7 +458,7 @@ public class VistaProyeccion extends javax.swing.JInternalFrame {
         JDCCalendario.setDateFormatString("yyyy-MM-dd");
         JDCCalendario.setDoubleBuffered(false);
         JDCCalendario.setMaxSelectableDate(new java.util.Date(1767236399000L));
-        JDCCalendario.setMinSelectableDate(Date.valueOf(LocalDate.now(ZoneId.systemDefault())));
+        JDCCalendario.setMinSelectableDate(java.util.Date.from(java.time.LocalDate.now().atStartOfDay(java.time.ZoneId.systemDefault()).toInstant()));
 
         JCBHoraInicio.setSelectedItem(-1);
         JCBHoraInicio.addActionListener(new java.awt.event.ActionListener() {

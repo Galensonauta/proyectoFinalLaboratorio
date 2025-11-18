@@ -4,17 +4,19 @@
  * and open the template in the editor.
  */
 package vistas;
+import java.awt.HeadlessException;
 import java.time.LocalDate;
 import java.time.ZoneId;
-import java.util.ArrayList;
+import java.util.*;
 import javax.swing.table.DefaultTableModel;
 import persistencia.CompradorData;
 import modelo.Comprador;
 import java.time.Period;
+import javax.swing.JOptionPane;
 import modelo.Sala;
 /**
  *
- * @author Charly Cimino
+ * @author Grupo 15 (Evelyn Cetera, Tomas Puw Zirulnik, Matias Correa, Enzo Fornes, Santiago Girardi)
  */
 public class Clientes extends javax.swing.JInternalFrame {
 
@@ -26,6 +28,8 @@ public class Clientes extends javax.swing.JInternalFrame {
             return false;
         }
     };
+    LocalDate fechaInicio = LocalDate.of(2013, 1, 1);
+    Date dateInicio = Date.from(fechaInicio.atStartOfDay(ZoneId.systemDefault()).toInstant());
     /**
      * Creates new form Clientes
      */
@@ -33,8 +37,9 @@ public class Clientes extends javax.swing.JInternalFrame {
         initComponents();
         armarCabecera();
         cargarCompradores(compradorData.obtenerTodosLosCompradores());
-        
-        
+        JCBMedioDePago.setSelectedIndex(-1);
+        JDFechaNacimiento.getJCalendar().setDate(dateInicio);
+        JDFechaNacimiento.setDate(dateInicio);
     }
 
     /**
@@ -101,6 +106,9 @@ public class Clientes extends javax.swing.JInternalFrame {
 
         jLabel4.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
         jLabel4.setText("Fecha de Nacimiento");
+
+        JDFechaNacimiento.setMaxSelectableDate(java.util.Date.from(LocalDate.now().minusYears(12).atStartOfDay(ZoneId.systemDefault()).toInstant()));
+        JDFechaNacimiento.setMinSelectableDate(java.util.Date.from(LocalDate.now().minusYears(100).atStartOfDay(ZoneId.systemDefault()).toInstant()));
 
         jLabel5.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
         jLabel5.setText("Pass");
@@ -226,7 +234,7 @@ public class Clientes extends javax.swing.JInternalFrame {
             }
         });
 
-        JBLimpiar.setText("Actualizar");
+        JBLimpiar.setText("Limpiar");
         JBLimpiar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 JBLimpiarActionPerformed(evt);
@@ -349,7 +357,7 @@ public class Clientes extends javax.swing.JInternalFrame {
                  return;
             }
             
-        } catch (Exception e) {
+        } catch (HeadlessException e) {
             javax.swing.JOptionPane.showMessageDialog(this, "Error al validar la fecha.");
             return;
         }
@@ -358,6 +366,7 @@ public class Clientes extends javax.swing.JInternalFrame {
             javax.swing.JOptionPane.showMessageDialog(this, "La contraseña es obligatoria.");
             return;
         }
+        
 
         try {
             int dni = Integer.parseInt(JTDni.getText());
@@ -375,11 +384,15 @@ public class Clientes extends javax.swing.JInternalFrame {
             
             String nombre = JTNombre.getText().trim().replaceAll("\\s+", " ");
             
- 
-            
             String pass = JTPass.getText();
-            String metodoDePago = JCBMedioDePago.getSelectedItem().toString();
+            String metodoDePago = null;
             
+            if(JCBMedioDePago.getSelectedItem() == null){
+                JOptionPane.showMessageDialog(this, "Debe seleccionar un medio de pago");
+                return;
+            }else{
+                metodoDePago = JCBMedioDePago.getSelectedItem().toString();
+            }
             // Lógica de guardado
             compradorData.guardarComprador(new Comprador(dni, nombre, pass, metodoDePago, fechaNacimiento));
             
@@ -438,6 +451,12 @@ public class Clientes extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_JBBuscarActionPerformed
 
     private void JBLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBLimpiarActionPerformed
+        JTDni.setText("");
+        JTNombre.setText("");
+        JDFechaNacimiento.setDate(null);
+        JTPass.setText("");
+        JCBMedioDePago.setSelectedIndex(-1);
+        
         
         modelo.setRowCount(0);
         cargarCompradores(compradorData.obtenerTodosLosCompradores());
@@ -488,10 +507,9 @@ public class Clientes extends javax.swing.JInternalFrame {
                     evt.consume();
                     return;
                 }
-                if (JTDni.getText().length() >= 10 && JTDni.getSelectedText() == null) {
+                if (JTBuscarPorDni.getText().length() >= 10 && JTBuscarPorDni.getSelectedText() == null) {
                     evt.consume();
                 }
-        // TODO add your handling code here:
     }//GEN-LAST:event_JTBuscarPorDniKeyTyped
 
     private void JTNombreKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_JTNombreKeyTyped
