@@ -379,6 +379,8 @@ public class SalaVista extends javax.swing.JInternalFrame {
             return;
         }
         
+ 
+        
         if (!RBApta3DSi.isSelected() && !RBApta3DNo.isSelected()) {
             JOptionPane.showMessageDialog(this, "Debe seleccionar si es Apta para 3D.");
             return;
@@ -411,6 +413,13 @@ public class SalaVista extends javax.swing.JInternalFrame {
             estado = false;
         }
         int capacidad = Integer.parseInt(JTCapacidad.getText());
+        
+        if (capacidad < 170 || capacidad > 230) {
+            JOptionPane.showMessageDialog(this, "La capacidad debe ser un número entre 170 y 230.");
+            JTCapacidad.requestFocus(); // Pone el cursor en el campo de capacidad
+            return; // Detiene la ejecución, no guarda
+        }
+        
         boolean Apta3D = false;
         if(RBApta3DSi.isSelected()){
             Apta3D = true;
@@ -532,7 +541,7 @@ public class SalaVista extends javax.swing.JInternalFrame {
             evt.consume();
         }
         String textoActual = JTCapacidad.getText();
-                if (textoActual.length() >= 4 && JTCapacidad.getSelectedText() == null) {
+                if (textoActual.length() >= 3 && JTCapacidad.getSelectedText() == null) {
                     evt.consume();
                 }
         
@@ -591,11 +600,15 @@ public class SalaVista extends javax.swing.JInternalFrame {
     }
     
     private void cargarSala(Sala sala){
+        
+        String apta3D = sala.isApta3D() ? "SI" : "NO";
+    String estado = sala.isEstado() ? "Habilitada" : "Inhabilitada";
+        
         Object[] fila = {
             sala.getNroSala(),
-            sala.isApta3D(),
+            apta3D,
             sala.getCapacidad(),
-            sala.isEstado(),
+            estado,
         };
         modelo.addRow(fila);
     }
@@ -603,11 +616,13 @@ public class SalaVista extends javax.swing.JInternalFrame {
     private void cargarSalas(ArrayList<Sala> salas){
         modelo.setRowCount(0);
         for(Sala sala : salas){
+            String apta3D = sala.isApta3D() ? "SI" : "NO";
+            String estado = sala.isEstado() ? "Habilitada" : "Inhabilitada";
             Object[] fila = {
                 sala.getNroSala(),
-                sala.isApta3D(),
+                apta3D,
                 sala.getCapacidad(),
-                sala.isEstado(),
+                estado,
             };
             modelo.addRow(fila);
         }
