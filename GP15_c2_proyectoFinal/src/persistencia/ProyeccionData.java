@@ -2,10 +2,13 @@
 package persistencia;
 
 import java.sql.*;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JOptionPane;
 import modelo.*;
 
 /**
@@ -225,6 +228,115 @@ public class ProyeccionData {
             System.out.println("Error al listar todas las Proyecciones" + ex.getMessage());
         }
         return lista;
+    }
+    
+    
+    // En ProyeccionData.java
+
+    public List<Proyeccion> buscarProyeccionesPorPelicula(String tituloPelicula) {
+
+        List<Proyeccion> proyecciones = new ArrayList<>();
+
+        // Esta consulta SQL es la clave:
+        String sql = "SELECT * FROM proyeccion WHERE pelicula = ?"; 
+
+        try (PreparedStatement ps = con.prepareStatement(sql)) {
+
+            ps.setString(1, tituloPelicula);
+
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    // (Usas la misma lógica que ya tienes en 'listarTodasLasProyecciones' 
+                    // para construir el objeto Proyeccion completo)
+
+                    Proyeccion pro = new Proyeccion();
+                    pro.setIdProyeccion(rs.getInt("idProyeccion"));
+
+                    Pelicula peli = peliculaData.obtenerPeliculaPorTitulo(rs.getString("pelicula"));
+                    Sala sala = salaData.buscarSala(rs.getInt("sala"));
+
+                    pro.setPelicula(peli);
+                    pro.setSala(sala);
+                    pro.setIdioma(rs.getString("idioma"));
+                    pro.setEs3D(rs.getBoolean("es3D"));
+                    pro.setSubtitulada(rs.getBoolean("subtitulada"));
+                    pro.setPrecioLugar(rs.getInt("precioLugar"));
+                    pro.setLugaresDisponibles(rs.getInt("lugaresDisponibles"));
+
+                    // Leemos los DATETIME como Timestamps
+                    pro.setHoraInicio(rs.getTimestamp("horaInicio").toLocalDateTime());
+                    pro.setHoraFin(rs.getTimestamp("horaFin").toLocalDateTime());
+
+                    proyecciones.add(pro);
+                }
+            }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error al buscar proyecciones por película: " + e.getMessage());
+        }
+
+        return proyecciones;
+    }
+    
+    
+    public List<Proyeccion> buscarProyeccionesFiltradas(Pelicula peli, Sala sala, LocalDate fecha, LocalTime hora) {
+    
+    List<Proyeccion> proyecciones = new ArrayList<>();
+    String sqlBase = "SELECT * FROM proyeccion WHERE 1=1";
+    StringBuilder sql = new StringBuilder(sqlBase);
+    List<Object> params = new ArrayList<>();
+
+    if (peli != null) {
+        sql.append(" AND pelicula = ?");
+        params.add(peli.getTitulo());
+    }
+    if (sala != null) {
+        sql.append(" AND sala = ?");
+        params.add(sala.getNroSala());
+    }
+    if (fecha != null) {
+        sql.append(" AND DATE(horaInicio) = ?"); 
+        params.add(fecha);
+    }
+    if (hora != null) {
+        // Compara solo la parte de la HORA del DATETIME
+        sql.append(" AND TIME(horaInicio) = ?");
+        params.add(hora);
+    }
+    
+
+    try (PreparedStatement ps = con.prepareStatement(sql.toString())) {
+        
+        for (int i = 0; i < params.size(); i++) {
+            ps.setObject(i + 1, params.get(i));
+        }
+        
+        try (ResultSet rs = ps.executeQuery()) {
+            while (rs.next()) {
+                Proyeccion pro = new Proyeccion();
+                pro.setIdProyeccion(rs.getInt("idProyeccion"));
+                
+                Pelicula peliObj = peliculaData.obtenerPeliculaPorTitulo(rs.getString("pelicula"));
+                Sala salaObj = salaData.buscarSala(rs.getInt("sala"));
+                
+                pro.setPelicula(peliObj);
+                pro.setSala(salaObj);
+                pro.setIdioma(rs.getString("idioma"));
+                pro.setEs3D(rs.getBoolean("es3D"));
+                pro.setSubtitulada(rs.getBoolean("subtitulada"));
+                pro.setPrecioLugar(rs.getInt("precioLugar"));
+                pro.setLugaresDisponibles(rs.getInt("lugaresDisponibles"));
+                
+                pro.setHoraInicio(rs.getTimestamp("horaInicio").toLocalDateTime());
+                pro.setHoraFin(rs.getTimestamp("horaFin").toLocalDateTime());
+
+                proyecciones.add(pro);
+            }
+        }
+    } catch (SQLException e) {
+        JOptionPane.showMessageDialog(null, "Error al buscar proyecciones filtradas: " + e.getMessage());
+    }
+    
+    return proyecciones;
     }
 
 }
