@@ -162,5 +162,32 @@ public class SalaData {
         return salas;
     }
     
+    
+    
+
+    public List<Sala> obtenerSalasHabilitadas() {
+        List<Sala> salas = new ArrayList<>();
+        String sql = "SELECT * FROM sala WHERE estado = 1"; // <-- El filtro clave
+
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                Sala sala = new Sala();
+                sala.setNroSala(rs.getInt("nroSala"));
+                sala.setApta3D(rs.getBoolean("apta3D"));
+                sala.setCapacidad(rs.getInt("capacidad"));
+                sala.setEstado(true); // Ya sabemos que es true
+                salas.add(sala);
+            }
+            rs.close();
+            ps.close();
+        } catch (SQLException e) {
+            System.out.println("Error al obtener salas habilitadas: " + e.getMessage());
+        }
+        return salas;
+    }
+    
 
 }

@@ -54,11 +54,16 @@ public class ModificarProyeccionVista extends javax.swing.JInternalFrame {
         
     }
 
+    // En ModificarProyeccionVista.java
+
     private void cargarComboSalas() {
-        for (Sala aux : listaSalas) {
+        JCBSala.removeAllItems();
+
+        // Usamos el nuevo método filtrado
+        for (Sala aux : salaData.obtenerSalasHabilitadas()) {
             JCBSala.addItem(aux);
         }
-        
+        JCBSala.setSelectedIndex(-1);
     }
     
     private void cargarHorarios() {
