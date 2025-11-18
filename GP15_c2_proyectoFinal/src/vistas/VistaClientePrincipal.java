@@ -71,6 +71,14 @@ public class VistaClientePrincipal extends javax.swing.JFrame {
             escritorio.moveToFront(vcpg);
             
             break;
+        case 4:
+            escritorio.repaint();
+            VistaClienteImprimirEntrada vcie = new VistaClienteImprimirEntrada(this);
+            vcie.setVisible(true);
+            escritorio.add(vcie);
+            escritorio.moveToFront(vcie);
+            
+            break;
         // ...
     }
 }
@@ -135,15 +143,15 @@ public class VistaClientePrincipal extends javax.swing.JFrame {
                     .addGroup(escritorioLayout.createSequentialGroup()
                         .addGroup(escritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(escritorioLayout.createSequentialGroup()
-                                .addGap(442, 442, 442)
-                                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 393, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(escritorioLayout.createSequentialGroup()
                                 .addGap(514, 514, 514)
                                 .addGroup(escritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(btnProyeccinoes, javax.swing.GroupLayout.PREFERRED_SIZE, 202, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addGap(0, 430, Short.MAX_VALUE)))
+                                    .addComponent(btnProyeccinoes, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                            .addGroup(escritorioLayout.createSequentialGroup()
+                                .addGap(442, 442, 442)
+                                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 433, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 390, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         escritorioLayout.setVerticalGroup(

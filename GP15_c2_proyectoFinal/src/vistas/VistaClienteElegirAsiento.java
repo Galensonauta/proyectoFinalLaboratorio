@@ -25,8 +25,8 @@ import persistencia.SalaData;
  */
 public class VistaClienteElegirAsiento extends javax.swing.JInternalFrame {
 
-    private int filasSala = 10; //estos datos podrían venir de la tabla sala    
-    private int columnasSala = 20;
+    private int filasSala = 1; //estos datos podrían venir de la tabla sala    
+    private int columnasSala = 10;
     public int idProyeccion;
     
     private VistaClientePrincipal madre;
@@ -89,7 +89,7 @@ public class VistaClienteElegirAsiento extends javax.swing.JInternalFrame {
         int capacidad =  madre.getDt().getProyeccion().getSala().getCapacidad();
         System.out.println("CAPACIDAD SALA:  " + capacidad);
         this.columnasSala = 10;
-        this.filasSala = capacidad / 10;
+        this.filasSala = (capacidad / 10);
     }
     
     private void convertirEtiquetasAObjetos(){
@@ -208,7 +208,7 @@ public class VistaClienteElegirAsiento extends javax.swing.JInternalFrame {
         );
         jPanelLayout.setVerticalGroup(
             jPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 695, Short.MAX_VALUE)
+            .addGap(0, 485, Short.MAX_VALUE)
         );
 
         jLabel1.setFont(new java.awt.Font("Dialog", 1, 36)); // NOI18N
@@ -270,8 +270,8 @@ public class VistaClienteElegirAsiento extends javax.swing.JInternalFrame {
                     .addComponent(jLabel1)
                     .addComponent(jLabel2))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 17, Short.MAX_VALUE)
                 .addGroup(jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnGuardar)
                     .addComponent(btnAtras)
@@ -289,7 +289,8 @@ public class VistaClienteElegirAsiento extends javax.swing.JInternalFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jDesktopPane1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jDesktopPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
