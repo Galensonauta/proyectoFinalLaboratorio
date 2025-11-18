@@ -73,8 +73,16 @@ public class VistaProyeccion extends javax.swing.JInternalFrame {
         jCBPelicula.setSelectedIndex(-1);
     }
 
+    // En VistaProyeccion.java
+
     private void cargarComboSalas() {
-        for (Sala aux : listaSalas) {
+        jCBSala.removeAllItems();
+
+        // ANTES: listaSalas = salaData.obtenerTodasLasSalas();
+        // AHORA:
+        List<Sala> listaSalasHabilitadas = salaData.obtenerSalasHabilitadas();
+
+        for (Sala aux : listaSalasHabilitadas) {
             jCBSala.addItem(aux);
         }
         jCBSala.setSelectedIndex(-1);

@@ -414,11 +414,14 @@ public class SalaVista extends javax.swing.JInternalFrame {
         }
         int capacidad = Integer.parseInt(JTCapacidad.getText());
         
-        if (capacidad < 170 || capacidad > 230) {
-            JOptionPane.showMessageDialog(this, "La capacidad debe ser un número entre 170 y 230.");
-            JTCapacidad.requestFocus(); // Pone el cursor en el campo de capacidad
-            return; // Detiene la ejecución, no guarda
-        }
+        if (capacidad < 170 || capacidad > 230 || capacidad % 10 != 0) {
+        
+        JOptionPane.showMessageDialog(this, 
+            "La capacidad debe ser un número entre 170 y 230, y múltiplo de 10 (ej: 170, 180...).");
+            
+        JTCapacidad.requestFocus(); 
+        return; 
+    }
         
         boolean Apta3D = false;
         if(RBApta3DSi.isSelected()){
