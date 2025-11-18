@@ -25,3 +25,4 @@ replay_pid*
 /GP15_c2_proyectoFinal/nbproject/private/
 /GP15_c2_proyectoFinal/build/
 /GP15_c2_proyectoFinal/dist/
+!dependencias/*.jar
