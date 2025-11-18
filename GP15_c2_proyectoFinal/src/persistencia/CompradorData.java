@@ -185,5 +185,26 @@ public class CompradorData {
             // 7. Devuelve el objeto (será 'null' si no se encontró)
         return comprador;
         }
-
+     
+     public ArrayList<Comprador> listarCompradoresPorFechaAsistencia(LocalDate fecha) {
+    ArrayList<Comprador> compradores = new ArrayList<>();
+    String sql = "SELECT DISTINCT c.dni " + 
+                 "FROM comprador c " +
+                 "JOIN ticket_compra tc ON c.dni = tc.comprador " +
+                 "JOIN detalle_ticket dt ON tc.idTicket = dt.codD " +
+                 "WHERE dt.fechProyeccion = ?";
+    try {
+        PreparedStatement ps = con.prepareStatement(sql);
+        ps.setDate(1, java.sql.Date.valueOf(fecha));
+        ResultSet rs = ps.executeQuery();
+        while (rs.next()) {
+            int dniComprador = rs.getInt("dni");
+            Comprador c = this.buscarCompradorDevuelveComprador(dniComprador); 
+            compradores.add(c);
+        }
+    }catch (SQLException ex) {
+        System.out.println("Error al listar compradores por fecha: " + ex.getMessage());
+    }
+    return compradores;
+     }
 }

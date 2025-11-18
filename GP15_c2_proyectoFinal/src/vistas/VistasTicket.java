@@ -238,14 +238,12 @@ public class VistasTicket extends javax.swing.JInternalFrame {
         
         modeloTabla.addColumn("ID Ticket");
         modeloTabla.addColumn("Fecha Compra");
-        modeloTabla.addColumn("Monto");
         modeloTabla.addColumn("Comprador");
         
         for (TicketCompra tc : tickets) {
         modeloTabla.addRow(new Object[]{
             tc.getIdTicket(),
             tc.getFechCompra().toString(),
-            tc.getMonto(),
             tc.getComprador().getNombre() 
         });
     }
@@ -264,14 +262,12 @@ public class VistasTicket extends javax.swing.JInternalFrame {
         
         modeloTabla.addColumn("ID Ticket");
         modeloTabla.addColumn("Fecha Compra");
-        modeloTabla.addColumn("Monto");
         modeloTabla.addColumn("Comprador");
         
         for (TicketCompra tc : tickets) {
         modeloTabla.addRow(new Object[]{
             tc.getIdTicket(),
             tc.getFechCompra().toString(),
-            tc.getMonto(),
             tc.getComprador().getNombre() 
         });
     }
@@ -298,23 +294,37 @@ public class VistasTicket extends javax.swing.JInternalFrame {
     //     });
     // }
 
-    // Mensaje temporal mientras no tienes la lógica:
-    javax.swing.JOptionPane.showMessageDialog(this, "Esta función aún no está implementada en la capa de persistencia.");       
+    
+    
         
     }//GEN-LAST:event_jbPeliculaPorVistasActionPerformed
 
     private void jbCompradoresPorFechaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbCompradoresPorFechaActionPerformed
         // TODO add your handling code here:
          limpiarTabla();
-        java.util.Date fechaAsistencia = jdcFechaPeliculaVista.getDate();
+        java.util.Date fechaAsistencia = jdcFechaAsistencia.getDate();
         if (fechaAsistencia == null) {
         javax.swing.JOptionPane.showMessageDialog(this, "Debe seleccionar una fecha de asistencia.");
         return;
     }
-        // Debe buscar en detalle_ticket por fechProyeccion, luego buscar el
-    // ticket_compra y finalmente el comprador. Usar DISTINCT.
-    //ArrayList<Comprador> compradores = cData.buscarCompradoresPorFechaAsistencia(fecha);
-    //Mostrar resultados
+    
+    LocalDate fecha = fechaAsistencia.toInstant().atZone(java.time.ZoneId.systemDefault()).toLocalDate();
+    ArrayList<Comprador>compradores= cData.listarCompradoresPorFechaAsistencia(fecha);
+    if(compradores.isEmpty()){
+javax.swing.JOptionPane.showMessageDialog(this, "No se encontraron compradores para esa fecha.");
+
+}
+    
+        modeloTabla.addColumn("DNI");
+    modeloTabla.addColumn("Nombre");
+        
+        for (Comprador c : compradores) {
+        modeloTabla.addRow(new Object[]{    
+            c.getDni(),
+            c.getNombre(),
+            
+        });
+    }
     }//GEN-LAST:event_jbCompradoresPorFechaActionPerformed
 
     private void jcbPeliculasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbPeliculasActionPerformed
