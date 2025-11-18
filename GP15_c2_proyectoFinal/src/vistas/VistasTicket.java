@@ -8,7 +8,9 @@ import persistencia.*;
 import modelo.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -238,15 +240,21 @@ public class VistasTicket extends javax.swing.JInternalFrame {
         
         modeloTabla.addColumn("ID Ticket");
         modeloTabla.addColumn("Fecha Compra");
-        modeloTabla.addColumn("Monto");
         modeloTabla.addColumn("Comprador");
+        modeloTabla.addColumn("Cantidad entradas");
         
         for (TicketCompra tc : tickets) {
+            int entradasTotales=0;
+            if (tc.getDetalles() != null) { 
+            for (DetalleTicket dt : tc.getDetalles()) {
+                entradasTotales += dt.getCantidad();
+            }
+            }
         modeloTabla.addRow(new Object[]{
             tc.getIdTicket(),
             tc.getFechCompra().toString(),
-            tc.getMonto(),
-            tc.getComprador().getNombre() 
+            tc.getComprador().getNombre(),
+            entradasTotales
         });
     }
         
@@ -264,57 +272,72 @@ public class VistasTicket extends javax.swing.JInternalFrame {
         
         modeloTabla.addColumn("ID Ticket");
         modeloTabla.addColumn("Fecha Compra");
-        modeloTabla.addColumn("Monto");
         modeloTabla.addColumn("Comprador");
+        modeloTabla.addColumn("Cantidad entradas");
+        
         
         for (TicketCompra tc : tickets) {
+            int entradasTotales=0;
+            if (tc.getDetalles() != null) { 
+            for (DetalleTicket dt : tc.getDetalles()) {
+                entradasTotales += dt.getCantidad();
+            }
+            }
         modeloTabla.addRow(new Object[]{
             tc.getIdTicket(),
             tc.getFechCompra().toString(),
-            tc.getMonto(),
-            tc.getComprador().getNombre() 
+            tc.getComprador().getNombre(),       
+            entradasTotales
         });
     }
     }//GEN-LAST:event_jbTicketsPorFechaActionPerformed
 
     private void jbPeliculaPorVistasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbPeliculaPorVistasActionPerformed
         limpiarTabla();
-    // 2. Llamar al método (que debes crear) en PeliculaData (o donde sea)
-    // Esto requiere una clase "EstadisticaPelicula" que tenga "nombre" y "cantidad"
-    // La consulta es: SELECT p.titulo, SUM(dt.cantidad) as total
-    // FROM detalle_ticket dt 
-    // JOIN proyeccion pr ON dt.idProyeccion = pr.idProyeccion
-    // JOIN pelicula p ON pr.idPelicula = p.idPelicula
-    // GROUP BY p.titulo
-    // ORDER BY total DESC
-    // ArrayList<EstadisticaPelicula> stats = pData.getEstadisticasPeliculas(); // Asumiendo que esto existe
-    // 3. Mostrar resultados
+        java.util.Map<String, Integer> estadisticas = pData.obtenerEstadisticasPeliculas();
+        if (estadisticas.isEmpty()) {
+        javax.swing.JOptionPane.showMessageDialog(this, "No hay estadísticas disponibles (aún no se han vendido tickets).");
+        return;
+    }
     modeloTabla.addColumn("Película");
-    modeloTabla.addColumn("Entradas Vendidas");
-    // for (EstadisticaPelicula stat : stats) {
-    //     modeloTabla.addRow(new Object[]{
-    //         stat.getNombrePelicula(),
-    //         stat.getCantidadVendida()
-    //     });
-    // }
-
-    // Mensaje temporal mientras no tienes la lógica:
-    javax.swing.JOptionPane.showMessageDialog(this, "Esta función aún no está implementada en la capa de persistencia.");       
-        
+    modeloTabla.addColumn("Total Entradas Vendidas");
+    for (java.util.Map.Entry<String, Integer> entry : estadisticas.entrySet()) {
+         modeloTabla.addRow(new Object[]{
+             entry.getKey(),
+             entry.getValue()
+         });
+     }    
     }//GEN-LAST:event_jbPeliculaPorVistasActionPerformed
 
     private void jbCompradoresPorFechaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbCompradoresPorFechaActionPerformed
         // TODO add your handling code here:
          limpiarTabla();
-        java.util.Date fechaAsistencia = jdcFechaPeliculaVista.getDate();
+        java.util.Date fechaAsistencia = jdcFechaAsistencia.getDate();
         if (fechaAsistencia == null) {
         javax.swing.JOptionPane.showMessageDialog(this, "Debe seleccionar una fecha de asistencia.");
         return;
     }
-        // Debe buscar en detalle_ticket por fechProyeccion, luego buscar el
-    // ticket_compra y finalmente el comprador. Usar DISTINCT.
-    //ArrayList<Comprador> compradores = cData.buscarCompradoresPorFechaAsistencia(fecha);
-    //Mostrar resultados
+    
+    LocalDate fecha = fechaAsistencia.toInstant().atZone(java.time.ZoneId.systemDefault()).toLocalDate();
+    HashMap<Comprador, Integer>compradores= cData.listarCompradoresPorFechaAsistenciaV2(fecha);
+    if(compradores.isEmpty()){
+javax.swing.JOptionPane.showMessageDialog(this, "No se encontraron compradores para esa fecha.");
+
+}
+    
+        modeloTabla.addColumn("DNI");
+    modeloTabla.addColumn("Nombre");
+    modeloTabla.addColumn("Entradas Compradas");
+        
+        for (Map.Entry<Comprador, Integer> entry : compradores.entrySet()) {
+            Comprador c = entry.getKey();
+            Integer cantidad = entry.getValue();
+            modeloTabla.addRow(new Object[]{    
+            c.getDni(),
+            c.getNombre(),
+            cantidad
+        });
+    }
     }//GEN-LAST:event_jbCompradoresPorFechaActionPerformed
 
     private void jcbPeliculasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbPeliculasActionPerformed

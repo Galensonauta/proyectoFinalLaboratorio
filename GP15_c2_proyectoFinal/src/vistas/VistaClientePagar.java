@@ -5,6 +5,10 @@
  */
 package vistas;
 
+import javax.swing.JOptionPane;
+import modelo.Comprador;
+import persistencia.CompradorData;
+
 /**
  *
  * @author Hueso
@@ -12,10 +16,32 @@ package vistas;
 public class VistaClientePagar extends javax.swing.JInternalFrame {
 
     VistaClientePrincipal madre;
+    CompradorData cd = new CompradorData();
+    Comprador comprador = new Comprador();
     
     public VistaClientePagar(VistaClientePrincipal madre) {
         initComponents();
         this.madre = madre;
+    }
+    
+    public boolean chequearComprador(){
+        Comprador c;
+        int dni = Integer.parseInt(txtDNI.getText());
+        String pass = txtPass.getText();
+        c = cd.buscarComprador(dni);
+        boolean existe=false;
+        System.out.println(c);
+        if(c != null){
+            if(c.getPass().equals(pass)){
+            comprador = c;
+            existe = true;
+            
+        } else if(comprador == null){
+            existe =  false;
+        }
+        }
+        
+        return existe;
     }
 
     /**
@@ -32,8 +58,8 @@ public class VistaClientePagar extends javax.swing.JInternalFrame {
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
+        txtDNI = new javax.swing.JTextField();
+        txtPass = new javax.swing.JTextField();
         jTextField3 = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
@@ -44,8 +70,8 @@ public class VistaClientePagar extends javax.swing.JInternalFrame {
         jDateChooser1 = new com.toedter.calendar.JDateChooser();
         jComboBox1 = new javax.swing.JComboBox<>();
         jLabel9 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        btnContinuar = new javax.swing.JButton();
+        btnRegistrar = new javax.swing.JButton();
         btnAtras = new javax.swing.JButton();
         lblTitulo = new javax.swing.JLabel();
 
@@ -57,9 +83,15 @@ public class VistaClientePagar extends javax.swing.JInternalFrame {
 
         jLabel4.setText("Contraseña:");
 
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+        txtDNI.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
+                txtDNIActionPerformed(evt);
+            }
+        });
+
+        txtPass.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtPassKeyReleased(evt);
             }
         });
 
@@ -87,14 +119,19 @@ public class VistaClientePagar extends javax.swing.JInternalFrame {
 
         jLabel9.setText("Medio de Pago");
 
-        jButton1.setText("Continuar compra");
-        jButton1.setEnabled(false);
-
-        jButton2.setText("Registrar y comprar");
-        jButton2.setEnabled(false);
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        btnContinuar.setText("Continuar compra");
+        btnContinuar.setEnabled(false);
+        btnContinuar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                btnContinuarActionPerformed(evt);
+            }
+        });
+
+        btnRegistrar.setText("Registrar y comprar");
+        btnRegistrar.setEnabled(false);
+        btnRegistrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRegistrarActionPerformed(evt);
             }
         });
 
@@ -109,8 +146,8 @@ public class VistaClientePagar extends javax.swing.JInternalFrame {
         jDesktopPane1.setLayer(jLabel2, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jDesktopPane1.setLayer(jLabel3, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jDesktopPane1.setLayer(jLabel4, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jDesktopPane1.setLayer(jTextField1, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jDesktopPane1.setLayer(jTextField2, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jDesktopPane1.setLayer(txtDNI, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jDesktopPane1.setLayer(txtPass, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jDesktopPane1.setLayer(jTextField3, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jDesktopPane1.setLayer(jLabel5, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jDesktopPane1.setLayer(jLabel6, javax.swing.JLayeredPane.DEFAULT_LAYER);
@@ -121,8 +158,8 @@ public class VistaClientePagar extends javax.swing.JInternalFrame {
         jDesktopPane1.setLayer(jDateChooser1, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jDesktopPane1.setLayer(jComboBox1, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jDesktopPane1.setLayer(jLabel9, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jDesktopPane1.setLayer(jButton1, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jDesktopPane1.setLayer(jButton2, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jDesktopPane1.setLayer(btnContinuar, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jDesktopPane1.setLayer(btnRegistrar, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jDesktopPane1.setLayer(btnAtras, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         javax.swing.GroupLayout jDesktopPane1Layout = new javax.swing.GroupLayout(jDesktopPane1);
@@ -140,8 +177,8 @@ public class VistaClientePagar extends javax.swing.JInternalFrame {
                                     .addComponent(jLabel4))
                                 .addGap(18, 18, 18)
                                 .addGroup(jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(jTextField1, javax.swing.GroupLayout.DEFAULT_SIZE, 109, Short.MAX_VALUE)
-                                    .addComponent(jTextField2))
+                                    .addComponent(txtDNI, javax.swing.GroupLayout.DEFAULT_SIZE, 109, Short.MAX_VALUE)
+                                    .addComponent(txtPass))
                                 .addGap(0, 0, Short.MAX_VALUE))
                             .addGroup(jDesktopPane1Layout.createSequentialGroup()
                                 .addGap(0, 0, Short.MAX_VALUE)
@@ -151,7 +188,7 @@ public class VistaClientePagar extends javax.swing.JInternalFrame {
                                     .addComponent(jLabel8, javax.swing.GroupLayout.Alignment.TRAILING)))
                             .addGroup(jDesktopPane1Layout.createSequentialGroup()
                                 .addGap(68, 68, 68)
-                                .addComponent(jButton1)
+                                .addComponent(btnContinuar)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addGroup(jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel9)
@@ -173,7 +210,7 @@ public class VistaClientePagar extends javax.swing.JInternalFrame {
                         .addGap(181, 181, 181))))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jDesktopPane1Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton2)
+                .addComponent(btnRegistrar)
                 .addGap(225, 225, 225))
             .addGroup(jDesktopPane1Layout.createSequentialGroup()
                 .addGap(14, 14, 14)
@@ -194,7 +231,7 @@ public class VistaClientePagar extends javax.swing.JInternalFrame {
                 .addGap(4, 4, 4)
                 .addGroup(jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtDNI, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(10, 10, 10)
                 .addGroup(jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
@@ -204,7 +241,7 @@ public class VistaClientePagar extends javax.swing.JInternalFrame {
                     .addGroup(jDesktopPane1Layout.createSequentialGroup()
                         .addGroup(jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel4)
-                            .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(txtPass, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(7, 7, 7)
                         .addComponent(jLabel8))
                     .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -212,13 +249,13 @@ public class VistaClientePagar extends javax.swing.JInternalFrame {
                 .addGroup(jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel7)
                     .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1))
+                    .addComponent(btnContinuar))
                 .addGap(25, 25, 25)
                 .addGroup(jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel9)
                     .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(75, 75, 75)
-                .addComponent(jButton2)
+                .addComponent(btnRegistrar)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnAtras))
         );
@@ -257,13 +294,14 @@ public class VistaClientePagar extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField5ActionPerformed
 
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+    private void txtDNIActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDNIActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
+        
+    }//GEN-LAST:event_txtDNIActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void btnRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_btnRegistrarActionPerformed
 
     private void btnAtrasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAtrasActionPerformed
         // TODO add your handling code here:
@@ -271,11 +309,28 @@ public class VistaClientePagar extends javax.swing.JInternalFrame {
         this.dispose();
     }//GEN-LAST:event_btnAtrasActionPerformed
 
+    private void btnContinuarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnContinuarActionPerformed
+        // TODO add your handling code here:
+       if(chequearComprador()){
+           madre.getTc().setComprador(comprador);
+           madre.avanzarFlujoVenta(4);
+       } else{
+           JOptionPane.showMessageDialog(null, "Usuario y/o Contraseña incorrecto/s");
+       }
+    }//GEN-LAST:event_btnContinuarActionPerformed
+
+    private void txtPassKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPassKeyReleased
+        // TODO add your handling code here:
+        if(txtPass.getText().length() > 5 && txtDNI.getText().length() > 5){
+            btnContinuar.setEnabled(true);
+        }
+    }//GEN-LAST:event_txtPassKeyReleased
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAtras;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
+    private javax.swing.JButton btnContinuar;
+    private javax.swing.JButton btnRegistrar;
     private javax.swing.JComboBox<String> jComboBox1;
     private com.toedter.calendar.JDateChooser jDateChooser1;
     private javax.swing.JDesktopPane jDesktopPane1;
@@ -288,11 +343,11 @@ public class VistaClientePagar extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField3;
     private javax.swing.JTextField jTextField4;
     private javax.swing.JTextField jTextField5;
     private javax.swing.JLabel lblTitulo;
+    private javax.swing.JTextField txtDNI;
+    private javax.swing.JTextField txtPass;
     // End of variables declaration//GEN-END:variables
 }

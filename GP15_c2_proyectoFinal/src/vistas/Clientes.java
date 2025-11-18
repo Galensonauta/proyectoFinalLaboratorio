@@ -12,7 +12,9 @@ import javax.swing.table.DefaultTableModel;
 import persistencia.CompradorData;
 import modelo.Comprador;
 import java.time.Period;
+
 import javax.swing.JOptionPane;
+
 import modelo.Sala;
 /**
  *
@@ -22,7 +24,7 @@ public class Clientes extends javax.swing.JInternalFrame {
 
     CompradorData compradorData = new CompradorData();
     Comprador comprador = new Comprador();
-    
+   
     private DefaultTableModel modelo = new DefaultTableModel(){
         public boolean isCellEditable(int row, int column) {
             return false;
@@ -37,9 +39,11 @@ public class Clientes extends javax.swing.JInternalFrame {
         initComponents();
         armarCabecera();
         cargarCompradores(compradorData.obtenerTodosLosCompradores());
+        
         JCBMedioDePago.setSelectedIndex(-1);
         JDFechaNacimiento.getJCalendar().setDate(dateInicio);
         JDFechaNacimiento.setDate(dateInicio);
+
     }
 
     /**

@@ -10,13 +10,13 @@ package vistas;
  * @author Hueso
  */
 public class VistaClienteImprimirEntrada extends javax.swing.JInternalFrame {
-
+    VistaClientePrincipal madre;
     /**
      * Creates new form VistaClienteImprimirEntrada
      */
-    public VistaClienteImprimirEntrada() {
+    public VistaClienteImprimirEntrada(VistaClientePrincipal madre) {
         initComponents();
-    }
+        this.madre = madre;    }
 
     /**
      * This method is called from within the constructor to initialize the form.

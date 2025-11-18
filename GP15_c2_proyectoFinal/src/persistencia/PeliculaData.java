@@ -3,7 +3,9 @@ package persistencia;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import modelo.Pelicula;
 
 
@@ -158,4 +160,118 @@ public class PeliculaData {
         return listaPelis;
     }
     
+    
+
+    public List<Pelicula> listarPeliculasEnCartelera() {
+
+        List<Pelicula> listaPelis = new ArrayList<>();
+
+        
+        String query = "SELECT * FROM pelicula WHERE enCartelera = 1"; 
+
+        try (PreparedStatement ps = con.prepareStatement(query);
+             ResultSet rs = ps.executeQuery()) {
+
+            while (rs.next()) {
+                
+
+                Pelicula peli = new Pelicula();
+                peli.setTitulo(rs.getString("titulo"));
+                peli.setDirector(rs.getString("director"));
+                peli.setActores(rs.getString("actores"));
+                peli.setOrigen(rs.getString("origen"));
+                peli.setGenero(rs.getString("genero"));
+                peli.setEstreno(rs.getDate("estreno").toLocalDate());
+                peli.setEnCartelera(rs.getBoolean("enCartelera"));
+
+                listaPelis.add(peli);
+            }
+        } catch (SQLException ex) {
+            System.out.println("No pudo listarse las peliculas en cartelera: " + ex.getMessage());
+        }
+
+        return listaPelis;
+        }
+    
+    
+ 
+
+    public void actualizarEstadoCartelera(String titulo, boolean nuevoEstado) {
+
+  
+        String query = "UPDATE pelicula SET enCartelera = ? WHERE titulo = ?";
+
+        try (PreparedStatement ps = con.prepareStatement(query)) {
+
+            ps.setBoolean(1, nuevoEstado);
+            ps.setString(2, titulo);
+
+            int filas = ps.executeUpdate();
+
+            if (filas > 0) {
+                System.out.println("Estado 'enCartelera' actualizado a " + nuevoEstado + " para la película: " + titulo);
+            }
+
+        } catch (SQLException ex) {
+            System.out.println("Error al actualizar estado 'enCartelera': " + ex.getMessage());
+        }
+    }
+    
+    
+
+    public List<Pelicula> listarProximosEstrenos() {
+
+        List<Pelicula> listaPelis = new ArrayList<>();
+
+        // Esta consulta SQL busca películas que NO estén en cartelera (false)
+        // Y cuya fecha de estreno sea en el FUTURO (después de hoy)
+        // Ordenadas por la fecha de estreno más cercana.
+        String query = "SELECT * FROM pelicula WHERE enCartelera = 0 AND estreno > CURDATE() ORDER BY estreno ASC"; 
+
+        try (PreparedStatement ps = con.prepareStatement(query);
+             ResultSet rs = ps.executeQuery()) {
+
+            while (rs.next()) {
+                // Construimos la película directamente desde el ResultSet
+                Pelicula peli = new Pelicula();
+                peli.setTitulo(rs.getString("titulo"));
+                peli.setDirector(rs.getString("director"));
+                peli.setActores(rs.getString("actores"));
+                peli.setOrigen(rs.getString("origen"));
+                peli.setGenero(rs.getString("genero"));
+                peli.setEstreno(rs.getDate("estreno").toLocalDate());
+                peli.setEnCartelera(rs.getBoolean("enCartelera"));
+
+                listaPelis.add(peli);
+            }
+        } catch (SQLException ex) {
+            System.out.println("No pudo listarse los próximos estrenos: " + ex.getMessage());
+        }
+
+        return listaPelis;
+    }
+    
+    public Map<String, Integer> obtenerEstadisticasPeliculas() {
+    Map<String, Integer> estadisticas = new LinkedHashMap<>();
+    
+    String sql = "SELECT p.titulo, SUM(dt.cantidad) as total " +
+                 "FROM detalle_ticket dt " +
+                 "JOIN proyeccion pr ON dt.idProyeccion = pr.idProyeccion " +
+                 "JOIN pelicula p ON pr.pelicula = p.titulo " +
+                 "GROUP BY p.titulo " +
+                 "ORDER BY total DESC";
+
+    try (PreparedStatement ps = con.prepareStatement(sql);
+         ResultSet rs = ps.executeQuery()) {
+
+        while (rs.next()) {
+            String titulo = rs.getString("titulo");
+            int cantidad = rs.getInt("total");            
+            estadisticas.put(titulo, cantidad);
+        }
+    } catch (SQLException ex) {
+        System.out.println("Error al obtener estadísticas: " + ex.getMessage());
+    }    
+    return estadisticas;
+}    
 }

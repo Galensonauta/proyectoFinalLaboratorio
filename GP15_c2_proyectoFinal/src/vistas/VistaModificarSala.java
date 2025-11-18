@@ -179,6 +179,13 @@ public class VistaModificarSala extends javax.swing.JInternalFrame {
             
             int nroSala = salaModificar.getNroSala();
             int capacidad = Integer.parseInt(JTCapacidad.getText());
+            
+            if (capacidad < 170 || capacidad > 230) {
+            JOptionPane.showMessageDialog(this, "La capacidad debe ser un número entre 170 y 230.");
+            JTCapacidad.requestFocus(); // Pone el cursor en el campo
+            return; // Detiene la actualización
+        }
+            
             boolean apta3D = JRApta3DSi.isSelected();
             boolean habilitado = JTHabilitado.isSelected();
             
@@ -214,7 +221,7 @@ public class VistaModificarSala extends javax.swing.JInternalFrame {
                 }
                 
                 String textoActual = JTCapacidad.getText();
-                if (textoActual.length() >= 4 && JTCapacidad.getSelectedText() == null) {
+                if (textoActual.length() >= 3 && JTCapacidad.getSelectedText() == null) {
                     evt.consume();
                 }
         // TODO add your handling code here:

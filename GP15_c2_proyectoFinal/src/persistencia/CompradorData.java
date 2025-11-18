@@ -4,6 +4,7 @@ import java.sql.*;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.ArrayList;
+import java.util.HashMap;
 import modelo.Comprador;
 
 /**
@@ -185,5 +186,31 @@ public class CompradorData {
             // 7. Devuelve el objeto (será 'null' si no se encontró)
         return comprador;
         }
-
+     
+    public HashMap<Comprador, Integer> listarCompradoresPorFechaAsistenciaV2(LocalDate fecha) {
+    HashMap<Comprador, Integer> compradoresConCantidad = new HashMap<>();
+    String sql = "SELECT c.dni, SUM(dt.cantidad) as total_entradas " +
+                 "FROM comprador c " +
+                 "JOIN ticket_compra tc ON c.dni = tc.comprador " +
+                 "JOIN detalle_ticket dt ON tc.idTicket = dt.codD " +
+                 "WHERE dt.fechProyeccion = ? " +
+                 "GROUP BY c.dni"; 
+    try (PreparedStatement ps = con.prepareStatement(sql)) {        
+        ps.setDate(1, java.sql.Date.valueOf(fecha));        
+        try (ResultSet rs = ps.executeQuery()) {
+            while (rs.next()) {
+                int dniComprador = rs.getInt("dni");
+                int totalEntradas = rs.getInt("total_entradas");
+                Comprador c = this.buscarCompradorDevuelveComprador(dniComprador); 
+                
+                if (c != null) {                    
+                    compradoresConCantidad.put(c, totalEntradas);
+                }
+            }
+        }
+    } catch (SQLException ex) {
+        System.out.println("Error al listar compradores con cantidad por fecha: " + ex.getMessage());
+    }
+    return compradoresConCantidad;
+}
 }

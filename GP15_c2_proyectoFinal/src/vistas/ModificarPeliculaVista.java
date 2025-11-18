@@ -182,6 +182,9 @@ public class ModificarPeliculaVista extends javax.swing.JInternalFrame {
                         .addGap(156, 156, 156)
                         .addComponent(JBGuardar))
                     .addGroup(layout.createSequentialGroup()
+                        .addGap(112, 112, 112)
+                        .addComponent(jLabel1))
+                    .addGroup(layout.createSequentialGroup()
                         .addGap(48, 48, 48)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel2)
@@ -202,20 +205,17 @@ public class ModificarPeliculaVista extends javax.swing.JInternalFrame {
                             .addComponent(JTOrigen, javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(JTActores, javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(JTDirector, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(JTTitulo, javax.swing.GroupLayout.Alignment.TRAILING)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(112, 112, 112)
-                        .addComponent(jLabel1)))
+                            .addComponent(JTTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(96, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jLabel1)
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(JTTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2))
+                .addGap(22, 22, 22)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(JTTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 25, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(JTDirector, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -237,7 +237,7 @@ public class ModificarPeliculaVista extends javax.swing.JInternalFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 25, Short.MAX_VALUE)
                         .addComponent(JDFechaDeEstreno, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.TRAILING))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 25, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 21, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(JREnCartelera)
                     .addComponent(JREnCarteleraNo)
@@ -291,6 +291,7 @@ public class ModificarPeliculaVista extends javax.swing.JInternalFrame {
             
             java.util.Date fecha = JDFechaDeEstreno.getDate();
             LocalDate fechaConvertida = fecha.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+
             
             boolean enCartelera = JREnCartelera.isSelected();
 
@@ -300,6 +301,7 @@ public class ModificarPeliculaVista extends javax.swing.JInternalFrame {
             peliculaData.modificarPelicula(peliculaAModificar, pelicula.getTitulo());
             
             JOptionPane.showMessageDialog(this, "Pelicula Modificada Correctamente");
+            
             this.dispose();
             
         } catch (Exception e) {
@@ -354,8 +356,5 @@ public class ModificarPeliculaVista extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel8;
     // End of variables declaration//GEN-END:variables
 
-
-    
-    
 
 }

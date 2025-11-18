@@ -280,10 +280,13 @@ public class PeliculaVista extends javax.swing.JInternalFrame {
                                 .addComponent(jLabel9)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(JTBuscarTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(JBBuscar)
-                                .addGap(12, 12, 12)
-                                .addComponent(jLabel1))
+                                .addGroup(jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jDesktopPane1Layout.createSequentialGroup()
+                                        .addGap(95, 95, 95)
+                                        .addComponent(jLabel1))
+                                    .addGroup(jDesktopPane1Layout.createSequentialGroup()
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(JBBuscar))))
                             .addGroup(jDesktopPane1Layout.createSequentialGroup()
                                 .addGap(301, 301, 301)
                                 .addComponent(jLabel8)))
@@ -523,7 +526,7 @@ public class PeliculaVista extends javax.swing.JInternalFrame {
         int limit = 30;
         
         if(JTBuscarTitulo.getText().length() >= limit) {
-           evt.consume();
+            evt.consume();
         }
     }//GEN-LAST:event_JTBuscarTituloKeyTyped
 

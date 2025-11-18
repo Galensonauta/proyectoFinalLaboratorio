@@ -17,10 +17,7 @@ import modelo.TicketCompra;
  * @author Hueso
  */
 public class VistaClientePrincipal extends javax.swing.JFrame {
-    
-    private List<LugarAsiento> asientosSeleccionados = new ArrayList<>();
-    private Proyeccion proyeccionSeleccionada = new Proyeccion();
-    
+
     private DetalleTicket dt = new DetalleTicket();
     private TicketCompra tc = new TicketCompra(); 
     
@@ -32,20 +29,12 @@ public class VistaClientePrincipal extends javax.swing.JFrame {
         
     }
 
-    public List<LugarAsiento> getAsientosSeleccionados() {
-        return asientosSeleccionados;
+    public TicketCompra getTc() {
+        return tc;
     }
 
-    public void setAsientosSeleccionados(List<LugarAsiento> asientosSeleccionados) {
-        this.asientosSeleccionados = asientosSeleccionados;
-    }
-
-    public Proyeccion getProyeccionSeleccionada() {
-        return proyeccionSeleccionada;
-    }
-
-    public void setProyeccionSeleccionada(Proyeccion proyeccionSeleccionada) {
-        this.proyeccionSeleccionada = proyeccionSeleccionada;
+    public void setTc(TicketCompra tc) {
+        this.tc = tc;
     }
 
     public DetalleTicket getDt() {
@@ -82,6 +71,14 @@ public class VistaClientePrincipal extends javax.swing.JFrame {
             escritorio.moveToFront(vcpg);
             
             break;
+        case 4:
+            escritorio.repaint();
+            VistaClienteImprimirEntrada vcie = new VistaClienteImprimirEntrada(this);
+            vcie.setVisible(true);
+            escritorio.add(vcie);
+            escritorio.moveToFront(vcie);
+            
+            break;
         // ...
     }
 }
@@ -112,6 +109,11 @@ public class VistaClientePrincipal extends javax.swing.JFrame {
 
         jButton3.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
         jButton3.setText("Cartelera");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
         btnProyeccinoes.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
         btnProyeccinoes.setText("Proyecciones");
@@ -141,15 +143,15 @@ public class VistaClientePrincipal extends javax.swing.JFrame {
                     .addGroup(escritorioLayout.createSequentialGroup()
                         .addGroup(escritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(escritorioLayout.createSequentialGroup()
-                                .addGap(442, 442, 442)
-                                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 393, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(escritorioLayout.createSequentialGroup()
                                 .addGap(514, 514, 514)
                                 .addGroup(escritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(btnProyeccinoes, javax.swing.GroupLayout.PREFERRED_SIZE, 202, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addGap(0, 430, Short.MAX_VALUE)))
+                                    .addComponent(btnProyeccinoes, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                            .addGroup(escritorioLayout.createSequentialGroup()
+                                .addGap(442, 442, 442)
+                                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 433, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 390, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         escritorioLayout.setVerticalGroup(
@@ -189,6 +191,21 @@ public class VistaClientePrincipal extends javax.swing.JFrame {
         // TODO add your handling code here:
         avanzarFlujoVenta(1);
     }//GEN-LAST:event_btnProyeccinoesActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        
+            escritorio.repaint();
+
+        // 2. Crea la nueva vista "Catalogo" que acabamos de diseñar
+        Catalogo vistaCatalogo = new Catalogo();
+
+        // 3. La hace visible, la agrega al escritorio y la pone al frente
+        vistaCatalogo.setVisible(true);
+        escritorio.add(vistaCatalogo);
+        escritorio.moveToFront(vistaCatalogo);
+            
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton3ActionPerformed
 
     /**
      * @param args the command line arguments
