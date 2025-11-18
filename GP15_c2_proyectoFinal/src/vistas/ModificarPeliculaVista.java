@@ -47,15 +47,12 @@ public class ModificarPeliculaVista extends javax.swing.JInternalFrame {
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
-        jLabel8 = new javax.swing.JLabel();
         JTTitulo = new javax.swing.JTextField();
         JTDirector = new javax.swing.JTextField();
         JTActores = new javax.swing.JTextField();
         JTOrigen = new javax.swing.JTextField();
         JCGenero = new javax.swing.JComboBox<>();
         JDFechaDeEstreno = new com.toedter.calendar.JDateChooser();
-        JREnCartelera = new javax.swing.JRadioButton();
-        JREnCarteleraNo = new javax.swing.JRadioButton();
         JBGuardar = new javax.swing.JButton();
         JBSalir = new javax.swing.JButton();
 
@@ -80,9 +77,6 @@ public class ModificarPeliculaVista extends javax.swing.JInternalFrame {
         jLabel7.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jLabel7.setText("FECHA DE ESTRENO");
 
-        jLabel8.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        jLabel8.setText("EN CARTELERA");
-
         JTTitulo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 JTTituloActionPerformed(evt);
@@ -101,12 +95,6 @@ public class ModificarPeliculaVista extends javax.swing.JInternalFrame {
                 JCGeneroActionPerformed(evt);
             }
         });
-
-        buttonGroup1.add(JREnCartelera);
-        JREnCartelera.setText("Si");
-
-        buttonGroup1.add(JREnCarteleraNo);
-        JREnCarteleraNo.setText("No");
 
         JBGuardar.setText("Guardar");
         JBGuardar.addActionListener(new java.awt.event.ActionListener() {
@@ -141,16 +129,11 @@ public class ModificarPeliculaVista extends javax.swing.JInternalFrame {
                                     .addComponent(jLabel2)
                                     .addComponent(jLabel6)
                                     .addComponent(jLabel7)
-                                    .addComponent(jLabel8)
                                     .addComponent(jLabel5)
                                     .addComponent(jLabel4)
                                     .addComponent(jLabel3))
                                 .addGap(18, 18, 18)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(JREnCartelera)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(JREnCarteleraNo))
                                     .addComponent(JDFechaDeEstreno, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addComponent(JCGenero, javax.swing.GroupLayout.Alignment.TRAILING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addComponent(JTOrigen, javax.swing.GroupLayout.Alignment.TRAILING)
@@ -192,12 +175,7 @@ public class ModificarPeliculaVista extends javax.swing.JInternalFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 25, Short.MAX_VALUE)
                         .addComponent(JDFechaDeEstreno, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.TRAILING))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 25, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(JREnCartelera)
-                    .addComponent(JREnCarteleraNo)
-                    .addComponent(jLabel8))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 65, Short.MAX_VALUE)
                 .addComponent(JBGuardar)
                 .addContainerGap(19, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
@@ -236,11 +214,7 @@ public class ModificarPeliculaVista extends javax.swing.JInternalFrame {
             java.util.Date fecha = JDFechaDeEstreno.getDate();
             LocalDate fechaConvertida = fecha.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
             boolean enCartelera = false;
-            if(JREnCartelera.isSelected()){
-                enCartelera = true;
-            }if(JREnCarteleraNo.isSelected()){
-                enCartelera = false;
-            }
+            
             
             Pelicula peliculaAModificar = new Pelicula(titulo,director, actores,origen, genero, fechaConvertida,enCartelera  );
             
@@ -257,8 +231,6 @@ public class ModificarPeliculaVista extends javax.swing.JInternalFrame {
     private javax.swing.JButton JBSalir;
     private javax.swing.JComboBox<String> JCGenero;
     private com.toedter.calendar.JDateChooser JDFechaDeEstreno;
-    private javax.swing.JRadioButton JREnCartelera;
-    private javax.swing.JRadioButton JREnCarteleraNo;
     private javax.swing.JTextField JTActores;
     private javax.swing.JTextField JTDirector;
     private javax.swing.JTextField JTOrigen;
@@ -271,7 +243,6 @@ public class ModificarPeliculaVista extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
     // End of variables declaration//GEN-END:variables
 
 
@@ -306,11 +277,7 @@ public class ModificarPeliculaVista extends javax.swing.JInternalFrame {
         
         boolean enCartelera = pelicula.isEnCartelera();
         
-        if(enCartelera){
-            JREnCartelera.setSelected(true);
-        }else{
-            JREnCarteleraNo.setSelected(true);
-        }
+        
         
         
     }

@@ -39,18 +39,12 @@
                                   <Component id="jLabel2" alignment="0" min="-2" max="-2" attributes="0"/>
                                   <Component id="jLabel6" alignment="0" min="-2" max="-2" attributes="0"/>
                                   <Component id="jLabel7" min="-2" max="-2" attributes="0"/>
-                                  <Component id="jLabel8" min="-2" max="-2" attributes="0"/>
                                   <Component id="jLabel5" alignment="0" min="-2" max="-2" attributes="0"/>
                                   <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
                                   <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace type="separate" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                  <Group type="102" attributes="0">
-                                      <Component id="JREnCartelera" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace max="32767" attributes="0"/>
-                                      <Component id="JREnCarteleraNo" min="-2" max="-2" attributes="0"/>
-                                  </Group>
                                   <Component id="JDFechaDeEstreno" max="32767" attributes="0"/>
                                   <Component id="JCGenero" alignment="1" max="32767" attributes="0"/>
                                   <Component id="JTOrigen" alignment="1" max="32767" attributes="0"/>
@@ -107,13 +101,7 @@
                   </Group>
                   <Component id="jLabel7" alignment="1" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace pref="25" max="32767" attributes="0"/>
-              <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="JREnCartelera" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="JREnCarteleraNo" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="jLabel8" alignment="3" min="-2" max="-2" attributes="0"/>
-              </Group>
-              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+              <EmptySpace pref="65" max="32767" attributes="0"/>
               <Component id="JBGuardar" min="-2" max="-2" attributes="0"/>
               <EmptySpace pref="19" max="32767" attributes="0"/>
           </Group>
@@ -182,14 +170,6 @@
         <Property name="text" type="java.lang.String" value="FECHA DE ESTRENO"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JLabel" name="jLabel8">
-      <Properties>
-        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-          <Font name="Dialog" size="14" style="1"/>
-        </Property>
-        <Property name="text" type="java.lang.String" value="EN CARTELERA"/>
-      </Properties>
-    </Component>
     <Component class="javax.swing.JTextField" name="JTTitulo">
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="JTTituloActionPerformed"/>
@@ -221,22 +201,6 @@
       </AuxValues>
     </Component>
     <Component class="com.toedter.calendar.JDateChooser" name="JDFechaDeEstreno">
-    </Component>
-    <Component class="javax.swing.JRadioButton" name="JREnCartelera">
-      <Properties>
-        <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
-          <ComponentRef name="buttonGroup1"/>
-        </Property>
-        <Property name="text" type="java.lang.String" value="Si"/>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JRadioButton" name="JREnCarteleraNo">
-      <Properties>
-        <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
-          <ComponentRef name="buttonGroup1"/>
-        </Property>
-        <Property name="text" type="java.lang.String" value="No"/>
-      </Properties>
     </Component>
     <Component class="javax.swing.JButton" name="JBGuardar">
       <Properties>
