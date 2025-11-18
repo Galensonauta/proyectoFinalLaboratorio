@@ -3,7 +3,9 @@ package persistencia;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import modelo.Pelicula;
 
 
@@ -249,4 +251,27 @@ public class PeliculaData {
         return listaPelis;
     }
     
+    public Map<String, Integer> obtenerEstadisticasPeliculas() {
+    Map<String, Integer> estadisticas = new LinkedHashMap<>();
+    
+    String sql = "SELECT p.titulo, SUM(dt.cantidad) as total " +
+                 "FROM detalle_ticket dt " +
+                 "JOIN proyeccion pr ON dt.idProyeccion = pr.idProyeccion " +
+                 "JOIN pelicula p ON pr.pelicula = p.titulo " +
+                 "GROUP BY p.titulo " +
+                 "ORDER BY total DESC";
+
+    try (PreparedStatement ps = con.prepareStatement(sql);
+         ResultSet rs = ps.executeQuery()) {
+
+        while (rs.next()) {
+            String titulo = rs.getString("titulo");
+            int cantidad = rs.getInt("total");            
+            estadisticas.put(titulo, cantidad);
+        }
+    } catch (SQLException ex) {
+        System.out.println("Error al obtener estadísticas: " + ex.getMessage());
+    }    
+    return estadisticas;
+}    
 }
