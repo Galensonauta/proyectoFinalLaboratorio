@@ -575,6 +575,16 @@ public class ModificarProyeccionVista extends javax.swing.JInternalFrame {
             boolean es3D = JCBox3DSI.isSelected();
             boolean subtitulada = JCBoxSubSI.isSelected();
             int lugarDispo = Integer.parseInt(JTFLugaresDispo.getText());
+            if (lugarDispo > sala.getCapacidad()) {
+            JOptionPane.showMessageDialog(this, 
+                "Error: Los lugares disponibles (" + lugarDispo + ") no pueden superar la capacidad de la sala (" + sala.getCapacidad() + ").");
+            return;
+        }
+            if (lugarDispo % 10 != 0) {
+            JOptionPane.showMessageDialog(this, 
+                "Error: La cantidad de lugares debe ser un múltiplo de 10.");
+            return;
+        }
 
             proyec.setPelicula(peli);
             proyec.setSala(sala);

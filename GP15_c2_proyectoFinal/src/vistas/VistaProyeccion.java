@@ -792,6 +792,18 @@ public class VistaProyeccion extends javax.swing.JInternalFrame {
             String idioma = (String) jCBIdioma.getSelectedItem();
             int precioButaca = Integer.parseInt(JTFPrecioAsiento.getText());
             int lugarDispo = Integer.parseInt(JTFLugaresDispo.getText());
+            if (lugarDispo > salaa.getCapacidad()) {
+            JOptionPane.showMessageDialog(this, 
+                "Error: Los lugares disponibles (" + lugarDispo + ") no pueden superar la capacidad de la sala (" + salaa.getCapacidad() + ").");
+            JTFLugaresDispo.requestFocus();
+            return;
+            }
+            if (lugarDispo % 10 != 0) {
+            JOptionPane.showMessageDialog(this, 
+                "Error: La cantidad de lugares debe ser un múltiplo de 10 (ej: 170, 180...).");
+            JTFLugaresDispo.requestFocus();
+            return;
+        }
             boolean es3D = jCheckBox3DSI.isSelected();
             boolean subtitulada = jCBSubSI.isSelected();
 
@@ -972,15 +984,17 @@ public class VistaProyeccion extends javax.swing.JInternalFrame {
             proData.eliminarProyeccion(id, dtData, butacaData);
             JOptionPane.showMessageDialog(this, "Poryección eliminada correctamente!");
             cargarTabla();
-        }
-        List<Proyeccion> proyeccionesRestantes = proData.buscarProyeccionesPorPelicula(tituloPelicula);
-        
-        if (proyeccionesRestantes.isEmpty()) {
+            List<Proyeccion> proyeccionesRestantes = proData.buscarProyeccionesPorPelicula(tituloPelicula);
+            if (proyeccionesRestantes.isEmpty()) {
                 // Si la lista está vacía, ya no hay funciones.
                 // Actualizamos la película a "enCartelera = false"
                 peliData.actualizarEstadoCartelera(tituloPelicula, false);
                 System.out.println("Era la última proyección. " + tituloPelicula + " ahora está fuera de cartelera.");
            }
+        }
+        
+        
+        
         cargarTabla();
         
         
