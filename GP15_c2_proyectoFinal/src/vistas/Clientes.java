@@ -341,7 +341,6 @@ public class Clientes extends javax.swing.JInternalFrame {
         
         LocalDate fechaNacimiento = null;
         try {
-
             java.util.Date fechaElegida = JDFechaNacimiento.getDate();
             fechaNacimiento = fechaElegida.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
             LocalDate fechaActual = LocalDate.now(); // Fecha de hoy

@@ -5,8 +5,11 @@
  */
 package vistas;
 
+import java.awt.HeadlessException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.Period;
+import java.time.ZoneId;
 import javax.swing.JOptionPane;
 import modelo.Comprador;
 import persistencia.CompradorData;
@@ -110,7 +113,7 @@ public class VistaClientePagar extends javax.swing.JInternalFrame {
 
         jLabel8.setText("Fecha de Nacimiento:");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Debito", "Credito" }));
 
         jLabel9.setText("Medio de Pago");
 
@@ -140,6 +143,17 @@ public class VistaClientePagar extends javax.swing.JInternalFrame {
         txtPass.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 txtPassKeyReleased(evt);
+            }
+        });
+
+        txtPassNuevo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtPassNuevoActionPerformed(evt);
+            }
+        });
+        txtPassNuevo.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtPassNuevoKeyReleased(evt);
             }
         });
 
@@ -296,7 +310,89 @@ public class VistaClientePagar extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_txtDNIActionPerformed
 
     private void btnRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarActionPerformed
-        // TODO add your handling code here:
+ 
+        if (txtDniNuevo.getText().isEmpty()) {
+            javax.swing.JOptionPane.showMessageDialog(this, "El DNI es obligatorio.");
+            return;
+        }
+        
+        if (txtNombreNuevo.getText().isEmpty()) {
+            javax.swing.JOptionPane.showMessageDialog(this, "El nombre es obligatorio.");
+            return;
+        }
+        
+        if (jdcNuevo.getDate() == null) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Debe seleccionar una fecha de nacimiento.");
+            return;
+        }    
+        char[] claveArray = txtPassNuevo.getPassword();
+        String pass = new String(claveArray);
+        if (pass.isEmpty()) {
+            javax.swing.JOptionPane.showMessageDialog(this, "La contraseña es obligatoria.");
+            return;
+        }
+        
+        LocalDate fechaNacimiento = null;
+        try {
+            java.util.Date fechaElegida = jdcNuevo.getDate();
+            fechaNacimiento = fechaElegida.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+            LocalDate fechaActual = LocalDate.now(); // Fecha de hoy
+
+            Period edad = Period.between(fechaNacimiento, fechaActual);
+
+
+            if (edad.getYears() < 18) {
+                javax.swing.JOptionPane.showMessageDialog(this, "El cliente debe ser mayor de 18 años (Edad actual: " + edad.getYears() + ").");
+                return;
+            }            
+
+            if (fechaNacimiento.isAfter(fechaActual)) {
+                 javax.swing.JOptionPane.showMessageDialog(this, "La fecha de nacimiento no puede ser futura.");
+                 return;
+            }
+            
+        } 
+        catch (HeadlessException e) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Error al validar la fecha.");
+            return;
+        }
+        
+        try {
+            int dni = Integer.parseInt(txtDniNuevo.getText());                 
+            String nombre = txtNombreNuevo.getText().trim().replaceAll("\\s+", " ");
+            String metodoDePago = null;
+            if(jComboBox1.getSelectedItem() == null){
+                JOptionPane.showMessageDialog(this, "Debe seleccionar un medio de pago");
+                return;
+            }else{
+                metodoDePago = jComboBox1.getSelectedItem().toString();
+            }
+            // Lógica de guardado
+            comprador=new Comprador(dni, nombre, pass, metodoDePago, fechaNacimiento);
+            try { 
+            Comprador compradorExistente = cd.buscarCompradorDevuelveComprador(dni);            
+            if (compradorExistente != null) {
+                javax.swing.JOptionPane.showMessageDialog(this, "Error: El DNI " + dni + " ya se encuentra registrado en la base de datos.");
+                return; 
+            }           
+            }catch(Exception e){
+                javax.swing.JOptionPane.showMessageDialog(this, "Cliente ya existe");
+            }
+            cd.guardarComprador(comprador);
+            
+            javax.swing.JOptionPane.showMessageDialog(this, "Cliente guardado exitosamente.");
+        } catch (NumberFormatException e) {
+            javax.swing.JOptionPane.showMessageDialog(this, "El DNI debe ser un número válido.");
+            return;
+        } catch (Exception e) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Error al guardar: " + e.getMessage());
+        }
+        madre.getTc().setComprador(comprador);
+           madre.getTc().setFechCompra(LocalDate.now());
+           madre.getTc().setMonto(madre.getDt().getSubtotal() * 1.21);
+           madre.avanzarFlujoVenta(4);
+           this.dispose();
+        
     }//GEN-LAST:event_btnRegistrarActionPerformed
 
     private void btnAtrasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAtrasActionPerformed
@@ -312,6 +408,7 @@ public class VistaClientePagar extends javax.swing.JInternalFrame {
            madre.getTc().setFechCompra(LocalDate.now());
            madre.getTc().setMonto(madre.getDt().getSubtotal() * 1.21);
            madre.avanzarFlujoVenta(4);
+           this.dispose();          
            
        } else{
            JOptionPane.showMessageDialog(null, "Usuario y/o Contraseña incorrecto/s");
@@ -325,6 +422,18 @@ public class VistaClientePagar extends javax.swing.JInternalFrame {
             btnContinuar.setEnabled(true);
         }
     }//GEN-LAST:event_txtPassKeyReleased
+
+    private void txtPassNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPassNuevoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtPassNuevoActionPerformed
+
+    private void txtPassNuevoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPassNuevoKeyReleased
+         char[] claveArray = txtPassNuevo.getPassword();
+        if(claveArray.length > 4){
+            btnRegistrar.setEnabled(true);
+        }
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtPassNuevoKeyReleased
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
