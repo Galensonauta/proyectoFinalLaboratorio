@@ -8,18 +8,12 @@ public class LugarAsiento {
     private int codLugar, numeroAsiento;
     private String fila;
     private boolean estado;
-    private Proyeccion proyeccion;
+    
     private int idProyeccion;
     
     public LugarAsiento() {}
 
-    public LugarAsiento(int codLugar,String fila, int numeroAsiento, boolean estado, Proyeccion proyeccion) {
-        this.codLugar = codLugar;
-        this.numeroAsiento = numeroAsiento;
-        this.fila = fila;
-        this.estado = estado;
-        this.proyeccion = proyeccion;
-    }
+    
     public LugarAsiento(String fila, int numeroAsiento, boolean estado, int idProyeccion) {
         this.idProyeccion = idProyeccion;
         this.numeroAsiento = numeroAsiento;
@@ -60,14 +54,15 @@ public class LugarAsiento {
         this.estado = estado;
     }
 
-    public Proyeccion getProyeccion() {
-        return proyeccion;
+    public int getIdProyeccion() {
+        return idProyeccion;
     }
 
-    public void setProyeccion(Proyeccion proyeccion) {
-        this.proyeccion = proyeccion;
+    public void setIdProyeccion(int idProyeccion) {
+        this.idProyeccion = idProyeccion;
     }
 
+    
     
 
     @Override

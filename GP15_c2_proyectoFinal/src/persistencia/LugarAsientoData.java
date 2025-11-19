@@ -29,18 +29,31 @@ public class LugarAsientoData {
 
     public void guardarAsiento(LugarAsiento l) {
 
-        String query = "INSERT INTO lugar_asiento (codLugar, filaAsiento, numeroAsiento, estado, proyeccion) VALUE (?,?,?,?,?)";
+        String query = "INSERT INTO lugar_asiento (filaAsiento, numeroAsiento, estado, proyeccion) VALUE (?,?,?,?)";
 
         try {
-            PreparedStatement ps = con.prepareStatement(query);
+            PreparedStatement ps = con.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
 
-            ps.setInt(1, l.getCodLugar());
-            ps.setString(2, l.getFila());
-            ps.setInt(3, l.getNumeroAsiento());
-            ps.setBoolean(4, l.isEstado());
-            ps.setInt(5, l.getProyeccion().getIdProyeccion());
+            
+            ps.setString(1, l.getFila());
+            ps.setInt(2, l.getNumeroAsiento());
+            ps.setBoolean(3, l.isEstado());
+            ps.setInt(4, l.getIdProyeccion());
 
             ps.executeUpdate();
+            
+            try (ResultSet rs = ps.getGeneratedKeys()) {
+            if (rs.next()) {
+                int codLugarGenerado = rs.getInt(1);
+                
+                // 2. Setear el ID generado de vuelta en el objeto
+                l.setCodLugar(codLugarGenerado); 
+                
+                System.out.println("Asiento guardado y CodLugar generado: " + codLugarGenerado);
+            } else {
+                throw new SQLException("Error: No se pudo obtener la clave generada para el asiento.");
+            }
+        }
 
         } catch (SQLException ex) {
             System.out.println("Error al tratar de guardar Asiento" + ex.getMessage());
@@ -79,7 +92,7 @@ public class LugarAsientoData {
             ps.setString(1, la.getFila());
             ps.setInt(2, la.getNumeroAsiento());
             ps.setBoolean(3, la.isEstado());
-            ps.setInt(4, la.getProyeccion().getIdProyeccion());
+            ps.setInt(4, la.getIdProyeccion());
             ps.setInt(5, la.getCodLugar());
 
             int filas = ps.executeUpdate();
@@ -142,7 +155,7 @@ public class LugarAsientoData {
 
                 Proyeccion p = proyeccionData.buscarProyeccionPorID(rs.getInt("proyeccion"));
 
-                asiento.setProyeccion(p);
+                asiento.setIdProyeccion(p.getIdProyeccion());
                 asiento.setFila(rs.getString("filaAsiento"));
                 asiento.setNumeroAsiento(rs.getInt("numeroAsiento"));
                 asiento.setEstado(rs.getBoolean("estado"));

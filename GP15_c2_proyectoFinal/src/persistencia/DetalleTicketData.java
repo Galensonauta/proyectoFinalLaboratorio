@@ -3,6 +3,7 @@ package persistencia;
 
 import java.math.BigDecimal;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -32,23 +33,41 @@ private Connection con;
     }
     public void guardarDetalleTicketCompra(DetalleTicket dt, int codD) {
         String sqlDetalles = "INSERT INTO detalle_ticket (codD,cantidad,subTotal,idProyeccion, fechProyeccion) values (?,?,?,?,?)";
-        
+        String sqlLugares = "INSERT INTO detalle_ticket_lugares (idDetalleTicket, codLugar) VALUES (?, ?)";
         try {
             PreparedStatement psDetalle = con.prepareStatement(sqlDetalles, Statement.RETURN_GENERATED_KEYS);            
             psDetalle.setInt(1, codD);
             psDetalle.setInt(2, dt.getCantidad());
             psDetalle.setBigDecimal(3, BigDecimal.valueOf(dt.getSubtotal()));
             psDetalle.setInt(4, dt.getProyeccion().getIdProyeccion());    
-            psDetalle.setDate(5, java.sql.Date.valueOf(dt.getFechProyeccion()));
+            psDetalle.setDate(5, Date.valueOf(dt.getProyeccion().getHoraInicio().toLocalDate()));
 
             psDetalle.executeUpdate();
-            System.out.println("Detalle insertado con éxito");
-            con.commit();
-        } catch(SQLException e){
-            System.out.println("Error al guardar el Ticket"+e.getMessage());
-            e.printStackTrace();
-        }   
-    }
+            int idDetalleGenerado;
+        try (ResultSet rs = psDetalle.getGeneratedKeys()) {
+            if (rs.next()) {
+                idDetalleGenerado = rs.getInt(1); // Se obtiene por índice (columna 1)
+                dt.setIdDetalle(idDetalleGenerado); // Actualizamos el objeto
+            } else {
+                throw new SQLException("No se pudo obtener el ID del detalle.");
+            }
+        }
+            PreparedStatement psLugares = con.prepareStatement(sqlLugares);
+            
+            for(LugarAsiento lugar : dt.getLugares()){
+               lugarAsientoData.guardarAsiento(lugar);
+               psLugares.setInt(1,idDetalleGenerado);
+               psLugares.setInt(2, lugar.getCodLugar());
+               psLugares.addBatch();
+            }
+            psLugares.executeBatch();                     
+        } catch(NullPointerException npe) {
+            System.err.println("ERROR: Se intentó acceder a un objeto nulo. Verifique los campos de dt.");
+            npe.printStackTrace(); 
+        }catch(SQLException e){
+                System.out.println("Error al guardar el Ticket"+e);
+            }   
+        }
     
     public void eliminarDetalleTicket(int idDetalle) {
         String query = "DELETE FROM detalle_ticket WHERE idDetalle = ?";

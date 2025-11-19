@@ -27,7 +27,7 @@ public class VistaClienteElegirAsiento extends javax.swing.JInternalFrame {
 
     private int filasSala = 1; //estos datos podrían venir de la tabla sala    
     private int columnasSala = 10;
-    public int idProyeccion;
+    public int idProyeccion = -1;
     
     private VistaClientePrincipal madre;
     private SalaData sd = new SalaData();
@@ -38,10 +38,22 @@ public class VistaClienteElegirAsiento extends javax.swing.JInternalFrame {
     public ArrayList<String> asientosSeleccionadosEtiquetas = new ArrayList<>();
     public ArrayList<LugarAsiento> asientosFinales = new ArrayList<>();
     
+     public VistaClienteElegirAsiento(VistaClientePrincipal madre) {
+        initComponents();
+        this.madre = madre;
+        this.idProyeccion = madre.getDt().getProyeccion().getIdProyeccion();
+        this.asientosOcupadosEtiquetas = lad.obtenerAsientosOcupados(idProyeccion);
+        System.out.println(asientosOcupadosEtiquetas);
+        setearFilasYColumnas();
+         System.out.println("IdProyeccion: " + idProyeccion);
+        dibujarSala(filasSala, columnasSala);
+    }
+    
     
     public ArrayList<String> getAsientosSeleccionadosEtiquetas(){
         return asientosSeleccionadosEtiquetas;
     }
+
     
     // Clase separada dentro del paquete Vista-Controlador
     private class SimpleToggleListener implements ActionListener {
@@ -163,16 +175,7 @@ public class VistaClienteElegirAsiento extends javax.swing.JInternalFrame {
         }
     }
  
-    public VistaClienteElegirAsiento(VistaClientePrincipal madre) {
-        initComponents();
-        this.madre = madre;
-        this.idProyeccion = madre.getDt().getProyeccion().getIdProyeccion();
-        this.asientosOcupadosEtiquetas = lad.obtenerAsientosOcupados(idProyeccion);
-        System.out.println(asientosOcupadosEtiquetas);
-        setearFilasYColumnas();
-        
-        dibujarSala(filasSala, columnasSala);
-    }
+   
 
     
     
