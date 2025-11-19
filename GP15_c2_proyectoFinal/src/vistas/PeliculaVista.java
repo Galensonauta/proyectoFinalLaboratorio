@@ -349,29 +349,51 @@ public class PeliculaVista extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void JBGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBGuardarActionPerformed
+        
+        
+        
+        if (JTTitulo.getText().trim().isEmpty() || 
+            JTDirector.getText().trim().isEmpty() || 
+            JTActores.getText().trim().isEmpty() || 
+            JTOrigen.getText().trim().isEmpty()) {
+            
+            JOptionPane.showMessageDialog(this, "Por favor, complete todos los campos de texto (Título, Director, Actores, Origen).");
+            return; 
+        }
 
+     
+        if (JCGenero.getSelectedItem() == null) {
+            JOptionPane.showMessageDialog(this, "Debe seleccionar un Género.");
+            return;
+        }
+
+        
+        if (JDFechaDeEstreno.getDate() == null) {
+            JOptionPane.showMessageDialog(this, "Debe seleccionar una Fecha de Estreno.");
+            return;
+        }
+
+       
         try {
             String titulo = JTTitulo.getText();
             String actores = JTActores.getText();
             String director = JTDirector.getText();
             String origen = JTOrigen.getText();
             String genero = JCGenero.getSelectedItem().toString();
+            
+            
             java.util.Date fecha = JDFechaDeEstreno.getDate();
             LocalDate fechaConvertida = fecha.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-            boolean enCartelera = false;
+            
+           
+            boolean enCartelera = false; // Siempre nace en false
 
-            String enCarteleraStr;
-
-            if (enCartelera == true) {
-                enCarteleraStr = "SI";
-            }
-            if (enCartelera == false) {
-                enCarteleraStr = "NO";
-            }
-
+            // Guardamos
             peliculaData.guardarPelicula(new Pelicula(titulo, director, actores, origen, genero, fechaConvertida, enCartelera));
 
             JOptionPane.showMessageDialog(this, "Pelicula guardada Correctamente!");
+            
+            
             cargarPeliculas(peliculaData.listarTodasLasPeliculas());
             modelo.fireTableDataChanged();
 
@@ -382,9 +404,12 @@ public class PeliculaVista extends javax.swing.JInternalFrame {
             JDFechaDeEstreno.setDate(null);
             JCGenero.setSelectedIndex(-1);
 
-        } catch (HeadlessException e) {
-            javax.swing.JOptionPane.showMessageDialog(this, "Error al guardar pelicula " + e.getMessage());
+        } catch (Exception e) {
+            // Cambié 'HeadlessException' por 'Exception' para atrapar CUALQUIER error
+            javax.swing.JOptionPane.showMessageDialog(this, "Error al guardar pelicula: " + e.getMessage());
+            e.printStackTrace(); // Esto muestra el error exacto en la consola de NetBeans
         }
+       
     }//GEN-LAST:event_JBGuardarActionPerformed
 
     private void JBSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBSalirActionPerformed
@@ -463,7 +488,8 @@ public class PeliculaVista extends javax.swing.JInternalFrame {
     private void JTTituloKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_JTTituloKeyTyped
         char c = evt.getKeyChar();
         
-        if(!Character.isLetter(c) && c != ' ' && c != java.awt.event.KeyEvent.VK_BACK_SPACE){
+        
+        if (!Character.isLetter(c) && !Character.isDigit(c) && c != ' ' && c != java.awt.event.KeyEvent.VK_BACK_SPACE) {
             evt.consume();
         }
     }//GEN-LAST:event_JTTituloKeyTyped
@@ -543,10 +569,22 @@ public class PeliculaVista extends javax.swing.JInternalFrame {
         
     }
     
+    // En PeliculaVista.java
+
     private void cargarPeliculas(List<Pelicula> peliculas){
         
         modelo.setRowCount(0);
         for(Pelicula pelicula : peliculas){
+            
+            // --- Conversión SI/NO ---
+            String enCarteleraStr; 
+            if(pelicula.isEnCartelera()){
+                enCarteleraStr = "SI";
+            }else{
+                enCarteleraStr = "NO";
+            }
+            // ------------------------
+            
             Object [] fila = {
                 pelicula.getTitulo(),
                 pelicula.getDirector(),
@@ -554,9 +592,9 @@ public class PeliculaVista extends javax.swing.JInternalFrame {
                 pelicula.getOrigen(),
                 pelicula.getGenero(),
                 pelicula.getEstreno(),
-                pelicula.isEnCartelera()
+                enCarteleraStr // <-- Usamos el String convertido
             };
-        modelo.addRow(fila);
+            modelo.addRow(fila);
         }      
     }
     
