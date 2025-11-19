@@ -31,6 +31,7 @@ public class ModificarPeliculaVista extends javax.swing.JInternalFrame {
         cargarDatos();
         JTTitulo.setEditable(false);
         JREnCartelera.setEnabled(false);
+        JREnCarteleraNo.setEnabled(false);
         
     }
 
