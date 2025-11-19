@@ -188,6 +188,9 @@ public class VistaClienteElegirAsiento extends javax.swing.JInternalFrame {
         btnSalir = new javax.swing.JButton();
         btnAtras = new javax.swing.JButton();
 
+        setMaximizable(true);
+        setResizable(true);
+
         jDesktopPane1.setMaximumSize(new java.awt.Dimension(1024, 768));
 
         btnGuardar.setText("Siguiente >");

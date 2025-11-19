@@ -4,6 +4,7 @@
  */
 package persistencia;
 
+import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
@@ -36,20 +37,18 @@ public class TicketCompraData {
         detalleTicketData = new DetalleTicketData();
     }
     public void guardarTicketCompra(TicketCompra tc) {
-        double montoTotal = 0;
+        
         if (tc.getDetalles() == null) {
             System.out.println("Error: El TicketCompra no tiene detalles.");
             return;
         }
-        for (DetalleTicket dt : tc.getDetalles()) {
-        montoTotal += dt.getSubtotal(); 
-    }
-        tc.setMonto(montoTotal);
+        
+        
         String sql = "INSERT INTO ticket_compra (fechCompra, monto, comprador) VALUES (?, ?, ?)";
         try {
             PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);           
             ps.setDate(1, Date.valueOf(tc.getFechCompra()));
-            ps.setDouble(2, tc.getMonto());
+            ps.setBigDecimal(2, BigDecimal.valueOf(tc.getMonto()));
             ps.setInt(3,tc.getComprador().getDni());           
             ps.executeUpdate();
             int idTicketGenerado=-1;
@@ -65,6 +64,7 @@ public class TicketCompraData {
                 detalleTicketData.guardarDetalleTicketCompra(dt, idTicketGenerado);
             }
             System.out.println("Ticket guardado con éxito. ID: " + idTicketGenerado);
+            ps.close();
         } catch(SQLException e){
             System.out.println("Error al guardar el Ticket"+e);
         }   

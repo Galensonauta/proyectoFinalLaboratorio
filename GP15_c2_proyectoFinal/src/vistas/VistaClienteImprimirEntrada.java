@@ -6,10 +6,14 @@
 package vistas;
 
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 import modelo.DetalleTicket;
 import modelo.LugarAsiento;
 import modelo.Proyeccion;
 import modelo.TicketCompra;
+import persistencia.DetalleTicketData;
+import persistencia.LugarAsientoData;
+import persistencia.TicketCompraData;
 
 /**
  *
@@ -19,6 +23,11 @@ public class VistaClienteImprimirEntrada extends javax.swing.JInternalFrame {
     VistaClientePrincipal madre;
     TicketCompra tc = new TicketCompra();
     DetalleTicket dt = new DetalleTicket();
+    
+    TicketCompraData tcd = new TicketCompraData();
+    DetalleTicketData dtd = new DetalleTicketData();
+    LugarAsientoData lad = new LugarAsientoData();
+    
     /**
      * Creates new form VistaClienteImprimirEntrada
      */
@@ -38,7 +47,8 @@ public class VistaClienteImprimirEntrada extends javax.swing.JInternalFrame {
 
     ticket += "----------------- CINEMACENTRO -----------------\n" +  
               "\nPelicula: " + proyeccion.getPelicula().getTitulo() + 
-              "\nFecha de proyección:    " + proyeccion.getHoraInicio().toLocalDate() + 
+              "\nFecha de proyección: " + proyeccion.getHoraInicio().toLocalDate() + 
+              "\nID Proyección: " + proyeccion.getIdProyeccion() +
               "\nHora inicio: " + proyeccion.getHoraInicio().toLocalTime() + 
               "\nHora Finalización: " + proyeccion.getHoraFin().toLocalTime() +
               "\nSala: " + proyeccion.getSala().getNroSala() +
@@ -54,6 +64,18 @@ public class VistaClienteImprimirEntrada extends javax.swing.JInternalFrame {
     
     return ticket;
 }
+    
+    public void registrarEntrada(){
+        try{
+           tcd.guardarTicketCompra(tc); 
+           int idTicket = tc.getIdTicket();
+           dtd.guardarDetalleTicketCompra(dt, idTicket);
+           JOptionPane.showMessageDialog(null, "Ticket registrado exitosamente!");
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(null, "Error al registrar compra");
+        }
+        
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -65,16 +87,16 @@ public class VistaClienteImprimirEntrada extends javax.swing.JInternalFrame {
     private void initComponents() {
 
         jDesktopPane1 = new javax.swing.JDesktopPane();
-        jButton2 = new javax.swing.JButton();
+        btnAtras = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTextArea1 = new javax.swing.JTextArea();
-        jButton1 = new javax.swing.JButton();
+        btnFinal = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
 
-        jButton2.setText("< Atrás");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        btnAtras.setText("< Atrás");
+        btnAtras.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                btnAtrasActionPerformed(evt);
             }
         });
 
@@ -85,17 +107,17 @@ public class VistaClienteImprimirEntrada extends javax.swing.JInternalFrame {
         jTextArea1.setText("\n");
         jScrollPane1.setViewportView(jTextArea1);
 
-        jButton1.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        jButton1.setText("Finalizar Compra");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btnFinal.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        btnFinal.setText("Finalizar Compra");
+        btnFinal.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btnFinalActionPerformed(evt);
             }
         });
 
-        jDesktopPane1.setLayer(jButton2, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jDesktopPane1.setLayer(btnAtras, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jDesktopPane1.setLayer(jScrollPane1, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jDesktopPane1.setLayer(jButton1, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jDesktopPane1.setLayer(btnFinal, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         javax.swing.GroupLayout jDesktopPane1Layout = new javax.swing.GroupLayout(jDesktopPane1);
         jDesktopPane1.setLayout(jDesktopPane1Layout);
@@ -103,9 +125,9 @@ public class VistaClienteImprimirEntrada extends javax.swing.JInternalFrame {
             jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jDesktopPane1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jButton2)
+                .addComponent(btnAtras)
                 .addGap(416, 416, 416)
-                .addComponent(jButton1)
+                .addComponent(btnFinal)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jDesktopPane1Layout.createSequentialGroup()
                 .addContainerGap(334, Short.MAX_VALUE)
@@ -116,12 +138,12 @@ public class VistaClienteImprimirEntrada extends javax.swing.JInternalFrame {
             jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jDesktopPane1Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton2))
+                .addComponent(btnAtras))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jDesktopPane1Layout.createSequentialGroup()
                 .addGap(40, 40, 40)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 568, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 53, Short.MAX_VALUE)
-                .addComponent(jButton1)
+                .addComponent(btnFinal)
                 .addGap(24, 24, 24))
         );
 
@@ -153,18 +175,20 @@ public class VistaClienteImprimirEntrada extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void btnFinalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFinalActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
+        registrarEntrada();
+    }//GEN-LAST:event_btnFinalActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void btnAtrasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAtrasActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton2ActionPerformed
+        madre.avanzarFlujoVenta(3);
+    }//GEN-LAST:event_btnAtrasActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
+    private javax.swing.JButton btnAtras;
+    private javax.swing.JButton btnFinal;
     private javax.swing.JDesktopPane jDesktopPane1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;

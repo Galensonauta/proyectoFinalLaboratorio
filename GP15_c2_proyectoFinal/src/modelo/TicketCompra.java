@@ -10,7 +10,7 @@ import java.util.ArrayList;
 public class TicketCompra {
     private int idTicket;
     private LocalDate fechCompra;
-    double monto; 
+    private double monto; 
     private Comprador comprador;
     private ArrayList<DetalleTicket> detalles;
 
