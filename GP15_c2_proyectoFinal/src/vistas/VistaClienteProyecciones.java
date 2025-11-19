@@ -144,6 +144,11 @@ public class VistaClienteProyecciones extends javax.swing.JInternalFrame {
         });
 
         btnAtrás.setText("< Atrás");
+        btnAtrás.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAtrásActionPerformed(evt);
+            }
+        });
 
         btnSalir.setText("Salir");
         btnSalir.addActionListener(new java.awt.event.ActionListener() {
@@ -229,6 +234,11 @@ public class VistaClienteProyecciones extends javax.swing.JInternalFrame {
         madre.avanzarFlujoVenta(2);
         this.dispose();
     }//GEN-LAST:event_btnSiguienteActionPerformed
+
+    private void btnAtrásActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAtrásActionPerformed
+       this.dispose();
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnAtrásActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
