@@ -301,6 +301,8 @@ public class VistaClienteElegirAsiento extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
         convertirEtiquetasAObjetos();
         madre.getDt().setLugares(asientosFinales);
+        madre.getDt().setCantidad(asientosFinales.size());
+        madre.getDt().setSubtotal(madre.getDt().getProyeccion().getPrecioLugar() * asientosFinales.size());
         madre.avanzarFlujoVenta(3);
         this.dispose();
     }//GEN-LAST:event_btnGuardarActionPerformed

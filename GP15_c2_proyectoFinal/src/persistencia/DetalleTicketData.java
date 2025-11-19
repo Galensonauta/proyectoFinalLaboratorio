@@ -36,7 +36,7 @@ private Connection con;
             PreparedStatement psDetalle = con.prepareStatement(sqlDetalles, Statement.RETURN_GENERATED_KEYS);            
             psDetalle.setInt(1, codD);
             psDetalle.setInt(2, dt.getCantidad());
-            psDetalle.setInt(3, dt.getSubtotal());
+            psDetalle.setDouble(3, dt.getSubtotal());
             psDetalle.setInt(4, dt.getProyeccion().getIdProyeccion());    
             psDetalle.setDate(5, java.sql.Date.valueOf(dt.getFechProyeccion()));
 

@@ -9,7 +9,8 @@ import java.util.List;
  * @author Grupo 15 (Evelyn Cetera, Tomas Puw Zirulnik, Matias Correa, Enzo Fornes, Santiago Girardi)
  */
 public class DetalleTicket {
-    private int idDetalle, cantidad, subtotal;
+    private int idDetalle, cantidad;
+    private double subtotal;
     private Proyeccion proyeccion;
     private ArrayList<LugarAsiento> lugares;
     private LocalDate fechProyeccion;
@@ -59,11 +60,11 @@ public class DetalleTicket {
         this.cantidad = cantidad;
     }
 
-    public int getSubtotal() {
+    public double getSubtotal() {
         return subtotal;
     }
 
-    public void setSubtotal(int subtotal) {
+    public void setSubtotal(double subtotal) {
         this.subtotal = subtotal;
     }
 
@@ -87,9 +88,9 @@ public class DetalleTicket {
     }
     
     public String asientosToString(){
-        String a = "Asiento/s: ";
-        for (LugarAsiento asiento : lugares) {
-            a.concat(asiento.toString());
+        String a = "";
+        for (LugarAsiento asiento : this.lugares) {
+            a += asiento.toString();
         }
         return a;
     }
