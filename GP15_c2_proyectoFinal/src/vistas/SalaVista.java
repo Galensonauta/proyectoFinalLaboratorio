@@ -9,6 +9,7 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import persistencia.SalaData;
 import modelo.Sala;
+import persistencia.ProyeccionData;
 
 /**
  *
@@ -72,6 +73,7 @@ public class SalaVista extends javax.swing.JInternalFrame {
         jLabel8 = new javax.swing.JLabel();
         JBLimpiarTable = new javax.swing.JButton();
         jDesktopPane1 = new javax.swing.JDesktopPane();
+        jButton1 = new javax.swing.JButton();
 
         jTextField1.setText("jTextField1");
 
@@ -194,6 +196,13 @@ public class SalaVista extends javax.swing.JInternalFrame {
             .addGap(0, 100, Short.MAX_VALUE)
         );
 
+        jButton1.setText("Eliminar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
         EscritorioSala.setLayer(RBEstadoSi, javax.swing.JLayeredPane.DEFAULT_LAYER);
         EscritorioSala.setLayer(RBEstadoNo, javax.swing.JLayeredPane.DEFAULT_LAYER);
         EscritorioSala.setLayer(botonGuardar, javax.swing.JLayeredPane.DEFAULT_LAYER);
@@ -215,6 +224,7 @@ public class SalaVista extends javax.swing.JInternalFrame {
         EscritorioSala.setLayer(jLabel8, javax.swing.JLayeredPane.DEFAULT_LAYER);
         EscritorioSala.setLayer(JBLimpiarTable, javax.swing.JLayeredPane.DEFAULT_LAYER);
         EscritorioSala.setLayer(jDesktopPane1, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        EscritorioSala.setLayer(jButton1, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         javax.swing.GroupLayout EscritorioSalaLayout = new javax.swing.GroupLayout(EscritorioSala);
         EscritorioSala.setLayout(EscritorioSalaLayout);
@@ -272,6 +282,8 @@ public class SalaVista extends javax.swing.JInternalFrame {
                             .addGroup(EscritorioSalaLayout.createSequentialGroup()
                                 .addComponent(JBModificar)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jButton1)
+                                .addGap(51, 51, 51)
                                 .addComponent(JBLimpiarTable)
                                 .addGap(43, 43, 43))))
                     .addGroup(EscritorioSalaLayout.createSequentialGroup()
@@ -328,7 +340,8 @@ public class SalaVista extends javax.swing.JInternalFrame {
                         .addGroup(EscritorioSalaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(JBModificar)
                             .addComponent(botonGuardar)
-                            .addComponent(JBLimpiarTable))
+                            .addComponent(JBLimpiarTable)
+                            .addComponent(jButton1))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(JBSalir)
                         .addGap(28, 28, 28))))
@@ -559,6 +572,43 @@ public class SalaVista extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_JTBuscarNroDeSalaKeyTyped
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+SalaData proData=new SalaData();
+        int filaSeleccionada = JTSalas.getSelectedRow();
+    if (filaSeleccionada == -1) {
+        JOptionPane.showMessageDialog(this, "Debe seleccionar una sala.");
+        return;
+    }
+
+    int nroSala = Integer.parseInt(modelo.getValueAt(filaSeleccionada, 0).toString());
+
+    
+    if (proData.existeSalaParaPelicula(nroSala)) {
+        JOptionPane.showMessageDialog(this, 
+            "NO se puede eliminar la sala '" + nroSala + "'.\n" +
+            "Tiene funciones/proyecciones programadas.\n" +
+            "Primero elimine las proyecciones asociadas.",
+            "Error de Integridad",
+            JOptionPane.WARNING_MESSAGE);
+        return; 
+    }
+
+   
+    int confirm = JOptionPane.showConfirmDialog(this, "¿Seguro que desea eliminar?", "Confirmar", JOptionPane.YES_NO_OPTION);
+    
+    if (confirm == JOptionPane.YES_OPTION) {
+        try {
+            // Como ya validamos arriba, esto debería funcionar sin errores de FK
+            proData.borrarSala(nroSala);
+            cargarSalas(proData.obtenerTodasLasSalas());
+            JOptionPane.showMessageDialog(this, "Sala eliminada.");
+            
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error al eliminar: " + e.getMessage());
+        }
+    }
+    }//GEN-LAST:event_jButton1ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JDesktopPane EscritorioSala;
@@ -577,6 +627,7 @@ public class SalaVista extends javax.swing.JInternalFrame {
     private javax.swing.JButton botonGuardar;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.ButtonGroup buttonGroup2;
+    private javax.swing.JButton jButton1;
     private javax.swing.JDesktopPane jDesktopPane1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

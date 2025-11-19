@@ -189,5 +189,24 @@ public class SalaData {
         return salas;
     }
     
+    public boolean existeSalaParaPelicula(int nroSala) {
+    // Cuenta cuántas veces aparece el título en la tabla de proyecciones
+    String sql = "SELECT COUNT(*) FROM proyeccion WHERE sala = ?";
+    
+    try (PreparedStatement ps = con.prepareStatement(sql)) {
+        ps.setInt(1, nroSala);
+        
+        try (ResultSet rs = ps.executeQuery()) {
+            if (rs.next()) {
+                
+                return rs.getInt(1) > 0;
+            }
+        }
+    } catch (SQLException ex) {
+        System.err.println("Error al verificar uso de sala: " + ex.getMessage());
+    }
+    return false; 
+}
+    
 
 }

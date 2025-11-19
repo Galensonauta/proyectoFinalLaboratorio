@@ -46,6 +46,10 @@ public class PeliculaData {
     
     }
     
+    
+    
+    
+    
     public void eliminarPelicula(String titulo) {
 
         String query = "DELETE FROM pelicula WHERE titulo = ?";

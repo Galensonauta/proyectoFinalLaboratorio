@@ -5,6 +5,7 @@
  */
 package vistas;
 import java.awt.HeadlessException;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.*;
@@ -79,6 +80,7 @@ public class Clientes extends javax.swing.JInternalFrame {
         JBBuscar = new javax.swing.JButton();
         JBLimpiar = new javax.swing.JButton();
         JBModificar = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
 
         setClosable(true);
 
@@ -252,6 +254,13 @@ public class Clientes extends javax.swing.JInternalFrame {
             }
         });
 
+        jButton1.setText("Eliminar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -262,6 +271,8 @@ public class Clientes extends javax.swing.JInternalFrame {
                         .addContainerGap()
                         .addComponent(JBModificar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButton1)
+                        .addGap(153, 153, 153)
                         .addComponent(JBLimpiar))
                     .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(jPanel2Layout.createSequentialGroup()
@@ -294,7 +305,8 @@ public class Clientes extends javax.swing.JInternalFrame {
                 .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(JBLimpiar)
-                    .addComponent(JBModificar))
+                    .addComponent(JBModificar)
+                    .addComponent(jButton1))
                 .addContainerGap(53, Short.MAX_VALUE))
         );
 
@@ -489,7 +501,6 @@ public class Clientes extends javax.swing.JInternalFrame {
             javax.swing.JOptionPane.showMessageDialog(this, "error al abrir la pagina" + e.getMessage());
         }
 
-    // TODO add your handling code here:
     }//GEN-LAST:event_JBModificarActionPerformed
 
     private void JTDniKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_JTDniKeyTyped
@@ -542,6 +553,23 @@ public class Clientes extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_JTPassKeyTyped
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+int filaSeleccionada = JTClientes.getSelectedRow();
+        
+        if(filaSeleccionada == -1 ){
+            javax.swing.JOptionPane.showMessageDialog(this, "Debe seleccionar una fila");
+            return ;
+        }        
+        try {
+            int dni = (Integer) modelo.getValueAt(filaSeleccionada, 0);           
+            compradorData.borrarComprador(dni);
+        } catch (HeadlessException e) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Error al validar la fecha."+ e.getMessage());
+            return;
+        }
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton1ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JDesktopPane EscritorioModificarCliente;
@@ -556,6 +584,7 @@ public class Clientes extends javax.swing.JInternalFrame {
     private javax.swing.JTextField JTDni;
     private javax.swing.JTextField JTNombre;
     private javax.swing.JTextField JTPass;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

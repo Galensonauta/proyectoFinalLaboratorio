@@ -11,6 +11,7 @@ import javax.swing.event.InternalFrameEvent;
 import javax.swing.table.DefaultTableModel;
 import modelo.Pelicula;
 import persistencia.PeliculaData;
+import persistencia.ProyeccionData;
 
 /**
  *
@@ -72,6 +73,7 @@ public class PeliculaVista extends javax.swing.JInternalFrame {
         JCGenero = new javax.swing.JComboBox<>();
         JBActualizar = new javax.swing.JButton();
         JBSalir = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
 
         jLabel1.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
         jLabel1.setText("PELICULAS");
@@ -184,6 +186,13 @@ public class PeliculaVista extends javax.swing.JInternalFrame {
             }
         });
 
+        jButton1.setText("Elimnar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
         jDesktopPane1.setLayer(jLabel1, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jDesktopPane1.setLayer(jLabel2, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jDesktopPane1.setLayer(jLabel3, javax.swing.JLayeredPane.DEFAULT_LAYER);
@@ -206,6 +215,7 @@ public class PeliculaVista extends javax.swing.JInternalFrame {
         jDesktopPane1.setLayer(JCGenero, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jDesktopPane1.setLayer(JBActualizar, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jDesktopPane1.setLayer(JBSalir, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jDesktopPane1.setLayer(jButton1, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         javax.swing.GroupLayout jDesktopPane1Layout = new javax.swing.GroupLayout(jDesktopPane1);
         jDesktopPane1.setLayout(jDesktopPane1Layout);
@@ -271,7 +281,9 @@ public class PeliculaVista extends javax.swing.JInternalFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(JBActualizar)
-                            .addComponent(JBModificar))))
+                            .addGroup(jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(jButton1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(JBModificar, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
                 .addContainerGap())
         );
         jDesktopPane1Layout.setVerticalGroup(
@@ -295,6 +307,8 @@ public class PeliculaVista extends javax.swing.JInternalFrame {
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 211, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jDesktopPane1Layout.createSequentialGroup()
                         .addComponent(JBModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(56, 56, 56)
+                        .addComponent(jButton1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(JBActualizar)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -526,6 +540,39 @@ public class PeliculaVista extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_JTBuscarTituloKeyTyped
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+
+        ProyeccionData proData = new ProyeccionData();
+        int filaSeleccionada = JTPeliculas.getSelectedRow();
+        if (filaSeleccionada == -1) {
+            JOptionPane.showMessageDialog(this, "Debe seleccionar una película.");
+            return;
+        }
+
+        String titulo = modelo.getValueAt(filaSeleccionada, 0).toString();
+        if (proData.existeProyeccionParaPelicula(titulo)) {
+            JOptionPane.showMessageDialog(this,
+                    "NO se puede eliminar la película '" + titulo + "'.\n"
+                    + "Tiene funciones/proyecciones programadas.\n"
+                    + "Primero elimine las proyecciones asociadas.",
+                    "Error de Integridad",
+                    JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        int confirm = JOptionPane.showConfirmDialog(this, "¿Seguro que desea eliminar?", "Confirmar", JOptionPane.YES_NO_OPTION);
+
+        if (confirm == JOptionPane.YES_OPTION) {
+            try {
+                peliculaData.eliminarPelicula(titulo);
+                cargarPeliculas(peliculaData.listarTodasLasPeliculas());
+                JOptionPane.showMessageDialog(this, "Película eliminada.");
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(this, "Error al eliminar: " + e.getMessage());
+            }
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton JBActualizar;
@@ -542,6 +589,7 @@ public class PeliculaVista extends javax.swing.JInternalFrame {
     private javax.swing.JTable JTPeliculas;
     private javax.swing.JTextField JTTitulo;
     private javax.swing.ButtonGroup buttonGroup1;
+    private javax.swing.JButton jButton1;
     private javax.swing.JDesktopPane jDesktopPane1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;

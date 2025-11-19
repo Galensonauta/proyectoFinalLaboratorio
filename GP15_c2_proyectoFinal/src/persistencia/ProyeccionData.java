@@ -338,6 +338,25 @@ public class ProyeccionData {
     
     return proyecciones;
     }
+    
+    public boolean existeProyeccionParaPelicula(String tituloPelicula) {
+    // Cuenta cuántas veces aparece el título en la tabla de proyecciones
+    String sql = "SELECT COUNT(*) FROM proyeccion WHERE pelicula = ?";
+    
+    try (PreparedStatement ps = con.prepareStatement(sql)) {
+        ps.setString(1, tituloPelicula);
+        
+        try (ResultSet rs = ps.executeQuery()) {
+            if (rs.next()) {
+                
+                return rs.getInt(1) > 0;
+            }
+        }
+    } catch (SQLException ex) {
+        System.err.println("Error al verificar uso de película: " + ex.getMessage());
+    }
+    return false; // Ante la duda, devolvemos false (o podrías lanzar excepción)
+}
 
 }
 
