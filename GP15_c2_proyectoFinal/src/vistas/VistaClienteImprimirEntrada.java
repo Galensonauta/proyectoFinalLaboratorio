@@ -93,6 +93,8 @@ public class VistaClienteImprimirEntrada extends javax.swing.JInternalFrame {
         btnFinal = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
 
+        setPreferredSize(new java.awt.Dimension(1137, 760));
+
         btnAtras.setText("< Atrás");
         btnAtras.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
