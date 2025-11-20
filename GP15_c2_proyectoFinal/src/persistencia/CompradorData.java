@@ -213,4 +213,21 @@ public class CompradorData {
     }
     return compradoresConCantidad;
 }
+    
+    public boolean existenClienteParaTicket(int dni){
+        boolean estado = false;
+        String sql = "SELECT COUNT (*) FROM ticket_compra WHERE comprador = ?";
+        try(PreparedStatement ps = con.prepareStatement(sql)){
+            ps.setInt(1, dni);
+            try(ResultSet rs = ps.executeQuery()){
+                if(rs.next()){
+                    return rs.getInt(1)>0;
+                }
+            }
+            estado = true;
+        }catch(SQLException ex){
+            System.out.println("error al verificar clientes"+ ex.getMessage());
+        }
+        return estado;
+    }
 }

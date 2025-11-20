@@ -17,6 +17,7 @@ import java.time.Period;
 import javax.swing.JOptionPane;
 
 import modelo.Sala;
+import persistencia.SalaData;
 /**
  *
  * @author Grupo 15 (Evelyn Cetera, Tomas Puw Zirulnik, Matias Correa, Enzo Fornes, Santiago Girardi)
@@ -554,20 +555,40 @@ public class Clientes extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_JTPassKeyTyped
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-int filaSeleccionada = JTClientes.getSelectedRow();
-        
-        if(filaSeleccionada == -1 ){
-            javax.swing.JOptionPane.showMessageDialog(this, "Debe seleccionar una fila");
-            return ;
-        }        
+    CompradorData proData=new CompradorData();
+        int filaSeleccionada = JTClientes.getSelectedRow();
+    if (filaSeleccionada == -1) {
+        JOptionPane.showMessageDialog(this, "Debe seleccionar un cliente.");
+        return;
+    }
+
+    int dni = Integer.parseInt(modelo.getValueAt(filaSeleccionada, 0).toString());
+
+    
+    if (proData.existenClienteParaTicket(dni)) {
+        JOptionPane.showMessageDialog(this, 
+            "NO se puede eliminar el cliente con el dni '" + dni + "'.\n" +
+            "Tiene tickets asociados.\n" +
+            "Primero elimine los tickets asociadas.",
+            "Error de Integridad",
+            JOptionPane.WARNING_MESSAGE);
+        return; 
+    }
+
+   
+    int confirm = JOptionPane.showConfirmDialog(this, "¿Seguro que desea eliminar?", "Confirmar", JOptionPane.YES_NO_OPTION);
+    
+    if (confirm == JOptionPane.YES_OPTION) {
         try {
-            int dni = (Integer) modelo.getValueAt(filaSeleccionada, 0);           
-            compradorData.borrarComprador(dni);
-        } catch (HeadlessException e) {
-            javax.swing.JOptionPane.showMessageDialog(this, "Error al validar la fecha."+ e.getMessage());
-            return;
+            // Como ya validamos arriba, esto debería funcionar sin errores de FK
+            proData.borrarComprador(dni);
+            cargarCompradores(proData.obtenerTodosLosCompradores());
+            JOptionPane.showMessageDialog(this, "cliente eliminado.");
+            
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error al eliminar: " + e.getMessage());
         }
-        // TODO add your handling code here:
+    }
     }//GEN-LAST:event_jButton1ActionPerformed
 
 

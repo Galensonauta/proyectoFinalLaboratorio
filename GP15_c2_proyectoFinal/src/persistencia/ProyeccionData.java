@@ -63,9 +63,8 @@ public class ProyeccionData {
     }
 
     //baja
-    public void eliminarProyeccion(int idProyec, DetalleTicketData dtData, LugarAsientoData butacaData) {
-        try{
-            dtData.eliminarDetalleSegunProyeccion(idProyec);
+    public void eliminarProyeccion(int idProyec, LugarAsientoData butacaData) {
+        try{           
             butacaData.eliminarButacaSegunProyeccion(idProyec);
             
         }catch(Exception e){

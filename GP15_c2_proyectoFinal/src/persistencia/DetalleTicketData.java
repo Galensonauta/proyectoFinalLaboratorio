@@ -150,6 +150,24 @@ private Connection con;
             System.out.println("Error al tratar de eliminar detalle según ID Proyeccion: " + e.getMessage());
         }
     }
+    public boolean existenTicketParaProyeccion(int idpr){
+        boolean estado = false;
+        String sql = "SELECT COUNT (*) FROM detalles_ticket WHERE idProyeccion = ?";
+        try(PreparedStatement ps = con.prepareStatement(sql)){
+            ps.setInt(1, idpr);
+            try(ResultSet rs = ps.executeQuery()){
+                if(rs.next()){
+                    estado= rs.getInt(1)>0;
+                }
+                
+
+            }
+        }catch(SQLException ex){
+            System.out.println("error al verificar tickets"+ ex.getMessage());
+        }
+        
+        return estado;
+    }
 
 }
 

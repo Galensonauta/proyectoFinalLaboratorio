@@ -962,40 +962,32 @@ public class VistaProyeccion extends javax.swing.JInternalFrame {
 
     private void JBEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBEliminarActionPerformed
         int filaSelec = jTableProyecciones.getSelectedRow();
+    if (filaSelec == -1) {
+        JOptionPane.showMessageDialog(this, "Debe seleccionar una proyección.");
+        return;
+    }
+    int id = Integer.parseInt(modeloTabla.getValueAt(filaSelec, 0).toString());
+
+    if (dtData.existenTicketParaProyeccion(id)) {
+        JOptionPane.showMessageDialog(this, 
+            "NO se puede eliminar la Proyección.\n" +
+            "Ya se han vendido tickets para esta función.\n" +
+            "Debe anular los tickets primero si desea continuar.",
+            "Error de Integridad",
+            JOptionPane.WARNING_MESSAGE);
+        return;
+    }
+
+    
+    int confirm = JOptionPane.showConfirmDialog(this, "¿Seguro que desea eliminar?", "Confirmar", JOptionPane.YES_NO_OPTION);
+    
+    if (confirm == JOptionPane.YES_OPTION) {
+        proData.eliminarProyeccion(id, butacaData); 
         
-        if(filaSelec == -1) {
-            JOptionPane.showMessageDialog(this, "Debe seleccionar una Proyección de la tabla para eliminar.");
-            return;
-        }
-        int id = Integer.parseInt(modeloTabla.getValueAt(filaSelec, 0).toString());
+        JOptionPane.showMessageDialog(this, "Proyección eliminada correctamente.");
         
-        Proyeccion proyeccionABorrar = proData.buscarProyeccionPorID(id);
-        if (proyeccionABorrar == null) {
-            JOptionPane.showMessageDialog(this, "Error: No se encontró la proyección en la base de datos.");
-            return;
-        }
-        String tituloPelicula = proyeccionABorrar.getPelicula().getTitulo();
-        
-        int confirm = JOptionPane.showConfirmDialog(this, "¿Está seguro de eliminar la proyeccion seleccionada con el ID: "+ id + "?", "Confirmar eliminación", JOptionPane.YES_NO_OPTION);
-        
-        if(confirm == JOptionPane.YES_OPTION){
-            proData.eliminarProyeccion(id, dtData, butacaData);
-            JOptionPane.showMessageDialog(this, "Poryección eliminada correctamente!");
-            cargarTabla();
-            List<Proyeccion> proyeccionesRestantes = proData.buscarProyeccionesPorPelicula(tituloPelicula);
-            if (proyeccionesRestantes.isEmpty()) {
-                // Si la lista está vacía, ya no hay funciones.
-                // Actualizamos la película a "enCartelera = false"
-                peliData.actualizarEstadoCartelera(tituloPelicula, false);
-                System.out.println("Era la última proyección. " + tituloPelicula + " ahora está fuera de cartelera.");
-           }
-        }
-        
-        
-        
-        cargarTabla();
-        
-        
+    }
+     cargarTabla();   
     }//GEN-LAST:event_JBEliminarActionPerformed
 
     private void JTFIDKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_JTFIDKeyTyped
